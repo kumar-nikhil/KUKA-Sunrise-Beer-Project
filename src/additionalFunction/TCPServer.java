@@ -74,10 +74,11 @@ public class TCPServer {
     		logger.info("Waitiing for a message from Client...");
     		
     		String message;
-    		char[] cbuf = null;
-    		// receiving message via inputstream
-    		in.read(cbuf);
-    		content = cbuf.toString();
+    		do {
+    			if ( (message = in.readLine()) != null && !message.contains("END") ) { // receiving message via inputstream
+    				content += message;
+    			}
+			} while (message.contains("END"));
     		
 		} catch (IOException e) {
 			e.printStackTrace();
