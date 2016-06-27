@@ -1,9 +1,17 @@
 package additionalFunction;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -62,29 +70,6 @@ public class TCPServer {
 		
 	}
 	
-	public String receiveFile() {
-		String content = "";
-		
-    	try {
-    		// clear buffered stacks
-    		while( socket.getInputStream().available() != 0 ) {
-				socket.getInputStream().read();
-			}
-    		
-    		logger.info("Waitiing for a message from Client...");
-    		
-    		String message;
-    		do {
-    			// receiving message via inputstream
-    			content += in.readLine();
-			} while (content.contains("END"));
-    		
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	
-		return content;
-	}
 	
 	public String receiveWait() {
     	try {
@@ -108,7 +93,80 @@ public class TCPServer {
     	
 		return null;
 	}
-    
+
+	public String receiveLines() {
+		String content = "";
+		
+    	try {
+    		// clear buffered stacks
+    		while( socket.getInputStream().available() != 0 ) {
+				socket.getInputStream().read();
+			}
+    		
+    		logger.info("Waitiing for a message from Client...");
+    		
+    		do {
+    			content += in.readLine();	// receiving message via inputstream
+			} while (content.contains("END"));
+    		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+		return content;
+	}
+	
+	public void sendFile() throws Exception {
+        // Specify the file
+		File file = new File("E:\\data.xml");
+		FileInputStream fis = new FileInputStream(file);
+		BufferedInputStream bis = new BufferedInputStream(fis);
+
+        //Get socket's output stream
+        OutputStream os = socket.getOutputStream();
+        
+        //Read File Contents into contents array 
+        byte[] contents;
+        long fileLength = file.length(); 
+        long current = 0;
+        
+        long start = System.nanoTime();
+        while(current!=fileLength){ 
+            int size = 10000;
+            if(fileLength - current >= size)
+                current += size;    
+            else{ 
+                size = (int)(fileLength - current); 
+                current = fileLength;
+            } 
+            contents = new byte[size]; 
+            bis.read(contents, 0, size); 
+            os.write(contents);
+            System.out.print("Sending file ... "+(current*100)/fileLength+"% complete!");
+        }   
+        
+        os.flush(); 
+	}
+	
+	public void receiveFile() throws Exception {
+        byte[] contents = new byte[1000000];	// 1MB
+        
+        //Initialize the FileOutputStream to the output file's full path.
+        FileOutputStream fos = new FileOutputStream("E:\\data.xml");
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+        InputStream is = socket.getInputStream();
+        
+        //No of bytes read in one read() call
+        int bytesRead = 0;
+
+        while( ( bytesRead=is.read(contents) )!=-1 ) {
+        	bos.write(contents, 0, bytesRead);         	
+        }
+        
+        bos.flush();
+        System.out.println("File saved successfully!");
+	}
+	
 	public void startComm() {
     	logger.info("Starting TCP communication");
     	 try{

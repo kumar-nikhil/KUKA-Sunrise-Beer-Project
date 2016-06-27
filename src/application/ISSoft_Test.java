@@ -84,7 +84,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	}
 
 	@Override
-	public void run() {
+	public void run() throws Exception {
 		server.startComm();
 
 		while (loopFlag) {
@@ -105,9 +105,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 				getLogger().info("Product 03 selected");
 				work(product03);
 			} else if (received.matches("test")) {
-				String content = server.receiveFile();
-				getLogger().info("Received content ->>");
-				getLogger().info(content);
+				server.receiveFile();		// throws Exception
 			} else if (received.matches("END")) {
 				loopFlag = false;
 			} else {
