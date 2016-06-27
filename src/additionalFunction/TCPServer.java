@@ -75,10 +75,9 @@ public class TCPServer {
     		
     		String message;
     		do {
-    			if ( (message = in.readLine()) != null && !message.contains("END") ) { // receiving message via inputstream
-    				content += message;
-    			}
-			} while (message.contains("END"));
+    			// receiving message via inputstream
+    			content += in.readLine();
+			} while (content.contains("END"));
     		
 		} catch (IOException e) {
 			e.printStackTrace();
