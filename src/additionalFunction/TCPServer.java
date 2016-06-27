@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.CharBuffer;
 
 import com.kuka.task.ITaskLogger;
 
@@ -73,9 +74,11 @@ public class TCPServer {
     		logger.info("Waitiing for a message from Client...");
     		
     		String message;
-			if ( (message = in.readLine()) != null ) { // receiving message via inputstream
-				content += message;
-			}
+    		CharBuffer cbuf = null;
+    		// receiving message via inputstream
+    		in.read(cbuf);
+    		content = cbuf.toString();
+    		
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
