@@ -136,11 +136,11 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			server.send("Select_Point_of_" + product.getName());
 			String received = server.receiveWait();
 			if (received.matches("P1")) {
-				tcp.move(lin(p1));
+				tcp.move(ptp(p1));
 			} else if (received.matches("P2")) {
-				tcp.move(lin(p2));
+				tcp.move(ptp(p2));
 			} else if (received.matches("P3")) {
-				tcp.move(lin(p3));
+				tcp.move(ptp(p3));
 			} else if (received.matches("END")) {
 				loop = false;
 			} else {
