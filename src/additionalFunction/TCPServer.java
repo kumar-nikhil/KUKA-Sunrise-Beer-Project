@@ -74,7 +74,7 @@ public class TCPServer {
     		logger.info("Waitiing for a message from Client...");
     		
     		String message;
-    		CharBuffer cbuf = null;
+    		char[] cbuf = null;
     		// receiving message via inputstream
     		in.read(cbuf);
     		content = cbuf.toString();
