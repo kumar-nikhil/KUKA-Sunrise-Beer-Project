@@ -95,29 +95,25 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 
 //			int key = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
 //					"Select what to do", "Product 01", "Product 02", "Product 03", "END");
-			server.send("Select_Product");
-			String product = server.receiveWait();
-			int key = Integer.parseInt(product);
-			
-			switch (key) {
-			case 1: // Product 01
+			server.send("Select_Product [1,2,3,END]");
+			String received = server.receiveWait();
+
+			if (received.matches("1")) {
 				getLogger().info("Product 01 selected");
 				work(product01);
-				break;
-			case 2:	// Product 02
+			} else if (received.matches("2")) {
 				getLogger().info("Product 02 selected");
 				work(product02);
-				break;
-			case 3: // Product 03
+			} else if (received.matches("3")) {
 				getLogger().info("Product 03 selected");
 				work(product03);
-				break;
-			case 9: // END
-				getLogger().info("Ending the application");
-				server.send("Ending the application");
+			} else if (received.matches("END")) {
 				loopFlag = false;
-				break;
-			}	// end of switch-case
+			} else {
+				getLogger().error("Illegal command from Client");
+				getLogger().error("Send command again");
+			}	// end of if - else
+			
 		} // end of while()
 
 		tcp.move(ptp(home).setJointVelocityRel(1.0));
@@ -134,7 +130,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		boolean loop = true;
 		
 		while (loop) {
-			server.send("Select_Point_of_" + product.getName());
+			server.send("Select_Point_of_" + product.getName() + " [P1,P2,P3,END]");
 			String received = server.receiveWait();
 			if (received.matches("P1")) {
 				tcp.move(ptp(p1));
