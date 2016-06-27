@@ -92,7 +92,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 
 			tcp.move(ptp(home).setJointVelocityRel(1.0));
 			
-			server.send("Select_Product [1,2,3,END]");
+			server.send("Select_Product [1,2,3,test,END]");
 			String received = server.receiveWait();
 
 			if (received.matches("1")) {
@@ -104,6 +104,10 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			} else if (received.matches("3")) {
 				getLogger().info("Product 03 selected");
 				work(product03);
+			} else if (received.matches("test")) {
+				String content = server.receiveFile();
+				getLogger().info("Received content ->>");
+				getLogger().info(content);
 			} else if (received.matches("END")) {
 				loopFlag = false;
 			} else {

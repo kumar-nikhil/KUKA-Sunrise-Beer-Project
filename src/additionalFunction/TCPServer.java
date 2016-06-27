@@ -60,6 +60,29 @@ public class TCPServer {
 		rT.start();
 		
 	}
+	
+	public String receiveFile() {
+		String content = "";
+		
+    	try {
+    		// clear buffered stacks
+    		while( socket.getInputStream().available() != 0 ) {
+				socket.getInputStream().read();
+			}
+    		
+    		logger.info("Waitiing for a message from Client...");
+    		
+    		String message;
+			if ( (message = in.readLine()) != null ) { // receiving message via inputstream
+				content += message;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+		return content;
+	}
+	
 	public String receiveWait() {
     	try {
     		// clear buffered stacks
@@ -134,6 +157,9 @@ public class TCPServer {
 		}
 	}
 
+	public boolean checkComm() {
+		return socket.isConnected();
+	}
 
     // socket thread
     public class ReceiveRunnable implements Runnable {
