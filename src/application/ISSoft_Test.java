@@ -92,9 +92,6 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 
 			tcp.move(ptp(home).setJointVelocityRel(1.0));
 			
-
-//			int key = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
-//					"Select what to do", "Product 01", "Product 02", "Product 03", "END");
 			server.send("Select_Product [1,2,3,END]");
 			String received = server.receiveWait();
 
@@ -132,6 +129,8 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		while (loop) {
 			server.send("Select_Point_of_" + product.getName() + " [P1,P2,P3,END]");
 			String received = server.receiveWait();
+			workTimer.start();
+			
 			if (received.matches("P1")) {
 				tcp.move(ptp(p1));
 			} else if (received.matches("P2")) {
@@ -144,6 +143,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 				getLogger().error("Illegal command from Client");
 				getLogger().error("Send command again");
 			}	// end of if - else
+			workTimer.end();
 			
 		}	// end of while
 		
