@@ -29,7 +29,7 @@ public class Motions extends RoboticsAPIApplication {
 			"\n" +
 			"The robot moves to the start position and based on this position, a motion that " +
 			"describes the symbol of lemniscate (a 'horizontal eight') will be executed." + "\n" +
-			"In a next step the robot will move in nullspace by "+nullSpaceAngle+"ï¿½in both directions.";
+			"In a next step the robot will move in nullspace by "+nullSpaceAngle+"° in both directions.";
 
 	public void initialize() {		
 		lbr = getContext().getDeviceFromType(LBR.class);
@@ -56,13 +56,13 @@ public class Motions extends RoboticsAPIApplication {
 		lemniscateSpline.setJointVelocityRel(0.25);
 		lbr.move(lemniscateSpline);
 
-		getLogger().info("Move in nullspace -"+nullSpaceAngle+"deg");		
+		getLogger().info("Move in nullspace -"+nullSpaceAngle+"°");		
 		Frame centerFrameWithChangedE1_1 = createChildFrameAndSetE1Offset(startFrame,Math.toRadians(-nullSpaceAngle));
 		LIN linToCenterFrameWithE1_1 = lin(centerFrameWithChangedE1_1);
 		linToCenterFrameWithE1_1.setJointVelocityRel(0.25);
 		lbr.move(linToCenterFrameWithE1_1);
 
-		getLogger().info("Move in nullspace "+nullSpaceAngle+"deg");
+		getLogger().info("Move in nullspace "+nullSpaceAngle+"°");
 		Frame centerFrameWithChangedE1_2 = createChildFrameAndSetE1Offset(startFrame,Math.toRadians(nullSpaceAngle));
 		LIN linToCenterFrameWithE1_2 = lin(centerFrameWithChangedE1_2);
 		linToCenterFrameWithE1_2.setJointVelocityRel(0.25);

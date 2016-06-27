@@ -1,6 +1,9 @@
 package application;
 
 
+import additionalFunction.CycleTimer;
+import additionalFunction.TCPServer;
+
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 
@@ -33,11 +36,11 @@ import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
  * @see #dispose()
  */
 public class ISSoft_Test extends RoboticsAPIApplication {
-	private Controller	cabinet;
-	private LBR			lbr;
+	private Controller		cabinet;
+	private LBR				lbr;
 	// Tool
-	private Tool		tool;
-	private ObjectFrame	tcp;
+	private Tool			tool;
+	private ObjectFrame		tcp;
 	// flag
 	private boolean			loopFlag;
 	// Frames
@@ -45,6 +48,8 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	private ObjectFrame		product01, product02, product03;
 	private ObjectFrame		p1, p2, p3;
 	// CycleTimer
+	private CycleTimer		workTimer;
+	private TCPServer		server;
 	
 
 	@Override
@@ -58,6 +63,10 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		loopFlag = true;
 		// frames
 		initFrames(null);
+		// CT
+		workTimer = new CycleTimer("WorkTimer", getLogger());
+		// TCP Server
+		server = new TCPServer(getLogger());
 		
 	}
 
@@ -76,31 +85,34 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 
 	@Override
 	public void run() {
+		server.startComm();
 
 		while (loopFlag) {
 			getLogger().info("Starting the application");
 
 			tcp.move(ptp(home).setJointVelocityRel(1.0));
 			
-//			triAxialOscillationTest();
 
-			int key = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
-					"Select what to do", "Product 01", "Product 02", "Product 03", "END");
+//			int key = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
+//					"Select what to do", "Product 01", "Product 02", "Product 03", "END");
+			server.send("Select_Product");
+			String product = server.receiveWait();
+			int key = Integer.parseInt(product);
 			
 			switch (key) {
-			case 0: // Product 01
+			case 1: // Product 01
 				getLogger().info("Product 01 selected");
 				work(product01);
 				break;
-			case 1:	// Product 02
+			case 2:	// Product 02
 				getLogger().info("Product 02 selected");
 				work(product02);
 				break;
-			case 2: // Product 03
+			case 3: // Product 03
 				getLogger().info("Product 03 selected");
 				work(product03);
 				break;
-			case 3: // END
+			case 9: // END
 				getLogger().info("Ending the application");
 				loopFlag = false;
 				break;
@@ -109,12 +121,36 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 
 		tcp.move(ptp(home).setJointVelocityRel(1.0));
 		
+		server.endComm();
+		
 		getLogger().info("Ending the application");
 		
 	}
 
 	private void work(ObjectFrame product) {
-		// TODO Auto-generated method stub
+		initFrames(product);
+		
+		boolean loop = true;
+		
+		while (loop) {
+			server.send("Select_Point_of_" + product.getName());
+			String received = server.receiveWait();
+			if (received.matches("P1")) {
+				tcp.move(lin(p1));
+			} else if (received.matches("P2")) {
+				tcp.move(lin(p2));
+			} else if (received.matches("P3")) {
+				tcp.move(lin(p3));
+			} else if (received.matches("END")) {
+				loop = false;
+			} else {
+				getLogger().error("Illegal command from Client");
+				getLogger().error("Send command again");
+			}	// end of if - else
+			
+		}	// end of while
+		
+		getLogger().info("Work finished on " + product.getName() );
 		
 	}
 

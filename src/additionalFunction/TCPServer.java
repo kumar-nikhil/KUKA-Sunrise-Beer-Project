@@ -66,6 +66,9 @@ public class TCPServer {
     		while( socket.getInputStream().available() != 0 ) {
 				socket.getInputStream().read();
 			}
+    		
+    		logger.info("Waitiing for a message from Client...");
+    		
     		String message;
 			if ( (message = in.readLine()) != null ) { // receiving message via inputstream
 //    		message = in.readLine();
