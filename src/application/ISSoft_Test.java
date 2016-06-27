@@ -114,6 +114,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 				break;
 			case 9: // END
 				getLogger().info("Ending the application");
+				server.send("Ending the application");
 				loopFlag = false;
 				break;
 			}	// end of switch-case
