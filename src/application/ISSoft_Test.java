@@ -141,20 +141,17 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	private boolean commandInterpreterOnTbdMode(String message) {
 		boolean ret = true;
 		String[] command = message.split(" ");
-		
-		if ( command[0].matches("set") && command[1].matches("mode") && command[2].matches("manual") ) {
-			tbd.cancel();
-			tcp.move(ptp(lbr.getCurrentCartesianPosition(tcp)));
-			modeFlag = mode.manual;
-		} else if ( command[0].matches("set") && command[1].matches("mode") && command[2].matches("tbd") ){
-			// already in tbd mode
+
+		if ( command[0].matches("set") ) {
+			ret = commandSet(command);
+			respondCommand_ok_fail( ret, command );
+		} else if ( command[0].matches("get") ) {
+			ret = commandGet_respond(command);
 		} else {
 			getLogger().error("Illegal command!!");
-			getLogger().error("Robot is in TBD mode, only [set mode manual] command is available");
+			getLogger().error("Robot is in TBD mode, only [set/get] command is available");
 			return false;
 		}
-
-		getLogger().info("mode is set to : [ " + command[2] + " ]");
 		
 		return ret;
 	}
@@ -237,13 +234,23 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			} else if ( command[1].matches("mode") ) {
 				String arg = command[2];
 				if ( arg.matches("tbd") ) {
-					CartesianImpedanceControlMode cicm = new CartesianImpedanceControlMode();
-					cicm.parametrize(CartDOF.TRANSL).setStiffness(0);
-					cicm.parametrize(CartDOF.ROT).setStiffness(0);
-					tbd = lbr.moveAsync(positionHold(cicm, -1, TimeUnit.SECONDS));
-					modeFlag = mode.tbd;
+					if ( modeFlag == mode.manual ) {
+						CartesianImpedanceControlMode cicm = new CartesianImpedanceControlMode();
+						cicm.parametrize(CartDOF.TRANSL).setStiffness(0);
+						cicm.parametrize(CartDOF.ROT).setStiffness(0);
+						tbd = lbr.moveAsync(positionHold(cicm, -1, TimeUnit.SECONDS));
+						modeFlag = mode.tbd;						
+					} else if ( modeFlag == mode.tbd ) {
+						getLogger().error("mode is already set to [ tbd ]");
+					}
 				} else if ( arg.matches("manual") ) {
-					// already in manual mode
+					if ( modeFlag == mode.tbd ) {
+						tbd.cancel();
+						tcp.move(ptp(lbr.getCurrentCartesianPosition(tcp)));
+						modeFlag = mode.manual;						
+					} else if ( modeFlag == mode.manual ) {
+						getLogger().error("mode is already set to [ manual ]");
+					}
 				}
 				getLogger().info("mode is set to : [ " + arg + " ]");
 			} else {
