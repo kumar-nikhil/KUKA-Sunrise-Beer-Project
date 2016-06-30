@@ -201,13 +201,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			}
 		} else if ( command[1].matches("position") ) {
 			Frame currentPosition = lbr.getCurrentCartesianPosition(tcp, World.Current.getRootFrame());
-			server.send(command[0] + " " + command[1]
-					+ " " + currentPosition.getX()
-					+ " " + currentPosition.getY()
-					+ " " + currentPosition.getZ()
-					+ " " + currentPosition.getAlphaRad()
-					+ " " + currentPosition.getBetaRad()
-					+ " " + currentPosition.getGammaRad()	);
+			server.send(command[0] + " " + command[1] + " " + frameToString(currentPosition) );
 			getLogger().info( String.format("get position : [ " + currentPosition.toStringInWorld() + " ]") );
 		} else if ( command[1].matches("mode") ) {
 			server.send(command[0] + " " + command[1] + " " + modeFlag.toString());
@@ -220,6 +214,8 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		
 		return ret;
 	}
+
+	
 	
 	private boolean commandSet(String[] command) {
 		boolean ret = true;
@@ -237,7 +233,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 				wfXML.writeFrame(currentPosition, String.format("P%d", arg) );
 				initFrames();
 				
-				getLogger().info( String.format("P%d is set to : [ " + currentPosition.toStringInWorld() + " ]", arg) );				
+				getLogger().info( String.format("P%d is set to : [ " + frameToString(currentPosition) + " ]", arg) );				
 			} else if ( command[1].matches("mode") ) {
 				String arg = command[2];
 				if ( arg.matches("tbd") ) {
@@ -304,7 +300,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		
 		// motion
 		try {
-			getLogger().info("moving to frame : [ " + newPosition.toStringInWorld() + " ]");
+			getLogger().info("moving to frame : [ " + frameToString(newPosition) + " ]");
 			tcp.move(ptp(newPosition).setJointVelocityRel(jointVel));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -348,7 +344,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 
 		// motion
 		try {
-			getLogger().info("moving to frame : [ " + newPosition.toStringInWorld() + " ]");
+			getLogger().info("moving to frame : [ " + frameToString(newPosition) + " ]");
 			tcp.move(ptp(newPosition).setJointVelocityRel(jointVel));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -368,7 +364,15 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		getLogger().info("set mode tbd/manual");
 		getLogger().info("get status/position/mode");
 	}
-
+	
+	private String frameToString(Frame frame) {
+		String data = String.format("%03f %03f %03f %03f %03f %03f",
+				frame.getX(), frame.getY(), frame.getZ(),
+				Math.toDegrees(frame.getAlphaRad()),
+				Math.toDegrees(frame.getBetaRad()),
+				Math.toDegrees(frame.getGammaRad()) );
+		return data;
+	}
 	
 	@Override
 	public void dispose() {
