@@ -1,10 +1,9 @@
 package application;
 
 
-import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.positionHold;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import additionalFunction.CycleTimer;
@@ -21,7 +20,6 @@ import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
-import com.kuka.roboticsAPI.geometricModel.math.Transformation;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.task.RoboticsAPITask;
@@ -67,7 +65,8 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	private IMotionContainer	tbd;
 	private mode				modeFlag;
 	private enum mode 			{ tbd, manual };
-	
+	// TCP command
+	private String				received;
 	
 
 	@Override
@@ -112,7 +111,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 
 //		server.send("Ready");
 		while (loopFlag) {
-			String received = server.receiveWait();
+			received = server.receiveWait();
 			if ( modeFlag == mode.tbd ) {
 				commandInterpreterOnTbdMode(received);
 			} else if ( modeFlag == mode.manual ){
@@ -145,7 +144,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		} else if ( command[0].matches("get") ) {
 			ret = commandGet_respond(command);
 		} else {
-			getLogger().error("Illegal command!!");
+			getLogger().error("Wrong command!! [ " + received + " ]");
 			getLogger().error("Robot is in TBD mode, only [set/get] command is available");
 			return false;
 		}
@@ -170,7 +169,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			ret = commandGet_respond(command);
 			
 		} else {
-			getLogger().error("Illegal command!!");
+			getLogger().error("Wrong command!! [ " + received + " ]");
 			showCommands();
 			ret =  false;
 		}
@@ -201,7 +200,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			server.send(command[0] + " " + command[1] + " " + modeFlag.toString());
 			getLogger().info( String.format("get mode : [ " + modeFlag.toString() + " ]") );
 		} else {
-			getLogger().error("Illegal command!!");
+			getLogger().error("Wrong command!! [ " + received + " ]");
 			showCommands();
 			return false;
 		}
@@ -249,13 +248,13 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 						getLogger().error("mode is already set to [ manual ]");
 					}
 				} else {
-					getLogger().error("Illegal command!!");
+					getLogger().error("Wrong command!! [ " + received + " ]");
 					showCommands();
 					return false;
 				}
 				getLogger().info("mode is set to : [ " + arg + " ]");
 			} else {
-				getLogger().error("Illegal command!!");
+				getLogger().error("Wrong command!! [ " + received + " ]");
 				showCommands();
 				return false;
 			}
@@ -301,7 +300,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			newPosition = base.getChild(String.format("P%d", argI)).copyWithRedundancy();
 			getLogger().info("selected point : [" + base.getChild(String.format("P%d", argI)).getName() + "]");
 		} else {
-			getLogger().error("Illegal command!!");
+			getLogger().error("Wrong command!! [ " + received + " ]");
 			showCommands();
 			return false;
 		}
@@ -345,7 +344,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 //			newPosition.transform(World.Current.getRootFrame(), Transformation.ofDeg(0, 0, 0, 0, 0, arg));
 			newPosition.setGammaRad( newPosition.getGammaRad() + Math.toRadians(arg) );
 		} else {
-			getLogger().error("Illegal command!!");
+			getLogger().error("Wrong command!! [ " + received + " ]");
 			showCommands();
 			return false;
 		}
