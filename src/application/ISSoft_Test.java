@@ -101,7 +101,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	private void initFrames() {
 		home = new JointPosition(0, Math.toRadians(30), 0, -Math.toRadians(60), 0, Math.toRadians(90), 0);
 		p = new ArrayList<ObjectFrame>();
-		for (ObjectFrame frame : World.Current.getAllFrames() ) {
+		for (ObjectFrame frame : World.Current.getRootFrame().getChildren() ) {
 			p.add(frame);
 		}
 	}
