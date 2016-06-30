@@ -223,7 +223,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		try {
 			if ( command[1].matches("speed") ) {
 				jointVel = Double.parseDouble( command[2] );
-				getLogger().info( String.format("Joint Velocity is set to : [ %03f ]", jointVel) );
+				getLogger().info( String.format("Joint Velocity is set to : [ %.03f ]", jointVel) );
 			} else if ( command[1].matches("point") ) {
 				WriteFrameToAPIdataXML wfXML = new WriteFrameToAPIdataXML(this, World.Current.getRootFrame(), getLogger());
 
@@ -366,7 +366,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	}
 	
 	private String frameToString(Frame frame) {
-		String data = String.format("%03f %03f %03f %03f %03f %03f",
+		String data = String.format("%.03f %.03f %.03f %.03f %.03f %.03f",
 				frame.getX(), frame.getY(), frame.getZ(),
 				Math.toDegrees(frame.getAlphaRad()),
 				Math.toDegrees(frame.getBetaRad()),
