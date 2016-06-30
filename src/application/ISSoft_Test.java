@@ -111,12 +111,17 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 
 //		server.send("Ready");
 		while (loopFlag) {
-			received = server.receiveWait();
-			if ( modeFlag == mode.tbd ) {
-				commandInterpreterOnTbdMode(received);
-			} else if ( modeFlag == mode.manual ){
-				commandInterpreter(received);				
-			}
+			try {
+				received = server.receiveWait();
+				if ( modeFlag == mode.tbd ) {
+					commandInterpreterOnTbdMode(received);
+				} else if ( modeFlag == mode.manual ){
+					commandInterpreter(received);				
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				break;
+			}	// end of try-catch
 			
 		} // end of while()
 
