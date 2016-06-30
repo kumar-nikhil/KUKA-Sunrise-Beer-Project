@@ -56,7 +56,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	private boolean				loopFlag;
 	// Frames
 	private JointPosition		home;
-	private List<ObjectFrame>	p;
+	private ObjectFrame			base;
 	// CycleTimer
 	private CycleTimer			workTimer;
 	private TCPServer			server;
@@ -100,10 +100,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 
 	private void initFrames() {
 		home = new JointPosition(0, Math.toRadians(30), 0, -Math.toRadians(60), 0, Math.toRadians(90), 0);
-		p = new ArrayList<ObjectFrame>();
-		for (ObjectFrame frame : getApplicationData().getFrame("/").getChildren() ) {
-			p.add(frame);
-		}
+		base = getApplicationData().getFrame("/Base");
 	}
 
 	@Override
@@ -301,8 +298,8 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 					Math.toRadians(args[3]), Math.toRadians(args[4]), Math.toRadians(args[5]));
 		} else if ( command[1].matches("point") ) {
 			int argI = (int) arg;
-			newPosition = p.get(argI-1).copyWithRedundancy();
-			getLogger().info("selected point : [" + p.get(argI-1).getName() + "]");
+			newPosition = base.getChild(String.format("P%d", argI)).copyWithRedundancy();
+			getLogger().info("selected point : [" + base.getChild(String.format("P%d", argI)).getName() + "]");
 		} else {
 			getLogger().error("Illegal command!!");
 			showCommands();

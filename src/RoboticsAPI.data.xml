@@ -5,61 +5,68 @@
         <additionalInformation>
             <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="true"/>
         </additionalInformation>
-        <frame name="P3">
+        <frame name="Base">
             <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
             <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1467190563165"/>
+                <info key="LastModificationTime" type="java.lang.Long" value="1467269324303"/>
             </additionalInformation>
-        </frame>
-        <frame name="P4">
-            <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
-            <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1467190564079"/>
-            </additionalInformation>
-        </frame>
-        <frame name="P5">
-            <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
-            <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1467190564950"/>
-            </additionalInformation>
-        </frame>
-        <frame name="P6">
-            <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
-            <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1467190565858"/>
-            </additionalInformation>
-        </frame>
-        <frame name="P7">
-            <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
-            <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1467190566999"/>
-            </additionalInformation>
-        </frame>
-        <frame name="P8">
-            <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
-            <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1467190568094"/>
-            </additionalInformation>
-        </frame>
-        <frame name="P9">
-            <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
-            <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1467190569087"/>
-            </additionalInformation>
-        </frame>
-        <frame name="P1">
-            <transformation a="-2.8343673999204912" b="0.7543119595560613" c="2.1775030377571203" x="614.5874257338739" y="385.69411201523826" z="521.0649636129086"/>
-            <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1467260926439"/>
-                <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="false"/>
-            </additionalInformation>
-        </frame>
-        <frame name="P2">
-            <transformation a="-2.834367184547662" b="0.7543121233926766" c="2.1775029055348316" x="614.5873068162473" y="385.6942882412392" z="521.0650846935997"/>
-            <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1467260931777"/>
-                <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="false"/>
-            </additionalInformation>
+            <redundancyData>
+                <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+            </redundancyData>
+            <frame name="P1">
+                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1467269355776"/>
+                </additionalInformation>
+            </frame>
+            <frame name="P2">
+                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1467269358458"/>
+                </additionalInformation>
+            </frame>
+            <frame name="P3">
+                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1467269378460"/>
+                </additionalInformation>
+            </frame>
+            <frame name="P4">
+                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1467269380064"/>
+                </additionalInformation>
+            </frame>
+            <frame name="P5">
+                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1467269380965"/>
+                </additionalInformation>
+            </frame>
+            <frame name="P6">
+                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1467269381931"/>
+                </additionalInformation>
+            </frame>
+            <frame name="P7">
+                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1467269383244"/>
+                </additionalInformation>
+            </frame>
+            <frame name="P8">
+                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1467269384448"/>
+                </additionalInformation>
+            </frame>
+            <frame name="P9">
+                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1467269385556"/>
+                </additionalInformation>
+            </frame>
         </frame>
     </world>
     <objectTemplates>
