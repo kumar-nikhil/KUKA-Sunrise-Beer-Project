@@ -61,7 +61,7 @@
         <toolTemplate class="" name="Tool">
             <frames>
                 <frame name="TCP">
-                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="150.0"/>
                 </frame>
             </frames>
             <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="3.022638461648432" cogY="3.9051431670134185" cogZ="97.51244307325913" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="1.0133814911558707"/>
