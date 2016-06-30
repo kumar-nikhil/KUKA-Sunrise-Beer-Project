@@ -219,7 +219,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 				jointVel = Double.parseDouble( command[2] );
 				getLogger().info( String.format("Joint Velocity is set to : [ %.03f ]", jointVel) );
 			} else if ( command[1].matches("point") ) {
-				WriteFrameToAPIdataXML wfXML = new WriteFrameToAPIdataXML(this, World.Current.getRootFrame(), getLogger());
+				WriteFrameToAPIdataXML wfXML = new WriteFrameToAPIdataXML(this, base, getLogger());
 
 				int arg = Integer.parseInt( command[2] );
 				Frame currentPosition = lbr.getCurrentCartesianPosition(tcp, World.Current.getRootFrame());
