@@ -12,19 +12,8 @@
                 <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                     <tcpTransformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="150.0"/>
                 </info>
+                <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="true"/>
             </additionalInformation>
-            <frame name="P1">
-                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
-                <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1467269355776"/>
-                </additionalInformation>
-            </frame>
-            <frame name="P2">
-                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
-                <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1467269358458"/>
-                </additionalInformation>
-            </frame>
             <frame name="P3">
                 <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
                 <additionalInformation>
@@ -65,6 +54,26 @@
                 <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
                 <additionalInformation>
                     <info key="LastModificationTime" type="java.lang.Long" value="1467269385556"/>
+                </additionalInformation>
+            </frame>
+            <frame name="P1">
+                <transformation a="-3.141558350445719" b="-4.056855743208077E-5" c="-3.1414958631716043" x="610.0004350343268" y="-0.01374400972231996" z="447.7289170665622"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1467269726987"/>
+                    <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
+                        <tcpTransformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="150.0"/>
+                    </info>
+                    <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="false"/>
+                </additionalInformation>
+            </frame>
+            <frame name="P2">
+                <transformation a="-2.740181910762501" b="0.011896468464236155" c="3.1032474065003006" x="604.8807228424355" y="77.96790501311585" z="448.4999284678959"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1467269726987"/>
+                    <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
+                        <tcpTransformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="150.0"/>
+                    </info>
+                    <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="false"/>
                 </additionalInformation>
             </frame>
         </frame>
