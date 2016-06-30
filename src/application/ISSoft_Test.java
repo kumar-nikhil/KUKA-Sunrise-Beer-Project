@@ -325,17 +325,23 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		Frame newPosition = currentPosition.copyWithRedundancy();
 
 		if ( command[1].matches("x") ) {
-			newPosition.transform(World.Current.getRootFrame(), Transformation.ofDeg(arg, 0, 0, 0, 0, 0));
+//			newPosition.transform(World.Current.getRootFrame(), Transformation.ofDeg(arg, 0, 0, 0, 0, 0));
+			newPosition.setX(newPosition.getX()+arg);
 		} else if ( command[1].matches("y") ) {
-			newPosition.transform(World.Current.getRootFrame(), Transformation.ofDeg(0, arg, 0, 0, 0, 0));
+//			newPosition.transform(World.Current.getRootFrame(), Transformation.ofDeg(0, arg, 0, 0, 0, 0));
+			newPosition.setY(newPosition.getY()+arg);
 		} else if ( command[1].matches("z") ) {
-			newPosition.transform(World.Current.getRootFrame(), Transformation.ofDeg(0, 0, arg, 0, 0, 0));
+//			newPosition.transform(World.Current.getRootFrame(), Transformation.ofDeg(0, 0, arg, 0, 0, 0));
+			newPosition.setZ(newPosition.getZ()+arg);
 		} else if ( command[1].matches("a") ) {
-			newPosition.transform(World.Current.getRootFrame(), Transformation.ofDeg(0, 0, 0, arg, 0, 0));
+//			newPosition.transform(World.Current.getRootFrame(), Transformation.ofDeg(0, 0, 0, arg, 0, 0));
+			newPosition.setAlphaRad( newPosition.getAlphaRad() + Math.toRadians(arg) );
 		} else if ( command[1].matches("b") ) {
-			newPosition.transform(World.Current.getRootFrame(), Transformation.ofDeg(0, 0, 0, 0, arg, 0));
+//			newPosition.transform(World.Current.getRootFrame(), Transformation.ofDeg(0, 0, 0, 0, arg, 0));
+			newPosition.setBetaRad( newPosition.getBetaRad() + Math.toRadians(arg) );
 		} else if ( command[1].matches("c") ) {
-			newPosition.transform(World.Current.getRootFrame(), Transformation.ofDeg(0, 0, 0, 0, 0, arg));
+//			newPosition.transform(World.Current.getRootFrame(), Transformation.ofDeg(0, 0, 0, 0, 0, arg));
+			newPosition.setGammaRad( newPosition.getGammaRad() + Math.toRadians(arg) );
 		} else {
 			getLogger().error("Illegal command!!");
 			showCommands();
