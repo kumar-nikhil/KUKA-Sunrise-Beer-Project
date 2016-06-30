@@ -251,6 +251,10 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 					} else if ( modeFlag == mode.manual ) {
 						getLogger().error("mode is already set to [ manual ]");
 					}
+				} else {
+					getLogger().error("Illegal command!!");
+					showCommands();
+					return false;
 				}
 				getLogger().info("mode is set to : [ " + arg + " ]");
 			} else {
