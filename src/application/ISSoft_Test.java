@@ -146,6 +146,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		} else {
 			getLogger().error("Wrong command!! [ " + received + " ]");
 			getLogger().error("Robot is in TBD mode, only [set/get] command is available");
+			server.send("Wrong command [ " + received + " ]");
 			return false;
 		}
 		
@@ -170,6 +171,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			
 		} else {
 			getLogger().error("Wrong command!! [ " + received + " ]");
+			server.send("Wrong command!! [ " + received + " ]");
 			showCommands();
 			ret =  false;
 		}
@@ -201,6 +203,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			getLogger().info( String.format("get mode : [ " + modeFlag.toString() + " ]") );
 		} else {
 			getLogger().error("Wrong command!! [ " + received + " ]");
+			server.send("Wrong command!! [ " + received + " ]");
 			showCommands();
 			return false;
 		}
@@ -249,12 +252,14 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 					}
 				} else {
 					getLogger().error("Wrong command!! [ " + received + " ]");
+					server.send("Wrong command!! [ " + received + " ]");
 					showCommands();
 					return false;
 				}
 				getLogger().info("mode is set to : [ " + arg + " ]");
 			} else {
 				getLogger().error("Wrong command!! [ " + received + " ]");
+				server.send("Wrong command!! [ " + received + " ]");
 				showCommands();
 				return false;
 			}
@@ -301,6 +306,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			getLogger().info("selected point : [" + base.getChild(String.format("P%d", argI)).getName() + "]");
 		} else {
 			getLogger().error("Wrong command!! [ " + received + " ]");
+			server.send("Wrong command!! [ " + received + " ]");
 			showCommands();
 			return false;
 		}
@@ -345,6 +351,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			newPosition.setGammaRad( newPosition.getGammaRad() + Math.toRadians(arg) );
 		} else {
 			getLogger().error("Wrong command!! [ " + received + " ]");
+			server.send("Wrong command!! [ " + received + " ]");
 			showCommands();
 			return false;
 		}
