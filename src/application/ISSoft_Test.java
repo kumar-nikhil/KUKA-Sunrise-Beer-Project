@@ -126,7 +126,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 
 		tcp.move(ptp(home).setJointVelocityRel(jointVel));
 		
-		server.endComm();
+//		server.endComm();
 		
 		getLogger().info("Ending the application");
 		
@@ -369,4 +369,10 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		getLogger().info("get status/position/mode");
 	}
 
+	
+	@Override
+	public void dispose() {
+		server.endComm();
+	}
+	
 }
