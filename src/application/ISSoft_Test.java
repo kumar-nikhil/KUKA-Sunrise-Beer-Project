@@ -256,7 +256,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 				return false;
 			}
 		} catch (Exception e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 			ret = false;
 		}
 		
@@ -303,14 +303,12 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		}
 		
 		// motion
-		IMotionContainer mc = null;
 		try {
 			getLogger().info("moving to frame : [ " + newPosition.toStringInWorld() + " ]");
-			mc = tcp.move(ptp(newPosition).setJointVelocityRel(jointVel));
+			tcp.move(ptp(newPosition).setJointVelocityRel(jointVel));
 		} catch (Exception e) {
-//			e.printStackTrace();
-		} finally {			
-			ret = !mc.hasError();
+			e.printStackTrace();
+			ret = false;
 		}
 		
 		return ret;
@@ -349,14 +347,12 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		}
 
 		// motion
-		IMotionContainer mc = null;
 		try {
 			getLogger().info("moving to frame : [ " + newPosition.toStringInWorld() + " ]");
-			mc = tcp.move(ptp(newPosition).setJointVelocityRel(jointVel));
+			tcp.move(ptp(newPosition).setJointVelocityRel(jointVel));
 		} catch (Exception e) {
-//			e.printStackTrace();
-		} finally {			
-			ret = !mc.hasError();
+			e.printStackTrace();
+			ret = false;
 		}
 
 		return ret;

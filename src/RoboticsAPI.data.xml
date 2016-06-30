@@ -67,8 +67,9 @@
             <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="3.022638461648432" cogY="3.9051431670134185" cogZ="97.51244307325913" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="1.0133814911558707"/>
         </toolTemplate>
     </objectTemplates>
+    
     <processDataContainer>
-        <processData comment="cartesian velocity of lin motion" dataType="java.lang.Double" defaultValue="200.0" displayName="Linear Velocity" id="linVel" max="1000.0" min="0.01" unit="mm/s" value="200.0"/>
-        <processData comment="joint velocity of ptp motion" dataType="java.lang.Double" defaultValue="0.2" displayName="Joint Velocity" id="jointVel" max="1.0" min="0.01" unit="%" value="0.2"/>
+   	  <processData displayName="Linear Velocity" dataType="java.lang.Double" defaultValue="200.0" id="linVel" min="0.01" max="1000.0" value="200.0" unit="mm/s" comment="cartesian velocity of lin motion"/>
+   	  <processData displayName="Joint Velocity" dataType="java.lang.Double" defaultValue="0.2" id="jointVel" min="0.01" max="1.0" value="0.2" unit="%" comment="joint velocity of ptp motion"/>
     </processDataContainer>
 </RoboticsAPIData>
