@@ -372,7 +372,10 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	
 	@Override
 	public void dispose() {
-		server.endComm();
+		if ( server.checkComm() ) {
+			server.endComm();			
+		}
+		super.dispose();
 	}
 	
 }
