@@ -278,7 +278,16 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 
 	private boolean commandMove(String[] command) {
 		boolean ret = true;
-		double arg = Double.parseDouble( command[2] );
+		double arg;
+		try {
+			arg = Double.parseDouble( command[2] );
+		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
+			getLogger().error("Wrong command!! [ " + received + " ]");
+			server.send("Wrong command!! [ " + received + " ]");
+			showCommands();
+			return false;
+		}
 
 		// set Frame
 		Frame currentPosition = lbr.getCurrentCartesianPosition(tcp, World.Current.getRootFrame());
@@ -330,7 +339,16 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	
 	private boolean commandMoverel(String[] command) {
 		boolean ret = true;
-		double arg = Double.parseDouble( command[2] );
+		double arg;
+		try {
+			arg = Double.parseDouble( command[2] );
+		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
+			getLogger().error("Wrong command!! [ " + received + " ]");
+			server.send("Wrong command!! [ " + received + " ]");
+			showCommands();
+			return false;
+		}
 
 		// set Frame
 		Frame currentPosition = lbr.getCurrentCartesianPosition(tcp, World.Current.getRootFrame());
