@@ -268,7 +268,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	}
 
 	private boolean commandMove(String[] command) {
-		boolean ret = false;
+		boolean ret = true;
 		double arg = Double.parseDouble( command[2] );
 
 		// set Frame
@@ -319,7 +319,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	}
 	
 	private boolean commandMoverel(String[] command) {
-		boolean ret = false;
+		boolean ret = true;
 		double arg = Double.parseDouble( command[2] );
 
 		// set Frame
