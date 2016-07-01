@@ -417,7 +417,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		try {
 			server.endComm();
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		super.dispose();
 	}
