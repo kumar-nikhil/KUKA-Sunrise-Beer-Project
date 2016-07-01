@@ -50,13 +50,9 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	// Tool
 	private Tool				tool;
 	private ObjectFrame			tcp;
-	// flag
-	private boolean				loopFlag;
 	// Frames
 	private JointPosition		home;
 	private ObjectFrame			base;
-	// CycleTimer
-	private CycleTimer			workTimer;
 	private TCPServer			server;
 	// Process Data
 	private double				linVel;
@@ -77,14 +73,11 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		tcp = tool.getFrame("TCP");
 		tool.attachTo(lbr.getFlange());
 		
-		loopFlag = true;
 		modeFlag = mode.manual;
 		// frames
 		initFrames();
 		// process data
 		processData();
-		// CT
-		workTimer = new CycleTimer("WorkTimer", getLogger());
 		// TCP Server
 		server = new TCPServer(getLogger());
 		
@@ -95,6 +88,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		getApplicationData().getProcessData("linVel").setDefaultValue(linVel);
 		jointVel = getApplicationData().getProcessData("jointVel").getValue();
 		getApplicationData().getProcessData("jointVel").setDefaultValue(jointVel);
+		getLogger().info(String.format("Process Data is set to : [linVel = %.03f] / [jointVel = %.03f]", linVel, jointVel));
 	}
 
 	private void initFrames() {
@@ -393,6 +387,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	}
 	
 	public void showCommands() {
+		getLogger().info("¦£---------Command list---------¦¤");
 		getLogger().info("moverel x/y/z/a/b/c 0.0");
 		getLogger().info("move x/y/z/a/b/c 0.0");
 		getLogger().info("move p 0.0 0.0 0.0 0.0 0.0 0.0");
@@ -401,6 +396,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		getLogger().info("set point 0");
 		getLogger().info("set mode tbd/manual");
 		getLogger().info("get status/position/mode");
+		getLogger().info("¦¦------------------------------¦¥");
 	}
 	
 	private String frameToString(Frame frame) {
