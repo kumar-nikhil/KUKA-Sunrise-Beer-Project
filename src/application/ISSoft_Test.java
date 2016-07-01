@@ -111,7 +111,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		server.startComm();
 		
 //		server.send("Ready");
-		while (loopFlag) {
+		while ( server.checkComm() ) {
 			try {
 				received = server.receiveWait();
 				if ( modeFlag == mode.tbd ) {
