@@ -206,8 +206,8 @@ public class TCPServer {
 	public void endComm() {
         try {
         	logger.info("Ending TCP communication");
+        	server_socket.close();
 			socket.close();
-			server_socket.close();
 			end_flag = true;
 			try {
 				rT.interrupt();
