@@ -120,7 +120,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 					commandInterpreter(received);				
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 				break;
 			}	// end of try-catch
 			
