@@ -387,16 +387,16 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	}
 	
 	public void showCommands() {
-		getLogger().info("¦£-----------Command list-----------¦¤");
-		getLogger().info("| moverel x/y/z/a/b/c 0.0 /t|");
-		getLogger().info("| move x/y/z/a/b/c 0.0 /t|");
-		getLogger().info("| move p 0.0 0.0 0.0 0.0 0.0 0.0 /t|");
-		getLogger().info("| move point 0 /t|");
-		getLogger().info("| set speed 0.0 /t|");
+		getLogger().info("¦£-----------Command list-------------¦¤");
+		getLogger().info("| moverel x/y/z/a/b/c 0.0 \t|");
+		getLogger().info("| move x/y/z/a/b/c 0.0 \t|");
+		getLogger().info("| move p 0.0 0.0 0.0 0.0 0.0 0.0 \t|");
+		getLogger().info("| move point 0 \t|");
+		getLogger().info("| set speed 0.0 \t|");
 		getLogger().info("| set point 0 /t|");
-		getLogger().info("| set mode tbd/manual /t|");
-		getLogger().info("| get status/position/mode /t|");
-		getLogger().info("¦¦----------------------------------¦¥");
+		getLogger().info("| set mode tbd/manual \t|");
+		getLogger().info("| get status/position/mode \t|");
+		getLogger().info("¦¦--------------------------------------¦¥");
 	}
 	
 	private String frameToString(Frame frame) {
