@@ -396,7 +396,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		getLogger().info("| set point 0 \t\t\t|");
 		getLogger().info("| set mode tbd/manual \t\t|");
 		getLogger().info("| get status/position/mode \t|");
-		getLogger().info("¦¦------------------------------------------¦¥");
+		getLogger().info("¦¦-------------------------------------------¦¥");
 	}
 	
 	private String frameToString(Frame frame) {
