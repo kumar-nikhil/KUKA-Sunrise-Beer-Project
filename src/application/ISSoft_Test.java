@@ -104,11 +104,12 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 
 	@Override
 	public void run() throws Exception {
-		server.startComm();
 
 		getLogger().info("Starting the application");
 		tcp.move(ptp(home).setJointVelocityRel(jointVel));
 
+		server.startComm();
+		
 //		server.send("Ready");
 		while (loopFlag) {
 			try {
