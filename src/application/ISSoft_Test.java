@@ -55,7 +55,8 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	private Tool				tool;
 	private ObjectFrame			tcp;
 	// Frames
-	private JointPosition		home;
+//	private JointPosition		home;
+	private ObjectFrame			home;
 	private ObjectFrame			base;
 	private TCPServer			server;
 	// Process Data
@@ -99,7 +100,8 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	}
 
 	private void initFrames() {
-		home = new JointPosition(0, Math.toRadians(30), 0, -Math.toRadians(60), 0, Math.toRadians(90), 0);
+//		home = new JointPosition(0, Math.toRadians(30), 0, -Math.toRadians(60), 0, Math.toRadians(90), 0);
+		home = getApplicationData().getFrame("/Home");
 		base = getApplicationData().getFrame("/Base");
 	}
 
