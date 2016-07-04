@@ -101,7 +101,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	}
 
 	@Override
-	public void run() throws Exception {
+	public void run() {
 
 		getLogger().info("Starting the application");
 		tcp.move(ptp(home).setJointVelocityRel(jointVel));
@@ -280,7 +280,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		double arg;
 		try {
 			arg = Double.parseDouble( command[2] );
-		} catch (NumberFormatException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 			getLogger().error("Wrong command!! [ " + received + " ]");
 			server.send("Wrong command!! [ " + received + " ]");
@@ -341,7 +341,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		double arg;
 		try {
 			arg = Double.parseDouble( command[2] );
-		} catch (NumberFormatException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 			getLogger().error("Wrong command!! [ " + received + " ]");
 			server.send("Wrong command!! [ " + received + " ]");
