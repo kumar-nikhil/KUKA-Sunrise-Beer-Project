@@ -311,8 +311,17 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			newPosition.setGammaRad( Math.toRadians(arg) );
 		} else if ( command[1].matches("p") ) {
 			Double[] args = new Double[6];
-			for ( int i=0; i<6; i++ ) {
-				args[i] = Double.parseDouble( command[i+2] );
+			
+			try {
+				for ( int i=0; i<6; i++ ) {
+					args[i] = Double.parseDouble( command[i+2] );
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+				getLogger().error("Wrong command!! [ " + received + " ]");
+				server.send("Wrong command!! [ " + received + " ]");
+				showCommands();
+				return retType.wrong;
 			}
 			
 			newPosition = new Frame(World.Current.getRootFrame(),
