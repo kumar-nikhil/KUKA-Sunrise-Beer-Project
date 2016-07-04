@@ -65,6 +65,8 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	private IMotionContainer	tbd;
 	private mode				modeFlag;
 	private enum mode 			{ tbd, manual };
+	// return type
+	private enum retType		{ ok, fail, wrong };
 	// TCP command
 	private String				received;
 	
@@ -138,8 +140,8 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	// command Interpreter
 	//
 	
-	private boolean commandInterpreterOnTbdMode(String message) {
-		boolean ret = true;
+	private retType commandInterpreterOnTbdMode(String message) {
+		retType ret = retType.ok;
 		String[] command = message.split(" ");
 
 		if ( command[0].matches("set") ) {
@@ -151,14 +153,14 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			getLogger().error("Wrong command!! [ " + received + " ]");
 			getLogger().error("Robot is in TBD mode, only [set/get] command is available");
 			server.send("Wrong command [ " + received + " ]");
-			return false;
+			return retType.wrong;
 		}
 		
 		return ret;
 	}
 
-	public boolean commandInterpreter(String message) {
-		boolean ret = false;
+	public retType commandInterpreter(String message) {
+		retType ret = retType.fail;
 		String[] command = message.split(" ");
 		
 		if ( command[0].matches("moverel") ) {
@@ -177,20 +179,23 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			getLogger().error("Wrong command!! [ " + received + " ]");
 			server.send("Wrong command!! [ " + received + " ]");
 			showCommands();
-			ret =  false;
+			ret =  retType.wrong;
 		}
 		
 		return ret;
 	}
 	
 
-	private void respondCommand_ok_fail(boolean ret, String[] command) {
-		String ok_fail = ret ? "ok" : "fail"; 
-		server.send(command[0] + " " + command[1] + " " + ok_fail);
+	private void respondCommand_ok_fail(retType ret, String[] command) {
+		if ( ret == retType.ok ) {
+			server.send(command[0] + " " + command[1] + " " + "ok");
+		} else if ( ret == retType.fail ) {
+			server.send(command[0] + " " + command[1] + " " + "fail");
+		}
 	}
 	
-	private boolean commandGet_respond(String[] command) {
-		boolean ret = true;
+	private retType commandGet_respond(String[] command) {
+		retType ret = retType.ok;
 		
 		if ( command[1].matches("status") ) {
 			if ( lbr.isReadyToMove() && modeFlag == mode.manual ) {
@@ -209,7 +214,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			getLogger().error("Wrong command!! [ " + received + " ]");
 			server.send("Wrong command!! [ " + received + " ]");
 			showCommands();
-			return false;
+			return retType.wrong;
 		}
 		
 		return ret;
@@ -217,8 +222,8 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 
 	
 	
-	private boolean commandSet(String[] command) {
-		boolean ret = true;
+	private retType commandSet(String[] command) {
+		retType ret = retType.ok;
 		
 		try {
 			if ( command[1].matches("speed") ) {
@@ -258,25 +263,25 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 					getLogger().error("Wrong command!! [ " + received + " ]");
 					server.send("Wrong command!! [ " + received + " ]");
 					showCommands();
-					return false;
+					return retType.wrong;
 				}
 				getLogger().info("mode is set to : [ " + arg + " ]");
 			} else {
 				getLogger().error("Wrong command!! [ " + received + " ]");
 				server.send("Wrong command!! [ " + received + " ]");
 				showCommands();
-				return false;
+				return retType.wrong;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			ret = false;
+			ret = retType.fail;
 		}
 		
 		return ret;
 	}
 
-	private boolean commandMove(String[] command) {
-		boolean ret = true;
+	private retType commandMove(String[] command) {
+		retType ret = retType.ok;
 		double arg;
 		try {
 			arg = Double.parseDouble( command[2] );
@@ -285,7 +290,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			getLogger().error("Wrong command!! [ " + received + " ]");
 			server.send("Wrong command!! [ " + received + " ]");
 			showCommands();
-			return false;
+			return retType.wrong;
 		}
 
 		// set Frame
@@ -321,7 +326,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			getLogger().error("Wrong command!! [ " + received + " ]");
 			server.send("Wrong command!! [ " + received + " ]");
 			showCommands();
-			return false;
+			return retType.wrong;
 		}
 		
 		// motion
@@ -330,14 +335,14 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			tcp.move(ptp(newPosition).setJointVelocityRel(jointVel));
 		} catch (Exception e) {
 			e.printStackTrace();
-			ret = false;
+			ret = retType.fail;
 		}
 		
 		return ret;
 	}
 	
-	private boolean commandMoverel(String[] command) {
-		boolean ret = true;
+	private retType commandMoverel(String[] command) {
+		retType ret = retType.ok;
 		double arg;
 		try {
 			arg = Double.parseDouble( command[2] );
@@ -346,7 +351,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			getLogger().error("Wrong command!! [ " + received + " ]");
 			server.send("Wrong command!! [ " + received + " ]");
 			showCommands();
-			return false;
+			return retType.wrong;
 		}
 
 		// set Frame
@@ -382,7 +387,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			getLogger().error("Wrong command!! [ " + received + " ]");
 			server.send("Wrong command!! [ " + received + " ]");
 			showCommands();
-			return false;
+			return retType.wrong;
 		}
 
 		// motion
@@ -392,7 +397,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 			tcp.move(motion);
 		} catch (Exception e) {
 			e.printStackTrace();
-			ret = false;
+			ret = retType.fail;
 		}
 
 		return ret;
