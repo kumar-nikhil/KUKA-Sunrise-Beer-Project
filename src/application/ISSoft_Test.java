@@ -69,6 +69,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	private enum retType		{ ok, fail, wrong };
 	// TCP command
 	private String				received;
+	private static String		delimiter = " ";
 	
 
 	@Override
@@ -142,7 +143,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 	
 	private retType commandInterpreterOnTbdMode(String message) {
 		retType ret = retType.ok;
-		String[] command = message.split(" ");
+		String[] command = message.split(delimiter);
 
 		if ( command[0].matches("set") ) {
 			ret = commandSet(command);
@@ -161,7 +162,7 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 
 	public retType commandInterpreter(String message) {
 		retType ret = retType.fail;
-		String[] command = message.split(" ");
+		String[] command = message.split(delimiter);
 		
 		if ( command[0].matches("moverel") ) {
 			ret = commandMoverel(command);
