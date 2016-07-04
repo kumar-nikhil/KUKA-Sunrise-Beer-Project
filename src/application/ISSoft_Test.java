@@ -1,8 +1,7 @@
 package application;
 
 
-import static com.kuka.roboticsAPI.motionModel.BasicMotions.positionHold;
-import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,7 +20,11 @@ import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.geometricModel.math.Transformation;
+import com.kuka.roboticsAPI.motionModel.IMotion;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
+import com.kuka.roboticsAPI.motionModel.LIN;
+import com.kuka.roboticsAPI.motionModel.Motion;
+import com.kuka.roboticsAPI.motionModel.RelativeLIN;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.task.RoboticsAPITask;
 
@@ -349,24 +352,31 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		// set Frame
 		Frame currentPosition = lbr.getCurrentCartesianPosition(tcp, World.Current.getRootFrame());
 		Frame newPosition = currentPosition.copyWithRedundancy();
+		Motion<RelativeLIN> motion;
 
 		if ( command[1].matches("x") ) {
-			newPosition.transform(base, Transformation.ofDeg(arg, 0, 0, 0, 0, 0));
+			motion = linRel(arg, 0, 0, 0, 0, 0, base).setJointVelocityRel(jointVel);
+//			newPosition.transform(base, Transformation.ofDeg(arg, 0, 0, 0, 0, 0));
 //			newPosition.setX(newPosition.getX()+arg);
 		} else if ( command[1].matches("y") ) {
-			newPosition.transform(base, Transformation.ofDeg(0, arg, 0, 0, 0, 0));
+			motion = linRel(0, arg, 0, 0, 0, 0, base).setJointVelocityRel(jointVel);
+//			newPosition.transform(base, Transformation.ofDeg(0, arg, 0, 0, 0, 0));
 //			newPosition.setY(newPosition.getY()+arg);
 		} else if ( command[1].matches("z") ) {
-			newPosition.transform(base, Transformation.ofDeg(0, 0, arg, 0, 0, 0));
+			motion = linRel(0, 0, arg, 0, 0, 0, base).setJointVelocityRel(jointVel);
+//			newPosition.transform(base, Transformation.ofDeg(0, 0, arg, 0, 0, 0));
 //			newPosition.setZ(newPosition.getZ()+arg);
 		} else if ( command[1].matches("a") ) {
-			newPosition.transform(base, Transformation.ofDeg(0, 0, 0, arg, 0, 0));
+			motion = linRel(0, 0, 0, Math.toRadians(arg), 0, 0, base).setJointVelocityRel(jointVel);
+//			newPosition.transform(base, Transformation.ofDeg(0, 0, 0, arg, 0, 0));
 //			newPosition.setAlphaRad( newPosition.getAlphaRad() + Math.toRadians(arg) );
 		} else if ( command[1].matches("b") ) {
-			newPosition.transform(base, Transformation.ofDeg(0, 0, 0, 0, arg, 0));
+			motion = linRel(0, 0, 0, 0, Math.toRadians(arg), 0, base).setJointVelocityRel(jointVel);
+//			newPosition.transform(base, Transformation.ofDeg(0, 0, 0, 0, arg, 0));
 //			newPosition.setBetaRad( newPosition.getBetaRad() + Math.toRadians(arg) );
 		} else if ( command[1].matches("c") ) {
-			newPosition.transform(base, Transformation.ofDeg(0, 0, 0, 0, 0, arg));
+			motion = linRel(0, 0, 0, 0, 0, Math.toRadians(arg), base).setJointVelocityRel(jointVel);
+//			newPosition.transform(base, Transformation.ofDeg(0, 0, 0, 0, 0, arg));
 //			newPosition.setGammaRad( newPosition.getGammaRad() + Math.toRadians(arg) );
 		} else {
 			getLogger().error("Wrong command!! [ " + received + " ]");
@@ -378,7 +388,8 @@ public class ISSoft_Test extends RoboticsAPIApplication {
 		// motion
 		try {
 			getLogger().info("moving to frame : [ " + frameToString(newPosition) + " ]");
-			tcp.move(ptp(newPosition).setJointVelocityRel(jointVel));
+//			tcp.move(ptp(newPosition).setJointVelocityRel(jointVel));
+			tcp.move(motion);
 		} catch (Exception e) {
 			e.printStackTrace();
 			ret = false;
