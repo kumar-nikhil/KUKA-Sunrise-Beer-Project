@@ -45,7 +45,7 @@
             </TopologyItem>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="ApplGateAgent" installItem="true" installedVersion="NONE" itemPath="com.kuka/ApplGateAgent" selectedVersion="NONE" usage="Library"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="ApplicationHost" installItem="true" installedVersion="1.0.0" itemPath="com.kuka/ApplicationHost" selectedVersion="1.0.0" usage="Library"/>
-            <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="KUKA Sunrise.BackupRestore" installItem="false" installedVersion="NONE" itemPath="com.kuka/BackupManager" selectedVersion="NONE" usage="Feature"/>
+            <SoftwareItem autoSelected="false" canChangeSelection="true" displayName="KUKA Sunrise.BackupRestore" installItem="false" installedVersion="NONE" itemPath="com.kuka/BackupManager" selectedVersion="NONE" usage="Feature"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="BackupRestore" installItem="true" installedVersion="NONE" itemPath="com.kuka/BackupManagerProperties" selectedVersion="NONE" usage="Library"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="BackupRestore GUI for smartHMI" installItem="true" installedVersion="NONE" itemPath="com.kuka/BackupManagerSmartHMIView" selectedVersion="NONE" usage="Library"/>
             <SoftwareItem autoSelected="true" canChangeSelection="true" displayName="Cabinet" installItem="true" installedVersion="1" itemPath="com.kuka/Cabinet" selectedVersion="1" usage="Library"/>
