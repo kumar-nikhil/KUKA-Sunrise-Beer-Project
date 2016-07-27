@@ -2,9 +2,6 @@
 <RoboticsAPIData version="3">
     <world>
         <gravitation x="0.0" y="0.0" z="9.81"/>
-        <additionalInformation>
-            <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="true"/>
-        </additionalInformation>
         <frame name="partBase">
             <transformation a="3.1275823993997354" b="-0.008395435003427808" c="-3.1144414258230917" x="644.8712600167712" y="228.2438001455435" z="15.975090836613418"/>
             <additionalInformation>
