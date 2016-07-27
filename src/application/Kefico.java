@@ -290,6 +290,8 @@ public class Kefico extends RoboticsAPIApplication {
 					lin(pick_aprAsy),
 					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Electric/P1")),
 					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Electric/P2")),
+					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Electric/P3")),
+					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Electric/P4")),
 					spl(place_aprAsy)
 					.setJointVelocityRel(1.0)/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 		} else {
@@ -297,6 +299,8 @@ public class Kefico extends RoboticsAPIApplication {
 					lin(pick_aprAsy),
 					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Oil/P1")),
 					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Oil/P2")),
+					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Oil/P3")),
+					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Oil/P4")),
 					spl(place_aprAsy)
 					.setJointVelocityRel(1.0)/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 		}

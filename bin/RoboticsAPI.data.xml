@@ -339,6 +339,18 @@
                         </redundancy>
                     </redundancyData>
                 </frame>
+                <frame name="P3">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469604929849"/>
+                    </additionalInformation>
+                </frame>
+                <frame name="P4">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469604931316"/>
+                    </additionalInformation>
+                </frame>
             </frame>
             <frame name="moveJigToInsert_Electric">
                 <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
@@ -358,6 +370,18 @@
                     <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
                     <additionalInformation>
                         <info key="LastModificationTime" type="java.lang.Long" value="1469603893947"/>
+                    </additionalInformation>
+                </frame>
+                <frame name="P3">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469604933090"/>
+                    </additionalInformation>
+                </frame>
+                <frame name="P4">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469604934694"/>
                     </additionalInformation>
                 </frame>
             </frame>
