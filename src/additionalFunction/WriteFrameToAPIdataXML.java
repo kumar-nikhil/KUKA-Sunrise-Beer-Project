@@ -12,6 +12,7 @@ import com.kuka.task.ITaskLogger;
 
 /**
  * @author Seulki-Kim , 2015. 8. 7. , KUKA Robotics Korea<p>
+ * @modified Seulki-Kim , Jul 8, 2016 , KUKA Robotics Korea<p>
  * WriteFraToAPIdataXML class
  */
 public class WriteFrameToAPIdataXML {
