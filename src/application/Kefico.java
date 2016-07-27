@@ -160,14 +160,14 @@ public class Kefico extends RoboticsAPIApplication {
 				getLogger().info("Starting Insertion");
 				workInsert(Con.Oil_Big);
 				workInsert(Con.Oil_Small);
-				workInsert(Con.Electric);
+//				workInsert(Con.Electric);
 				
 				tcp.move(ptp(home).setJointVelocityRel(1.0));
 				// Eject
-				getLogger().info("Starting Ejection");
-				workEject(Con.Oil_Big);
-				workEject(Con.Oil_Small);
-				workEject(Con.Electric);
+//				getLogger().info("Starting Ejection");
+//				workEject(Con.Oil_Big);
+//				workEject(Con.Oil_Small);
+//				workEject(Con.Electric);
 				break;
 			case 1: // END
 				getLogger().info("Ending the application");
