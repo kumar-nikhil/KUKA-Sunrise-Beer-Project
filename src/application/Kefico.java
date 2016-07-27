@@ -285,24 +285,37 @@ public class Kefico extends RoboticsAPIApplication {
 
 	private void moveJig_To_Insert(Con type) {
 		Spline spl = null;
-		if ( type == Con.Electric ) {
+		switch (type) {
+		case Electric:
 			spl = new Spline(
 					lin(pick_aprAsy),
-					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Electric/P1")),
-					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Electric/P2")),
-					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Electric/P3")),
-					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Electric/P4")),
+					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P1")),
+					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P2")),
+					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P3")),
+					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P4")),
 					spl(place_aprAsy)
 					.setJointVelocityRel(1.0)/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
-		} else {
+			break;
+		case Oil_Big:
 			spl = new Spline(
 					lin(pick_aprAsy),
-					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Oil/P1")),
-					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Oil/P2")),
-					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Oil/P3")),
-					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Oil/P4")),
+					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Big/P1")),
+					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Big/P2")),
+					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Big/P3")),
+					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Big/P4")),
 					spl(place_aprAsy)
 					.setJointVelocityRel(1.0)/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
+			break;
+		case Oil_Small:
+			spl = new Spline(
+					lin(pick_aprAsy),
+					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Small/P1")),
+					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Small/P2")),
+					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Small/P3")),
+					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Small/P4")),
+					spl(place_aprAsy)
+					.setJointVelocityRel(1.0)/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
+			break;
 		}
 		tcp.moveAsync(lin(pick_aprAsy).setJointVelocityRel(1.0).setBlendingRel(1.0));
 		tcp.move(ptp(place_aprAsy).setJointVelocityRel(1.0));
