@@ -14,10 +14,13 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.conditionModel.ICallbackAction;
+import com.kuka.roboticsAPI.conditionModel.ICondition;
 import com.kuka.roboticsAPI.conditionModel.ITriggerAction;
+import com.kuka.roboticsAPI.conditionModel.JointTorqueCondition;
 import com.kuka.roboticsAPI.conditionModel.MotionPathCondition;
 import com.kuka.roboticsAPI.conditionModel.ReferenceType;
 import com.kuka.roboticsAPI.controllerModel.Controller;
+import com.kuka.roboticsAPI.deviceModel.JointEnum;
 import com.kuka.roboticsAPI.deviceModel.JointPosition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.executionModel.IFiredTriggerInfo;
@@ -389,14 +392,16 @@ public class Kefico extends RoboticsAPIApplication {
 		getLogger().info("Starting insertion with CICM");
 		
 		// Condition & CICM
-		ForceCondition fC = null;
+		ICondition fC = null;
 		CartesianSineImpedanceControlMode insertCSICM = new CartesianSineImpedanceControlMode();
 		if ( type == Con.Electric ) {
-			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 10.0);
+//			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 10.0);
+			double tq1 = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
+			fC = new JointTorqueCondition(JointEnum.J1, tq1-4.0, tq1+4.0);
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
 			insertCSICM.parametrize(CartDOF.ROT).setStiffness(200).setDamping(0.3);
-			insertCSICM.parametrize(CartDOF.X).setStiffness(500).setAmplitude(3.0).setFrequency(3);
-			insertCSICM.parametrize(CartDOF.Z).setStiffness(500).setAmplitude(3.0).setFrequency(3);
+			insertCSICM.parametrize(CartDOF.X).setStiffness(500).setAmplitude(1.0).setFrequency(3);
+			insertCSICM.parametrize(CartDOF.Z).setStiffness(500).setAmplitude(1.0).setFrequency(3);
 		} else {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
