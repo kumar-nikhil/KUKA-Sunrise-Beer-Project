@@ -5,10 +5,10 @@
         <additionalInformation>
             <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="true"/>
         </additionalInformation>
-        <frame name="partBase">
+        <frame name="jigBase">
             <transformation a="3.1275823993997354" b="-0.008395435003427808" c="-3.1144414258230917" x="644.8712600167712" y="228.2438001455435" z="15.975090836613418"/>
             <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1467850284689"/>
+                <info key="LastModificationTime" type="java.lang.Long" value="1469587954205"/>
                 <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="true"/>
                 <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                     <tcpTransformation a="-0.3926990816987242" b="0.0" c="0.0" x="0.0" y="0.0" z="170.0"/>
@@ -21,23 +21,186 @@
                     <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="0.007919535328014765" valueType="java.lang.Double"/>
                 </redundancy>
             </redundancyData>
-        </frame>
-        <frame name="productBase">
-            <transformation a="-2.573850552947323" b="0.16759386757528144" c="-3.0011940500307284" x="620.5787119941662" y="438.6537981303366" z="152.58160010478875"/>
-            <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1467850423285"/>
-                <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="true"/>
-                <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
-                    <tcpTransformation a="-0.3926990816987242" b="0.0" c="0.0" x="0.0" y="0.0" z="170.0"/>
-                </info>
-            </additionalInformation>
-            <redundancyData>
-                <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
-                    <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
-                    <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="24" valueType="java.lang.Integer"/>
-                    <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="0.008101336022385658" valueType="java.lang.Double"/>
-                </redundancy>
-            </redundancyData>
+            <frame name="jigCon_Oil_Big">
+                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1469593452528"/>
+                </additionalInformation>
+                <redundancyData>
+                    <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                </redundancyData>
+                <frame name="aprAsy">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469594380903"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
+                <frame name="aprGrip">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469594385840"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
+            </frame>
+            <frame name="jigCon_Oil_Small">
+                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1469593458640"/>
+                </additionalInformation>
+                <redundancyData>
+                    <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                </redundancyData>
+                <frame name="aprAsy">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469594383106"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
+                <frame name="aprGrip">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469594387437"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
+            </frame>
+            <frame name="jigCon_Electric">
+                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1469593468176"/>
+                </additionalInformation>
+                <redundancyData>
+                    <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                </redundancyData>
+                <frame name="aprGrip">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469594367764"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
+                <frame name="aprAsy">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469594372732"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
+            </frame>
+            <frame name="insertCon_Oil_Big">
+                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1469593493540"/>
+                </additionalInformation>
+                <redundancyData>
+                    <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                </redundancyData>
+                <frame name="aprGrip">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469594410551"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
+                <frame name="aprAsy">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469594418557"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
+            </frame>
+            <frame name="insertCon_Oil_Small">
+                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1469593498885"/>
+                </additionalInformation>
+                <redundancyData>
+                    <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                </redundancyData>
+                <frame name="aprGrip">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469594412532"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
+                <frame name="aprAsy">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469594419734"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
+            </frame>
+            <frame name="insertCon_Electric">
+                <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1469593511223"/>
+                </additionalInformation>
+                <redundancyData>
+                    <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                </redundancyData>
+                <frame name="aprGrip">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469594408148"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
+                <frame name="aprAsy">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469594416777"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
+            </frame>
+            <frame name="tempAir_AfterOil">
+                <transformation a="3.1278149487333304" b="0.008771867380494106" c="-3.1145606676630253" x="641.4535944682852" y="-236.58856086183604" z="27.79418717604282"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1469598519949"/>
+                </additionalInformation>
+                <redundancyData>
+                    <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                </redundancyData>
+            </frame>
+            <frame name="tempAir_AfterElectric">
+                <transformation a="3.1278149487333304" b="0.008771867380494106" c="-3.1145606676630253" x="641.4535944682852" y="-236.58856086183604" z="27.79418717604282"/>
+                <additionalInformation>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1469598525441"/>
+                </additionalInformation>
+                <redundancyData>
+                    <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                </redundancyData>
+            </frame>
         </frame>
     </world>
     <objectTemplates>

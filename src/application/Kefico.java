@@ -66,11 +66,23 @@ public class Kefico extends RoboticsAPIApplication {
 	private ExternalIO		exIO;
 	// flag
 	private boolean			loopFlag;
+	// switch enum
+	private enum Con		{ Electric, Oil_Big, Oil_Small };
 	// Frames
 	private JointPosition	home;
-	private ObjectFrame		partBase, productBase;
-	private Frame			partBase_Air, productBase_Air;
-	private Frame			partBase_Con, productBase_Con;
+	private ObjectFrame		tempAirAfterElectric, tempAirAfterOil;
+	private ObjectFrame		jigCon_Electric, jigCon_Oil_Big, jigCon_Oil_Small;
+	private ObjectFrame		jigCon_Electric_aprGrip, jigCon_Electric_aprAsy;
+	private ObjectFrame		jigCon_Oil_Big_aprGrip, jigCon_Oil_Big_aprAsy;
+	private ObjectFrame		jigCon_Oil_Small_aprGrip, jigCon_Oil_Small_aprAsy;
+	
+	private ObjectFrame		insertCon_Electric, insertCon_Oil_Big, insertCon_Oil_Small;
+	private ObjectFrame		insertCon_Electric_aprGrip, insertCon_Electric_aprAsy;
+	private ObjectFrame		insertCon_Oil_Big_aprGrip, insertCon_Oil_Big_aprAsy;
+	private ObjectFrame		insertCon_Oil_Small_aprGrip, insertCon_Oil_Small_aprAsy;
+
+	private Frame			pick, pick_aprGrip, pick_aprAsy;
+	private Frame			place, place_aprAsy, place_aprGrip;
 	// CycleTimer
 	private CycleTimer		totalCT, pickCT, insertCT;
 	private CycleTimer		ejectCT, placeCT;
@@ -103,17 +115,27 @@ public class Kefico extends RoboticsAPIApplication {
 
 	private void initFrames() {
 		home = new JointPosition(0, Math.toRadians(30), 0, -Math.toRadians(60), 0, Math.toRadians(90), 0);
-		partBase = getApplicationData().getFrame("/partBase");
-		partBase_Air = partBase.copyWithRedundancy();
-		partBase_Air.transform(Transformation.ofTranslation(0, 0, -100));
-		partBase_Con = partBase.copyWithRedundancy();
-		partBase_Con.transform(Transformation.ofTranslation(0, 0, -10));
+		tempAirAfterElectric = getApplicationData().getFrame("/jigBase/tempAir_AfterElectric");
+		tempAirAfterOil = getApplicationData().getFrame("/jigBase/tempAir_AfterOil");
+		jigCon_Electric = getApplicationData().getFrame("/jigBase/jigCon_Electric");
+		jigCon_Electric_aprAsy = getApplicationData().getFrame("/jigBase/jigCon_Electric/aprAsy");
+		jigCon_Electric_aprGrip = getApplicationData().getFrame("/jigBase/jigCon_Electric/aprGrip");
+		jigCon_Oil_Big = getApplicationData().getFrame("/jigBase/jigCon_Oil_Big");
+		jigCon_Oil_Big_aprAsy = getApplicationData().getFrame("/jigBase/jigCon_Oil_Big/aprAsy");
+		jigCon_Oil_Big_aprGrip = getApplicationData().getFrame("/jigBase/jigCon_Oil_Big/aprGrip");
+		jigCon_Oil_Small = getApplicationData().getFrame("/jigBase/jigCon_Oil_Small");
+		jigCon_Oil_Small_aprAsy = getApplicationData().getFrame("/jigBase/jigCon_Oil_Small/aprAsy");
+		jigCon_Oil_Small_aprGrip = getApplicationData().getFrame("/jigBase/jigCon_Oil_Small/aprGrip");
 		
-		productBase = getApplicationData().getFrame("/productBase");
-		productBase_Air = productBase.copyWithRedundancy();
-		productBase_Air.transform(Transformation.ofTranslation(0, 0, -100));
-		productBase_Con = productBase.copyWithRedundancy();
-		productBase_Con.transform(Transformation.ofTranslation(0, 0, -40));
+		insertCon_Electric = getApplicationData().getFrame("/jigBase/insertCon_Electric");
+		insertCon_Electric_aprAsy = getApplicationData().getFrame("/jigBase/insertCon_Electric/aprAsy");
+		insertCon_Electric_aprGrip = getApplicationData().getFrame("/jigBase/insertCon_Electric/aprGrip");
+		insertCon_Oil_Big = getApplicationData().getFrame("/jigBase/insertCon_Oil_Big");
+		insertCon_Oil_Big_aprAsy = getApplicationData().getFrame("/jigBase/insertCon_Oil_Big/aprAsy");
+		insertCon_Oil_Big_aprGrip = getApplicationData().getFrame("/jigBase/insertCon_Oil_Big/aprGrip");
+		insertCon_Oil_Small = getApplicationData().getFrame("/jigBase/insertCon_Oil_Small");
+		insertCon_Oil_Small_aprAsy = getApplicationData().getFrame("/jigBase/insertCon_Oil_Small/aprAsy");
+		insertCon_Oil_Small_aprGrip = getApplicationData().getFrame("/jigBase/insertCon_Oil_Small/aprGrip");
 		
 		
 	}
@@ -129,18 +151,25 @@ public class Kefico extends RoboticsAPIApplication {
 //			triAxialOscillationTest();
 
 			int key = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
-					"Select what to do", "Insert", "Eject", "END");
+					"Select what to do", "Work", "END");
 			
 			switch (key) {
-			case 0: // Insert
-				getLogger().info("Insert selected");
-				workInsert();
+			case 0:
+				getLogger().info("Work selected");
+				// Insert
+				getLogger().info("Starting Insertion");
+				workInsert(Con.Oil_Big);
+				workInsert(Con.Oil_Small);
+				workInsert(Con.Electric);
+				
+				tcp.move(ptp(home).setJointVelocityRel(1.0));
+				// Eject
+				getLogger().info("Starting Ejection");
+				workEject(Con.Oil_Big);
+				workEject(Con.Oil_Small);
+				workEject(Con.Electric);
 				break;
-			case 1:	// Eject
-				getLogger().info("Eject selected");
-				workEject();
-				break;
-			case 2: // END
+			case 1: // END
 				getLogger().info("Ending the application");
 				loopFlag = false;
 				break;
@@ -152,7 +181,7 @@ public class Kefico extends RoboticsAPIApplication {
 		getLogger().info("Ending the application");
 	}
 
-	private void workEject() {
+	private void workEject(Con type) {
 		totalCT.start();
 
 		// move in
@@ -164,9 +193,9 @@ public class Kefico extends RoboticsAPIApplication {
 			}
 		};
 		getLogger().info("Starting PickPart");
-		tcp.moveAsync(ptp(productBase_Air).setJointVelocityRel(1.0).setBlendingRel(1.0).triggerWhen(gOpenC, gOpenAction));
-		tcp.moveAsync(lin(productBase_Con).setJointVelocityRel(1.0).setBlendingRel(0.5));
-		tcp.move(lin(productBase).setCartVelocity(500));
+		tcp.moveAsync(ptp(place_aprAsy).setJointVelocityRel(1.0).setBlendingRel(1.0).triggerWhen(gOpenC, gOpenAction));
+		tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
+		tcp.move(lin(place).setCartVelocity(500));
 		// pick
 		exIO.gripperClose();
 		
@@ -182,26 +211,54 @@ public class Kefico extends RoboticsAPIApplication {
 		totalCT.end();
 	}
 
-	private void workInsert() {
+	private void workInsert(Con type) {
 		totalCT.start();
 //		exIO.gripperOpen();
 		
+		switch (type) {
+		case Electric:
+			getLogger().info("Electric connector");
+			pick = jigCon_Electric.copyWithRedundancy();
+			pick_aprAsy = jigCon_Electric_aprAsy.copyWithRedundancy();
+			pick_aprGrip = jigCon_Electric_aprGrip.copyWithRedundancy();
+			place = insertCon_Electric.copyWithRedundancy();
+			place_aprAsy = insertCon_Electric_aprAsy.copyWithRedundancy();
+			place_aprGrip = insertCon_Electric_aprGrip.copyWithRedundancy();
+			break;
+		case Oil_Big:
+			getLogger().info("Oil_Big connector");
+			pick = jigCon_Oil_Big.copyWithRedundancy();
+			pick_aprAsy = jigCon_Oil_Big_aprAsy.copyWithRedundancy();
+			pick_aprGrip = jigCon_Oil_Big_aprGrip.copyWithRedundancy();
+			place = insertCon_Oil_Big.copyWithRedundancy();
+			place_aprAsy = insertCon_Oil_Big_aprAsy.copyWithRedundancy();
+			place_aprGrip = insertCon_Oil_Big_aprGrip.copyWithRedundancy();
+			break;
+		case Oil_Small:
+			getLogger().info("Oil_Small connector");
+			pick = jigCon_Oil_Small.copyWithRedundancy();
+			pick_aprAsy = jigCon_Oil_Small_aprAsy.copyWithRedundancy();
+			pick_aprGrip = jigCon_Oil_Small_aprGrip.copyWithRedundancy();
+			place = insertCon_Oil_Small.copyWithRedundancy();
+			place_aprAsy = insertCon_Oil_Small_aprAsy.copyWithRedundancy();
+			place_aprGrip = insertCon_Oil_Small_aprGrip.copyWithRedundancy();
+			break;
+		}
+		
 		// part picking
 		pickCT.start();
-		pickPart();
+		pickPart(type);
 		pickCT.end();
 		// move out
 		getLogger().info("Moving...");
-		tcp.moveAsync(lin(partBase_Con).setJointVelocityRel(1.0).setBlendingRel(0.5));
-		tcp.moveAsync(lin(partBase_Air).setJointVelocityRel(1.0).setBlendingRel(1.0));
-		tcp.moveAsync(ptp(productBase_Air).setJointVelocityRel(1.0).setBlendingRel(1.0));
-		tcp.move(lin(productBase_Con).setJointVelocityRel(1.0));
-//		tcp.move(spline(
-//				lin(partBase_Con),
-//				lin(partBase_Air),
-//				spl(productBase_Air),
-//				lin(productBase_Con)
-//				).setJointVelocityRel(1.0) );
+		CartesianImpedanceControlMode gripCICM = new CartesianImpedanceControlMode();
+		gripCICM.parametrize(CartDOF.Y).setStiffness(1500);
+		gripCICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(800).setDamping(0.3);
+		
+		tcp.move(lin(pick_aprAsy).setCartVelocity(500).setMode(gripCICM));
+		
+		tcp.moveAsync(lin(pick_aprAsy).setJointVelocityRel(1.0).setBlendingRel(1.0));
+		tcp.move(ptp(place_aprAsy).setJointVelocityRel(1.0));
 		
 		//
 		insertCT.start();
@@ -209,46 +266,64 @@ public class Kefico extends RoboticsAPIApplication {
 		insertCT.end();
 		// move out
 		getLogger().info("Moving...");
-		tcp.moveAsync(lin(productBase_Con).setJointVelocityRel(1.0).setBlendingRel(0.5));
-		tcp.moveAsync(lin(productBase_Air).setJointVelocityRel(1.0).setBlendingRel(0.5));
+		Frame approach = pick_aprGrip;
+		approach.transform(Transformation.ofTranslation(0, 0, -40));
+		
+		if ( type == Con.Electric ) {
+			tcp.move(lin(place_aprGrip).setCartVelocity(500));
+			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
+			tcp.move(ptp(tempAirAfterElectric).setJointVelocityRel(1.0));
+		} else {
+			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
+			tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(0.5));
+		}
 		
 
 		totalCT.end();
 	}
 
-	private void pickPart() {
+	private void pickPart(Con type) {
 		// move in
-		MotionPathCondition gOpenC = new MotionPathCondition(ReferenceType.DEST, 0, -100);
+		MotionPathCondition gOpenC = new MotionPathCondition(ReferenceType.DEST, 0, -300);
 		ITriggerAction gOpenAction = new ICallbackAction() {
 			@Override
 			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
 				exIO.gripperOpen();				
 			}
 		};
+		Frame approach = pick_aprGrip;
+		approach.transform(Transformation.ofTranslation(0, 0, -40));
+		
 		getLogger().info("Starting PickPart");
-		tcp.moveAsync(ptp(partBase_Air).setJointVelocityRel(1.0).setBlendingRel(1.0).triggerWhen(gOpenC, gOpenAction));
-		tcp.moveAsync(lin(partBase_Con).setJointVelocityRel(1.0).setBlendingRel(0.5));
-		tcp.move(lin(partBase).setCartVelocity(500));
+		if ( type == Con.Electric ) {
+			tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(1.0).triggerWhen(gOpenC, gOpenAction));
+			tcp.move(lin(pick_aprGrip).setCartVelocity(500));
+			tcp.move(lin(pick).setCartVelocity(500));
+		} else {
+			tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(1.0).triggerWhen(gOpenC, gOpenAction));
+			tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
+			tcp.move(lin(pick).setCartVelocity(500));			
+		}
 		// pick
+		CartesianImpedanceControlMode gripCICM = new CartesianImpedanceControlMode();
+		gripCICM.parametrize(CartDOF.Y).setStiffness(1500);
+		gripCICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(800).setDamping(0.3);
+		tcp.moveAsync(positionHold(gripCICM, 300, TimeUnit.MILLISECONDS));
 		exIO.gripperClose();
 	}
 
 	@SuppressWarnings("deprecation")
-	private void insert() {		
-		/*
-		 * Insert motion 확인 가능한 느린 영상 촬영 (POV 30%)
-		 */
-		
+	private void insert() {
 		getLogger().info("Starting insertion with CICM");
 		
 		// Condition & CICM
-		ForceCondition fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Z, 4.0);
+		ForceCondition fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
 		CartesianImpedanceControlMode contactCICM = new CartesianImpedanceControlMode();
-		contactCICM.parametrize(CartDOF.Z).setStiffness(1500);
-		contactCICM.parametrize(CartDOF.X, CartDOF.Y).setStiffness(800).setDamping(0.3);
+		contactCICM.parametrize(CartDOF.Y).setStiffness(1500);
+		contactCICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(800).setDamping(0.3);
 		CartesianSineImpedanceControlMode insertCSICM = new CartesianSineImpedanceControlMode();
-		insertCSICM.parametrize(CartDOF.Z).setStiffness(1000);
-		insertCSICM.parametrize(CartDOF.X, CartDOF.Y).setStiffness(300).setDamping(0.3);
+		insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
+		insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(300).setDamping(0.3);
 		insertCSICM.parametrize(CartDOF.A).setStiffness(100).setAmplitude(10.0).setFrequency(1.5);
 		
 		if ( forceSend ) {
@@ -258,16 +333,16 @@ public class Kefico extends RoboticsAPIApplication {
 		}
 		// insert
 		getLogger().info("Moving until contact occurs");
-		IMotionContainer mc = tcp.move(lin(productBase).setCartVelocity(200).setMode(contactCICM).breakWhen(fC));
+		IMotionContainer mc = tcp.move(lin(place).setCartVelocity(200).setMode(contactCICM).breakWhen(fC));
 		if ( mc.hasFired(fC) ) {
 			getLogger().info("Contact made!, trying insertion");
-			insertCSICM.setAdditionalControlForce(0, 0, 25, 0, 0, 0);
-			tcp.move(lin(productBase).setCartVelocity(100).setMode(insertCSICM));
+			insertCSICM.setAdditionalControlForce(0, 25, 0, 0, 0, 0);
+			tcp.move(lin(place).setCartVelocity(100).setMode(insertCSICM));
 			insertCSICM.setAdditionalControlForceToDefaultValue();
 			// evaluate
-			if ( ! evaluate(productBase) ) {	// fail
+			if ( ! evaluate(place) ) {	// fail
 				getLogger().info("Distance or Force not in range, re-trying with 40N");
-				insertCSICM.setAdditionalControlForce(0, 0, 40, 0, 0, 0);
+				insertCSICM.setAdditionalControlForce(0, 40, 0, 0, 0, 0);
 				tcp.move(positionHold(insertCSICM, 1000, TimeUnit.MILLISECONDS));
 				insertCSICM.setAdditionalControlForceToDefaultValue();
 			}	// end of if
@@ -300,10 +375,10 @@ public class Kefico extends RoboticsAPIApplication {
 		// eject
 		getLogger().info("Starting ejection with CICM");
 //		ejectCSICM.setAdditionalControlForce(0, 0, -10, 0, 0, 0);
-		tcp.move(lin(productBase_Air).setCartVelocity(300).setMode(ejectCSICM));
+		tcp.move(lin(place_aprAsy).setCartVelocity(300).setMode(ejectCSICM));
 //		ejectCSICM.setAdditionalControlForceToDefaultValue();
 
-		tcp.moveAsync(ptp(productBase_Air).setJointVelocityRel(1.0).setBlendingRel(0.5));
+		tcp.moveAsync(ptp(place_aprAsy).setJointVelocityRel(1.0).setBlendingRel(0.5));
 		
 		getLogger().info("Ejection finished");
 		
@@ -314,19 +389,19 @@ public class Kefico extends RoboticsAPIApplication {
 
 	private void place() {
 		getLogger().info("Starting place part");
-		tcp.moveAsync(ptp(partBase_Air).setJointVelocityRel(1.0).setBlendingRel(1.0));
-		tcp.moveAsync(lin(partBase_Con).setJointVelocityRel(1.0).setBlendingRel(0.5));
-		tcp.move(lin(partBase).setCartVelocity(200));
+		tcp.moveAsync(ptp(pick_aprAsy).setJointVelocityRel(1.0).setBlendingRel(1.0));
+		tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
+		tcp.move(lin(pick).setCartVelocity(200));
 		
 		exIO.gripperOpen();
 		// move out
 		getLogger().info("Moving...");
-		tcp.moveAsync(lin(partBase_Con).setJointVelocityRel(1.0).setBlendingRel(0.5));
-		tcp.move(lin(partBase_Air).setJointVelocityRel(1.0).setBlendingRel(1.0));
+		tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
+		tcp.move(lin(pick_aprAsy).setJointVelocityRel(1.0).setBlendingRel(1.0));
 	}
 	
 	private boolean evaluate(AbstractFrame target) {
-		double dist = lbr.getCurrentCartesianPosition(tcp, productBase).getZ();
+		double dist = lbr.getCurrentCartesianPosition(tcp, place).getZ();
 		getLogger().info( String.format("Distance to the destination : %03f", dist));
 		double force = Math.abs( lbr.getExternalForceTorque(tcp).getForce().getZ() );
 		getLogger().info( String.format("Z directional Force : %03f", force));
