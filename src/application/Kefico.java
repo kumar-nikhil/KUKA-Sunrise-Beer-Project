@@ -300,19 +300,19 @@ public class Kefico extends RoboticsAPIApplication {
 			spl = new Spline(
 					lin(pick_aprAsy),
 					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P1")),
-					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Big/P2")),
-					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Big/P3")),
-					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Big/P4")),
+					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P2")),
+					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P3")),
+					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P4")),
 					spl(place_aprAsy)
 					.setJointVelocityRel(1.0)/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		case Oil_Small:
 			spl = new Spline(
 					lin(pick_aprAsy),
-					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Small/P1")),
-					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Small/P2")),
-					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Small/P3")),
-					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Small/P4")),
+					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P1")),
+					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P2")),
+					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P3")),
+					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P4")),
 					spl(place_aprAsy)
 					.setJointVelocityRel(1.0)/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
