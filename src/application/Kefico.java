@@ -264,7 +264,7 @@ public class Kefico extends RoboticsAPIApplication {
 		
 		//
 		insertCT.start();
-		insert();
+		insert(type);
 		insertCT.end();
 		// move out
 		getLogger().info("Moving...");
@@ -385,18 +385,29 @@ public class Kefico extends RoboticsAPIApplication {
 	}
 
 	@SuppressWarnings("deprecation")
-	private void insert() {
+	private void insert(Con type) {
 		getLogger().info("Starting insertion with CICM");
 		
 		// Condition & CICM
-		ForceCondition fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
+		ForceCondition fC = null;
+		CartesianSineImpedanceControlMode insertCSICM = new CartesianSineImpedanceControlMode();
+		if ( type == Con.Electric ) {
+			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 7.0);
+			insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
+			insertCSICM.parametrize(CartDOF.ROT).setStiffness(200).setDamping(0.3);
+			insertCSICM.parametrize(CartDOF.X).setStiffness(500).setAmplitude(10.0).setFrequency(0.3);
+			insertCSICM.parametrize(CartDOF.Z).setStiffness(500).setAmplitude(10.0).setFrequency(0.3);
+		} else {
+			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
+			insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
+			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(300).setDamping(0.3);
+			insertCSICM.parametrize(CartDOF.A).setStiffness(100).setAmplitude(10.0).setFrequency(1.5);	
+		}
+		
 		CartesianImpedanceControlMode contactCICM = new CartesianImpedanceControlMode();
 		contactCICM.parametrize(CartDOF.Y).setStiffness(1500);
 		contactCICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(800).setDamping(0.3);
-		CartesianSineImpedanceControlMode insertCSICM = new CartesianSineImpedanceControlMode();
-		insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
-		insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(300).setDamping(0.3);
-		insertCSICM.parametrize(CartDOF.A).setStiffness(100).setAmplitude(10.0).setFrequency(1.5);
+		
 		
 		if ( forceSend ) {
 			ftdSenderInsert = new ForceTorqueDataSender(lbr, tcp, "172.31.1.101", 30000, -1, 5,
