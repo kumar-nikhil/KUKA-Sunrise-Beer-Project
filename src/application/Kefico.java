@@ -161,8 +161,8 @@ public class Kefico extends RoboticsAPIApplication {
 				getLogger().info("Work selected");
 				// Insert
 				getLogger().info("Starting Insertion");
-				workInsert(Con.Oil_Big);
-				workInsert(Con.Oil_Small);
+//				workInsert(Con.Oil_Big);
+//				workInsert(Con.Oil_Small);
 				workInsert(Con.Electric);
 				
 				tcp.move(ptp(home).setJointVelocityRel(1.0));
@@ -368,14 +368,15 @@ public class Kefico extends RoboticsAPIApplication {
 			}
 		};
 		Frame approach = pick_aprGrip;
-		approach.transform(Transformation.ofTranslation(0, 0, -40));
 		
 		getLogger().info("Starting PickPart");
 		if ( type == Con.Electric ) {
+			approach.transform(Transformation.ofTranslation(0, 0, -60));
 			tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(1.0).triggerWhen(gOpenC, gOpenAction));
 			tcp.move(lin(pick_aprGrip).setCartVelocity(500));
 			tcp.move(lin(pick).setCartVelocity(500));
 		} else {
+			approach.transform(Transformation.ofTranslation(0, 0, -40));
 			tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(1.0).triggerWhen(gOpenC, gOpenAction));
 			tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
 			tcp.move(lin(pick).setCartVelocity(500));			
