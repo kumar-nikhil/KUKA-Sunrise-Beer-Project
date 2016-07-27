@@ -116,7 +116,7 @@ public class Kefico extends RoboticsAPIApplication {
 	}
 
 	private void initFrames() {
-		home = new JointPosition(0, Math.toRadians(30), 0, -Math.toRadians(60), 0, Math.toRadians(90), 0);
+		home = new JointPosition(0, Math.toRadians(30), 0, -Math.toRadians(60), 0, Math.toRadians(90), Math.toRadians(115));
 		tempAirAfterElectric = getApplicationData().getFrame("/jigBase/tempAir_AfterElectric");
 		tempAirAfterOil = getApplicationData().getFrame("/jigBase/tempAir_AfterOil");
 		jigCon_Electric = getApplicationData().getFrame("/jigBase/jigCon_Electric");
