@@ -44,7 +44,7 @@
         <toolTemplate class="" name="Tool">
             <frames>
                 <frame name="TCP">
-                    <transformation a="-0.39269908169872414" b="0.0" c="0.0" x="0.0" y="0.0" z="170.0"/>
+                    <transformation a="-0.39269908169872414" b="0.0" c="0.0" x="0.0" y="0.0" z="150.0"/>
                 </frame>
             </frames>
             <additionalInformation>
