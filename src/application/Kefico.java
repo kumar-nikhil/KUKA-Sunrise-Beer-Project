@@ -299,7 +299,6 @@ public class Kefico extends RoboticsAPIApplication {
 			break;
 		case Oil_Big:
 			spl = new SplineJP(
-//					lin(pick_aprAsy),
 					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P4")),
 					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P3")),
 					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P2")),
@@ -309,7 +308,6 @@ public class Kefico extends RoboticsAPIApplication {
 			break;
 		case Oil_Small:
 			spl = new SplineJP(
-//					lin(pick_aprAsy),
 					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P4")),
 					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P3")),
 					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P2")),
@@ -326,17 +324,15 @@ public class Kefico extends RoboticsAPIApplication {
 		switch (type) {
 		case Electric:
 			spl = new SplineJP(
-//					lin(pick_aprAsy),
-					ptp(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P1")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P2")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P3")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P4")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Electric/P1")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Electric/P2")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Electric/P3")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Electric/P4")),
 					ptp(place_aprAsy)
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		case Oil_Big:
 			spl = new SplineJP(
-//					lin(pick_aprAsy),
 					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P1")),
 					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P2")),
 					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P3")),
@@ -346,7 +342,6 @@ public class Kefico extends RoboticsAPIApplication {
 			break;
 		case Oil_Small:
 			spl = new SplineJP(
-//					lin(pick_aprAsy),
 					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P1")),
 					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P2")),
 					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P3")),
