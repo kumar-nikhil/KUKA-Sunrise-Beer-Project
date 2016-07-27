@@ -299,7 +299,7 @@ public class Kefico extends RoboticsAPIApplication {
 		case Oil_Big:
 			spl = new Spline(
 					lin(pick_aprAsy),
-					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Big/P1")),
+					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P1")),
 					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Big/P2")),
 					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Big/P3")),
 					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Oil_Big/P4")),
