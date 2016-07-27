@@ -294,7 +294,7 @@ public class Kefico extends RoboticsAPIApplication {
 					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P3")),
 					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P4")),
 					spl(place_aprAsy)
-					.setJointVelocityRel(1.0)/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
+					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		case Oil_Big:
 			spl = new Spline(
@@ -304,7 +304,7 @@ public class Kefico extends RoboticsAPIApplication {
 					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P3")),
 					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P4")),
 					spl(place_aprAsy)
-					.setJointVelocityRel(1.0)/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
+					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		case Oil_Small:
 			spl = new Spline(
@@ -314,11 +314,10 @@ public class Kefico extends RoboticsAPIApplication {
 					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P3")),
 					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P4")),
 					spl(place_aprAsy)
-					.setJointVelocityRel(1.0)/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
+					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		}
-		tcp.moveAsync(lin(pick_aprAsy).setJointVelocityRel(1.0).setBlendingRel(1.0));
-		tcp.move(ptp(place_aprAsy).setJointVelocityRel(1.0));
+		tcp.move(spl.setJointVelocityRel(1.0));
 	}
 
 	private void pickPart(Con type) {
