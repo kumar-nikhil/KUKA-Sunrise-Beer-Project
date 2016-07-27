@@ -32,6 +32,7 @@ import com.kuka.roboticsAPI.geometricModel.math.Transformation;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.OrientationReferenceSystem;
 import com.kuka.roboticsAPI.motionModel.Spline;
+import com.kuka.roboticsAPI.motionModel.SplineJP;
 import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianSineImpedanceControlMode;
@@ -284,36 +285,36 @@ public class Kefico extends RoboticsAPIApplication {
 	}
 
 	private void moveJig_To_Insert(Con type) {
-		Spline spl = null;
+		SplineJP spl = null;
 		switch (type) {
 		case Electric:
-			spl = new Spline(
-					lin(pick_aprAsy),
-					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P1")),
-					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P2")),
-					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P3")),
-					spl(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P4")),
-					spl(place_aprAsy)
+			spl = new SplineJP(
+//					lin(pick_aprAsy),
+					ptp(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P1")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P2")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P3")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLjigToInsert_Electric/P4")),
+					ptp(place_aprAsy)
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		case Oil_Big:
-			spl = new Spline(
-					lin(pick_aprAsy),
-					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P1")),
-					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P2")),
-					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P3")),
-					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P4")),
-					spl(place_aprAsy)
+			spl = new SplineJP(
+//					lin(pick_aprAsy),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P1")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P2")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P3")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P4")),
+					ptp(place_aprAsy)
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		case Oil_Small:
-			spl = new Spline(
-					lin(pick_aprAsy),
-					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P1")),
-					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P2")),
-					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P3")),
-					spl(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P4")),
-					spl(place_aprAsy)
+			spl = new SplineJP(
+//					lin(pick_aprAsy),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P1")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P2")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P3")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P4")),
+					ptp(place_aprAsy)
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		}
