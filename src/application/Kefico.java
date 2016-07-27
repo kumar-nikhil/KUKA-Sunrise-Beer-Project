@@ -275,7 +275,7 @@ public class Kefico extends RoboticsAPIApplication {
 		switch (type) {
 		case Electric:
 			Frame approach = pick_aprGrip.copyWithRedundancy();
-			approach.transform(Transformation.ofTranslation(0, 0, -100));
+			approach.transform(Transformation.ofTranslation(0, 0, -50));
 			
 			tcp.move(lin(place_aprGrip).setCartVelocity(500));
 			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
