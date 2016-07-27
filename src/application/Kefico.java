@@ -271,7 +271,7 @@ public class Kefico extends RoboticsAPIApplication {
 		
 		switch (type) {
 		case Electric:
-			Frame approach = pick_aprGrip;
+			Frame approach = pick_aprGrip.copyWithRedundancy();
 			approach.transform(Transformation.ofTranslation(0, 0, -100));
 			
 			tcp.move(lin(place_aprGrip).setCartVelocity(500));
@@ -367,7 +367,7 @@ public class Kefico extends RoboticsAPIApplication {
 				exIO.gripperOpen();				
 			}
 		};
-		Frame approach = pick_aprGrip;
+		Frame approach = pick_aprGrip.copyWithRedundancy();
 		
 		getLogger().info("Starting PickPart");
 		if ( type == Con.Electric ) {
