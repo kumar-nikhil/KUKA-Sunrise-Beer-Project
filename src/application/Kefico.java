@@ -30,7 +30,9 @@ import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.geometricModel.math.CoordinateAxis;
 import com.kuka.roboticsAPI.geometricModel.math.Transformation;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
+import com.kuka.roboticsAPI.motionModel.OrientationReferenceSystem;
 import com.kuka.roboticsAPI.motionModel.Spline;
+import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianSineImpedanceControlMode;
 import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
@@ -160,7 +162,7 @@ public class Kefico extends RoboticsAPIApplication {
 				getLogger().info("Starting Insertion");
 				workInsert(Con.Oil_Big);
 				workInsert(Con.Oil_Small);
-//				workInsert(Con.Electric);
+				workInsert(Con.Electric);
 				
 				tcp.move(ptp(home).setJointVelocityRel(1.0));
 				// Eject
@@ -257,8 +259,7 @@ public class Kefico extends RoboticsAPIApplication {
 		
 		tcp.move(lin(pick_aprAsy).setCartVelocity(500).setMode(gripCICM));
 		
-		tcp.moveAsync(lin(pick_aprAsy).setJointVelocityRel(1.0).setBlendingRel(1.0));
-		tcp.move(ptp(place_aprAsy).setJointVelocityRel(1.0));
+		moveJig_To_Insert(type);
 		
 		//
 		insertCT.start();
@@ -280,6 +281,27 @@ public class Kefico extends RoboticsAPIApplication {
 		
 
 		totalCT.end();
+	}
+
+	private void moveJig_To_Insert(Con type) {
+		Spline spl = null;
+		if ( type == Con.Electric ) {
+			spl = new Spline(
+					lin(pick_aprAsy),
+					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Electric/P1")),
+					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Electric/P2")),
+					spl(place_aprAsy)
+					.setJointVelocityRel(1.0)/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
+		} else {
+			spl = new Spline(
+					lin(pick_aprAsy),
+					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Oil/P1")),
+					spl(getApplicationData().getFrame("/jigBase/moveJigToInsert_Oil/P2")),
+					spl(place_aprAsy)
+					.setJointVelocityRel(1.0)/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
+		}
+		tcp.moveAsync(lin(pick_aprAsy).setJointVelocityRel(1.0).setBlendingRel(1.0));
+		tcp.move(ptp(place_aprAsy).setJointVelocityRel(1.0));
 	}
 
 	private void pickPart(Con type) {
