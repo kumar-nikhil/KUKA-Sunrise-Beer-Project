@@ -392,11 +392,11 @@ public class Kefico extends RoboticsAPIApplication {
 		ForceCondition fC = null;
 		CartesianSineImpedanceControlMode insertCSICM = new CartesianSineImpedanceControlMode();
 		if ( type == Con.Electric ) {
-			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 7.0);
+			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 10.0);
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
 			insertCSICM.parametrize(CartDOF.ROT).setStiffness(200).setDamping(0.3);
-			insertCSICM.parametrize(CartDOF.X).setStiffness(500).setAmplitude(10.0).setFrequency(0.3);
-			insertCSICM.parametrize(CartDOF.Z).setStiffness(500).setAmplitude(10.0).setFrequency(0.3);
+			insertCSICM.parametrize(CartDOF.X).setStiffness(500).setAmplitude(3.0).setFrequency(3);
+			insertCSICM.parametrize(CartDOF.Z).setStiffness(500).setAmplitude(3.0).setFrequency(3);
 		} else {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
