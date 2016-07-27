@@ -268,21 +268,57 @@ public class Kefico extends RoboticsAPIApplication {
 		insertCT.end();
 		// move out
 		getLogger().info("Moving...");
-		Frame approach = pick_aprGrip;
-		approach.transform(Transformation.ofTranslation(0, 0, -40));
 		
-		if ( type == Con.Electric ) {
+		switch (type) {
+		case Electric:
+			Frame approach = pick_aprGrip;
+			approach.transform(Transformation.ofTranslation(0, 0, -100));
+			
 			tcp.move(lin(place_aprGrip).setCartVelocity(500));
 			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
 			tcp.move(ptp(tempAirAfterElectric).setJointVelocityRel(1.0));
-		} else {
+			break;
+		case Oil_Big:
 			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
-			tcp.moveAsync(ptp(place_aprAsy).setJointVelocityRel(1.0).setBlendingRel(0.5));
-			tcp.move(ptp(tempAirAfterOil).setJointVelocityRel(1.0));
+			moveInsert_To_Jig(type);
+			break;
+		case Oil_Small:
+			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
+			moveInsert_To_Jig(type);
+			break;
 		}
 		
 
 		totalCT.end();
+	}
+	
+	private void moveInsert_To_Jig(Con type) {
+		SplineJP spl = null;
+		switch (type) {
+		case Electric:
+			break;
+		case Oil_Big:
+			spl = new SplineJP(
+//					lin(pick_aprAsy),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P4")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P3")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P2")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P1")),
+					ptp(tempAirAfterOil)
+					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
+			break;
+		case Oil_Small:
+			spl = new SplineJP(
+//					lin(pick_aprAsy),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P4")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P3")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P2")),
+					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P1")),
+					ptp(tempAirAfterOil)
+					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
+			break;
+		}
+		tcp.moveAsync(spl.setJointVelocityRel(1.0).setBlendingRel(0.5));
 	}
 
 	private void moveJig_To_Insert(Con type) {
@@ -376,13 +412,13 @@ public class Kefico extends RoboticsAPIApplication {
 		IMotionContainer mc = tcp.move(lin(place).setCartVelocity(200).setMode(contactCICM).breakWhen(fC));
 		if ( mc.hasFired(fC) ) {
 			getLogger().info("Contact made!, trying insertion");
-			insertCSICM.setAdditionalControlForce(0, 5, 0, 0, 0, 0);
+			insertCSICM.setAdditionalControlForce(0, 5, 0, 0, 0, 0);		// 25
 			tcp.move(lin(place).setCartVelocity(100).setMode(insertCSICM));
 			insertCSICM.setAdditionalControlForceToDefaultValue();
 			// evaluate
 			if ( ! evaluate(place) ) {	// fail
 				getLogger().info("Distance or Force not in range, re-trying with 40N");
-				insertCSICM.setAdditionalControlForce(0, 10, 0, 0, 0, 0);
+				insertCSICM.setAdditionalControlForce(0, 10, 0, 0, 0, 0);	//40
 				tcp.move(positionHold(insertCSICM, 1000, TimeUnit.MILLISECONDS));
 				insertCSICM.setAdditionalControlForceToDefaultValue();
 			}	// end of if
