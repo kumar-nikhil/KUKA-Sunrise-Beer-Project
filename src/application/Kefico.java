@@ -564,7 +564,8 @@ public class Kefico extends RoboticsAPIApplication {
 			if ( ! evaluate(place) ) {	// fail
 				getLogger().info(String.format("Distance or Force not in range, re-trying with %.02f N", force[1]));
 				insertCSICM.setAdditionalControlForce(0, force[1], 0, 0, 0, 0);
-				tcp.move(positionHold(insertCSICM, 1000, TimeUnit.MILLISECONDS));
+//				tcp.move(positionHold(insertCSICM, 1000, TimeUnit.MILLISECONDS));
+				tcp.move(lin(place).setCartVelocity(100).setMode(insertCSICM));
 				insertCSICM.setAdditionalControlForceToDefaultValue();
 			}	// end of if
 		} else {
@@ -631,7 +632,8 @@ public class Kefico extends RoboticsAPIApplication {
 			if ( ! evaluate(place) ) {	// fail
 				getLogger().info(String.format("Distance or Force not in range, re-trying with %.02f N", force[1]));
 				insertCSICM.setAdditionalControlForce(0, force[1], 0, 0, 0, 0);
-				tcp.move(positionHold(insertCSICM, 1000, TimeUnit.MILLISECONDS));
+//				tcp.move(positionHold(insertCSICM, 1000, TimeUnit.MILLISECONDS));
+				tcp.move(lin(place).setCartVelocity(100).setMode(insertCSICM));
 				insertCSICM.setAdditionalControlForceToDefaultValue();
 			}	// end of if
 		} else {
