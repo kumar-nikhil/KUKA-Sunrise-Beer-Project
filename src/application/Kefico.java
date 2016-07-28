@@ -654,10 +654,10 @@ public class Kefico extends RoboticsAPIApplication {
 	private boolean evaluate(AbstractFrame target) {
 		double dist = lbr.getCurrentCartesianPosition(tcp, place).getZ();
 		getLogger().info( String.format("Distance to the destination : %03f", dist));
-		double force = Math.abs( lbr.getExternalForceTorque(tcp).getForce().getZ() );
-		getLogger().info( String.format("Z directional Force : %03f", force));
+		double force = Math.abs( lbr.getExternalForceTorque(tcp).getForce().getY() );
+		getLogger().info( String.format("Y directional Force : %03f", force));
 		boolean ret = false;
-		if ( Math.abs(dist) < 0.5 && force < 30 ) {	// success
+		if ( Math.abs(dist) < 0.4 /*&& force < 30*/ ) {	// success
 			ret = true;
 		} else {							// fail
 			ret = false;
