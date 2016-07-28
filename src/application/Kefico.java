@@ -526,8 +526,8 @@ public class Kefico extends RoboticsAPIApplication {
 			insertCSICM.parametrize(CartDOF.Z).setStiffness(500).setAmplitude(1.0).setFrequency(3);
 		} else {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
-			insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
-			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(300).setDamping(0.3);
+			insertCSICM.parametrize(CartDOF.Y).setStiffness(1500);
+			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(800).setDamping(0.3);
 			insertCSICM.parametrize(CartDOF.A).setStiffness(200).setAmplitude(5.0).setFrequency(1.5);	
 		}
 		
@@ -587,8 +587,8 @@ public class Kefico extends RoboticsAPIApplication {
 			insertCSICM.parametrize(CartDOF.Z).setStiffness(500).setAmplitude(1.0).setFrequency(3);
 		} else {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
-			insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
-			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(300).setDamping(0.3);
+			insertCSICM.parametrize(CartDOF.Y).setStiffness(1500);
+			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(800).setDamping(0.3);
 			insertCSICM.parametrize(CartDOF.A).setStiffness(200).setAmplitude(5.0).setFrequency(1.5);	
 		}
 		
