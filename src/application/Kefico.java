@@ -520,6 +520,7 @@ public class Kefico extends RoboticsAPIApplication {
 		// Condition & CICM
 		ICondition fC = null;
 		double[] force = new double[2];
+		force[0] = 0; force[1] = 1;
 		CartesianSineImpedanceControlMode insertCSICM = new CartesianSineImpedanceControlMode();
 		if ( type == Con.Electric ) {
 //			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 10.0);
@@ -554,13 +555,13 @@ public class Kefico extends RoboticsAPIApplication {
 		getLogger().info("Moving until contact occurs");
 		IMotionContainer mc = tcp.move(lin(place).setCartVelocity(200).setMode(contactCICM).breakWhen(fC));
 		if ( mc.hasFired(fC) ) {
-			getLogger().info(String.format("Contact made!, trying insertion with %d N", force[0]));
+			getLogger().info(String.format("Contact made!, trying insertion with %.02f N", force[0]));
 			insertCSICM.setAdditionalControlForce(0, force[0], 0, 0, 0, 0);
 			tcp.move(lin(place).setCartVelocity(100).setMode(insertCSICM));
 			insertCSICM.setAdditionalControlForceToDefaultValue();
 			// evaluate
 			if ( ! evaluate(place) ) {	// fail
-				getLogger().info(String.format("Distance or Force not in range, re-trying with %d N", force[1]));
+				getLogger().info(String.format("Distance or Force not in range, re-trying with %.02f N", force[1]));
 				insertCSICM.setAdditionalControlForce(0, force[1], 0, 0, 0, 0);
 				tcp.move(positionHold(insertCSICM, 1000, TimeUnit.MILLISECONDS));
 				insertCSICM.setAdditionalControlForceToDefaultValue();
@@ -586,6 +587,7 @@ public class Kefico extends RoboticsAPIApplication {
 		// Condition & CICM
 		ICondition fC = null;
 		double[] force = new double[2];
+		force[0] = 0; force[1] = 0;
 		CartesianSineImpedanceControlMode insertCSICM = new CartesianSineImpedanceControlMode();
 		if ( type == Con.Electric ) {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
@@ -620,13 +622,13 @@ public class Kefico extends RoboticsAPIApplication {
 		getLogger().info("Moving until contact occurs");
 		IMotionContainer mc = tcp.move(lin(place).setCartVelocity(200).setMode(contactCICM).breakWhen(fC));
 		if ( mc.hasFired(fC) ) {
-			getLogger().info(String.format("Contact made!, trying insertion with %d N", force[0]));
+			getLogger().info(String.format("Contact made!, trying insertion with %.02f N", force[0]));
 			insertCSICM.setAdditionalControlForce(0, force[0], 0, 0, 0, 0);
 			tcp.move(lin(place).setCartVelocity(100).setMode(insertCSICM));
 			insertCSICM.setAdditionalControlForceToDefaultValue();
 			// evaluate
 			if ( ! evaluate(place) ) {	// fail
-				getLogger().info(String.format("Distance or Force not in range, re-trying with %d N", force[1]));
+				getLogger().info(String.format("Distance or Force not in range, re-trying with %.02f N", force[1]));
 				insertCSICM.setAdditionalControlForce(0, force[1], 0, 0, 0, 0);
 				tcp.move(positionHold(insertCSICM, 1000, TimeUnit.MILLISECONDS));
 				insertCSICM.setAdditionalControlForceToDefaultValue();
