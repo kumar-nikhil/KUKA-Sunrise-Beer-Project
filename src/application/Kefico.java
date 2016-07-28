@@ -571,7 +571,8 @@ public class Kefico extends RoboticsAPIApplication {
 		} else {
 			getLogger().info("Error on approaching");
 		}	// end of if-else
-		
+
+		evaluate(place);
 		tcp.move(ptp(lbr.getCurrentCartesianPosition(tcp)));
 		getLogger().info("Insert finished");
 		exIO.gripperOpen();
@@ -640,6 +641,7 @@ public class Kefico extends RoboticsAPIApplication {
 			getLogger().info("Error on approaching");
 		}	// end of if-else
 		
+		evaluate(place);
 		tcp.move(ptp(lbr.getCurrentCartesianPosition(tcp)));
 		getLogger().info("Insert finished");
 		exIO.gripperOpen();
