@@ -188,8 +188,8 @@ public class Kefico extends RoboticsAPIApplication {
 				// Eject
 				getLogger().info("Starting Ejection");
 				workEject(Con.Electric);
-				workEject(Con.Oil_Small);
 				workEject(Con.Oil_Big);
+				workEject(Con.Oil_Small);
 				break;
 			case 1: // END
 				getLogger().info("Ending the application");
