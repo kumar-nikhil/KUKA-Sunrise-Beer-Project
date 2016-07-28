@@ -145,9 +145,9 @@
                 </frame>
             </frame>
             <frame name="insertCon_Oil_Big">
-                <transformation a="1.731292788487879" b="-0.9316587168072281" c="1.431652901250849" x="-1.7364095642344637" y="71.87626098007388" z="83.1589067449099"/>
+                <transformation a="1.7352672962481135" b="-0.947044042872811" c="1.4227532459724832" x="0.45060576673040487" y="71.74960330929645" z="83.21537956211827"/>
                 <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1469679476383"/>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1469680574804"/>
                     <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                         <tcpTransformation a="-0.3926990816987242" b="0.0" c="0.0" x="0.0" y="0.0" z="150.0"/>
                     </info>
@@ -156,7 +156,7 @@
                     <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
                         <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="6" valueType="java.lang.Integer"/>
                         <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="121" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="1.2318109005984472" valueType="java.lang.Double"/>
+                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="1.231838464365158" valueType="java.lang.Double"/>
                     </redundancy>
                 </redundancyData>
                 <frame name="aprGrip">
@@ -193,9 +193,9 @@
                 </frame>
             </frame>
             <frame name="insertCon_Oil_Small">
-                <transformation a="-0.17961082635185618" b="1.281486497738495" c="1.2254675737793397" x="-71.36214586346136" y="47.629079674690956" z="88.7036560939967"/>
+                <transformation a="-0.9863284117811705" b="0.9556390361367719" c="0.48357682098965254" x="-71.34972310182695" y="46.14839934185437" z="89.55890809437605"/>
                 <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1469680015294"/>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1469680700436"/>
                     <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                         <tcpTransformation a="-0.3926990816987242" b="0.0" c="0.0" x="0.0" y="0.0" z="150.0"/>
                     </info>
@@ -204,7 +204,7 @@
                     <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
                         <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
                         <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="12" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-0.0017422666354893928" valueType="java.lang.Double"/>
+                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-0.0016989436364640762" valueType="java.lang.Double"/>
                     </redundancy>
                 </redundancyData>
                 <frame name="aprGrip">
