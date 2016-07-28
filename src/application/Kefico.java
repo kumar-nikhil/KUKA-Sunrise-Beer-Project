@@ -528,7 +528,7 @@ public class Kefico extends RoboticsAPIApplication {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
 			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(300).setDamping(0.3);
-			insertCSICM.parametrize(CartDOF.A).setStiffness(100).setAmplitude(10.0).setFrequency(1.5);	
+			insertCSICM.parametrize(CartDOF.A).setStiffness(200).setAmplitude(5.0).setFrequency(1.5);	
 		}
 		
 		CartesianImpedanceControlMode contactCICM = new CartesianImpedanceControlMode();
@@ -546,13 +546,13 @@ public class Kefico extends RoboticsAPIApplication {
 		IMotionContainer mc = tcp.move(lin(place).setCartVelocity(200).setMode(contactCICM).breakWhen(fC));
 		if ( mc.hasFired(fC) ) {
 			getLogger().info("Contact made!, trying insertion");
-			insertCSICM.setAdditionalControlForce(0, 5, 0, 0, 0, 0);		// 25
+			insertCSICM.setAdditionalControlForce(0, 25, 0, 0, 0, 0);		// 25
 			tcp.move(lin(place).setCartVelocity(100).setMode(insertCSICM));
 			insertCSICM.setAdditionalControlForceToDefaultValue();
 			// evaluate
 			if ( ! evaluate(place) ) {	// fail
 				getLogger().info("Distance or Force not in range, re-trying with 40N");
-				insertCSICM.setAdditionalControlForce(0, 10, 0, 0, 0, 0);	//40
+				insertCSICM.setAdditionalControlForce(0, 40, 0, 0, 0, 0);	//40
 				tcp.move(positionHold(insertCSICM, 1000, TimeUnit.MILLISECONDS));
 				insertCSICM.setAdditionalControlForceToDefaultValue();
 			}	// end of if
@@ -589,7 +589,7 @@ public class Kefico extends RoboticsAPIApplication {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
 			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(300).setDamping(0.3);
-			insertCSICM.parametrize(CartDOF.A).setStiffness(100).setAmplitude(10.0).setFrequency(1.5);	
+			insertCSICM.parametrize(CartDOF.A).setStiffness(200).setAmplitude(5.0).setFrequency(1.5);	
 		}
 		
 		CartesianImpedanceControlMode contactCICM = new CartesianImpedanceControlMode();
@@ -607,13 +607,13 @@ public class Kefico extends RoboticsAPIApplication {
 		IMotionContainer mc = tcp.move(lin(place).setCartVelocity(200).setMode(contactCICM).breakWhen(fC));
 		if ( mc.hasFired(fC) ) {
 			getLogger().info("Contact made!, trying insertion");
-			insertCSICM.setAdditionalControlForce(0, 5, 0, 0, 0, 0);		// 25
+			insertCSICM.setAdditionalControlForce(0, 25, 0, 0, 0, 0);		// 25
 			tcp.move(lin(place).setCartVelocity(100).setMode(insertCSICM));
 			insertCSICM.setAdditionalControlForceToDefaultValue();
 			// evaluate
 			if ( ! evaluate(place) ) {	// fail
 				getLogger().info("Distance or Force not in range, re-trying with 40N");
-				insertCSICM.setAdditionalControlForce(0, 10, 0, 0, 0, 0);	//40
+				insertCSICM.setAdditionalControlForce(0, 40, 0, 0, 0, 0);	//40
 				tcp.move(positionHold(insertCSICM, 1000, TimeUnit.MILLISECONDS));
 				insertCSICM.setAdditionalControlForceToDefaultValue();
 			}	// end of if
