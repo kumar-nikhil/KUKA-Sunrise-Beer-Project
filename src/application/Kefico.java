@@ -533,13 +533,19 @@ public class Kefico extends RoboticsAPIApplication {
 //			insertCSICM.parametrize(CartDOF.ROT).setStiffness(200).setDamping(0.3);
 			insertCSICM.parametrize(CartDOF.X).setStiffness(1000).setAmplitude(1.0).setFrequency(3);
 			insertCSICM.parametrize(CartDOF.Z).setStiffness(1000).setAmplitude(1.0).setFrequency(3);
-		} else {
+		} else if ( type == Con.Oil_Big ) {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 5.0);
 			force[0] = 50;
 			force[1] = 60;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
 			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(1500).setDamping(0.3);
 //			insertCSICM.parametrize(CartDOF.A).setStiffness(200).setAmplitude(5.0).setFrequency(1.5);	
+		} else if ( type == Con.Oil_Small ) {
+			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 5.0);
+			force[0] = 80;
+			force[1] = 90;
+			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
+			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(1500).setDamping(0.3);
 		}
 		
 		CartesianImpedanceControlMode contactCICM = new CartesianImpedanceControlMode();
@@ -602,13 +608,19 @@ public class Kefico extends RoboticsAPIApplication {
 //			insertCSICM.parametrize(CartDOF.ROT).setStiffness(200).setDamping(0.3);
 			insertCSICM.parametrize(CartDOF.X).setStiffness(1000).setAmplitude(1.0).setFrequency(3);
 			insertCSICM.parametrize(CartDOF.Z).setStiffness(1000).setAmplitude(1.0).setFrequency(3);
-		} else {
+		} else if ( type == Con.Oil_Big ) {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 5.0);
 			force[0] = 50;
 			force[1] = 60;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
 			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(1500).setDamping(0.3);
 //			insertCSICM.parametrize(CartDOF.A).setStiffness(200).setAmplitude(5.0).setFrequency(1.5);	
+		} else if ( type == Con.Oil_Small ) {
+			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 5.0);
+			force[0] = 80;
+			force[1] = 90;
+			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
+			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(1500).setDamping(0.3);
 		}
 		
 		CartesianImpedanceControlMode contactCICM = new CartesianImpedanceControlMode();
