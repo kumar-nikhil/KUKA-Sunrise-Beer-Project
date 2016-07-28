@@ -256,7 +256,7 @@ public class Kefico extends RoboticsAPIApplication {
 		
 		// eject
 		ejectCT.start();
-		insert(type);
+		insert_iTj(type);
 		ejectCT.end();
 
 		// move out
@@ -512,6 +512,67 @@ public class Kefico extends RoboticsAPIApplication {
 //			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 10.0);
 			double tq1 = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
 			fC = new JointTorqueCondition(JointEnum.J1, tq1-4.0, tq1+4.0);
+			insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
+			insertCSICM.parametrize(CartDOF.ROT).setStiffness(200).setDamping(0.3);
+			insertCSICM.parametrize(CartDOF.X).setStiffness(500).setAmplitude(1.0).setFrequency(3);
+			insertCSICM.parametrize(CartDOF.Z).setStiffness(500).setAmplitude(1.0).setFrequency(3);
+		} else {
+			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
+			insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
+			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(300).setDamping(0.3);
+			insertCSICM.parametrize(CartDOF.A).setStiffness(100).setAmplitude(10.0).setFrequency(1.5);	
+		}
+		
+		CartesianImpedanceControlMode contactCICM = new CartesianImpedanceControlMode();
+		contactCICM.parametrize(CartDOF.Y).setStiffness(1500);
+		contactCICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(800).setDamping(0.3);
+		
+		
+		if ( forceSend ) {
+			ftdSenderInsert = new ForceTorqueDataSender(lbr, tcp, "172.31.1.101", 30000, -1, 5,
+					Type.FORCETORQUE_XYZABC, "Insert");
+			ftdSenderInsert.start();
+		}
+		// insert
+		getLogger().info("Moving until contact occurs");
+		IMotionContainer mc = tcp.move(lin(place).setCartVelocity(200).setMode(contactCICM).breakWhen(fC));
+		if ( mc.hasFired(fC) ) {
+			getLogger().info("Contact made!, trying insertion");
+			insertCSICM.setAdditionalControlForce(0, 5, 0, 0, 0, 0);		// 25
+			tcp.move(lin(place).setCartVelocity(100).setMode(insertCSICM));
+			insertCSICM.setAdditionalControlForceToDefaultValue();
+			// evaluate
+			if ( ! evaluate(place) ) {	// fail
+				getLogger().info("Distance or Force not in range, re-trying with 40N");
+				insertCSICM.setAdditionalControlForce(0, 10, 0, 0, 0, 0);	//40
+				tcp.move(positionHold(insertCSICM, 1000, TimeUnit.MILLISECONDS));
+				insertCSICM.setAdditionalControlForceToDefaultValue();
+			}	// end of if
+		} else {
+			getLogger().info("Error on approaching");
+		}	// end of if-else
+		
+		tcp.move(ptp(lbr.getCurrentCartesianPosition(tcp)));
+		getLogger().info("Insert finished");
+		exIO.gripperOpen();
+		
+		if ( forceSend ) {
+			ftdSenderInsert.interrupt();
+		}
+		
+	}
+
+	@SuppressWarnings("deprecation")
+	private void insert_iTj(Con type) {
+		getLogger().info("Starting insertion with CICM");
+		
+		// Condition & CICM
+		ICondition fC = null;
+		CartesianSineImpedanceControlMode insertCSICM = new CartesianSineImpedanceControlMode();
+		if ( type == Con.Electric ) {
+			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
+//			double tq1 = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
+//			fC = new JointTorqueCondition(JointEnum.J1, tq1-4.0, tq1+4.0);
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
 			insertCSICM.parametrize(CartDOF.ROT).setStiffness(200).setDamping(0.3);
 			insertCSICM.parametrize(CartDOF.X).setStiffness(500).setAmplitude(1.0).setFrequency(3);
