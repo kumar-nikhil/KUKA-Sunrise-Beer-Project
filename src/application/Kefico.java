@@ -263,9 +263,9 @@ public class Kefico extends RoboticsAPIApplication {
 		// move out
 		getLogger().info("Moving...");
 		
+		Frame approach = place_aprGrip.copyWithRedundancy();
 		switch (type) {
 		case Electric:
-			Frame approach = place_aprGrip.copyWithRedundancy();
 			approach.transform(Transformation.ofTranslation(0, 0, -50));
 			
 			tcp.move(lin(place_aprGrip).setCartVelocity(500));
@@ -273,8 +273,12 @@ public class Kefico extends RoboticsAPIApplication {
 			tcp.move(ptp(tempAirAfterElectric_iTj).setJointVelocityRel(1.0));
 			break;
 		case Oil_Big:
+			approach.transform(Transformation.ofTranslation(50, -100, 0));
 			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
-			tcp.moveAsync(ptp(tempAirAfterOil_iTj).setJointVelocityRel(1.0).setBlendingRel(0.5));
+			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
+			
+//			tcp.moveAsync(ptp(getApplicationData().getFrame("/jigBase/TempAir_btwBigSmall")).setJointVelocityRel(1.0).setBlendingRel(0.5));
+//			tcp.moveAsync(ptp(tempAirAfterOil_iTj).setJointVelocityRel(1.0).setBlendingRel(0.5));
 			break;
 		case Oil_Small:
 			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
