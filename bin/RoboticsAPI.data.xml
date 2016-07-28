@@ -289,6 +289,15 @@
                         <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-0.002029648295882727" valueType="java.lang.Double"/>
                     </redundancy>
                 </redundancyData>
+                <frame name="insertToJig">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469667015471"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
             </frame>
             <frame name="tempAir_AfterElectric">
                 <transformation a="-6.096891532966555E-5" b="-4.8412792826589966E-5" c="8.994148039602537E-5" x="-0.005197870308734309" y="138.96955111977059" z="-26.66773077799718"/>
@@ -305,6 +314,15 @@
                         <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-0.0019409650622627041" valueType="java.lang.Double"/>
                     </redundancy>
                 </redundancyData>
+                <frame name="insertToJig">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469667010740"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
             </frame>
             <frame name="SPLJigToInsert_Electric">
                 <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>

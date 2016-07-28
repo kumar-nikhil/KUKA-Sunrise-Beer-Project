@@ -82,6 +82,7 @@ public class Kefico extends RoboticsAPIApplication {
 	// Frames
 	private JointPosition	home;
 	private ObjectFrame		tempAirAfterElectric, tempAirAfterOil;
+	private ObjectFrame		tempAirAfterElectric_iTj, tempAirAfterOil_iTj;
 	private ObjectFrame		jigCon_Electric, jigCon_Oil_Big, jigCon_Oil_Small;
 	private ObjectFrame		jigCon_Electric_aprGrip, jigCon_Electric_aprAsy;
 	private ObjectFrame		jigCon_Oil_Big_aprGrip, jigCon_Oil_Big_aprAsy;
@@ -130,6 +131,9 @@ public class Kefico extends RoboticsAPIApplication {
 		home = new JointPosition(0, Math.toRadians(30), 0, -Math.toRadians(60), 0, Math.toRadians(90), Math.toRadians(115));
 		tempAirAfterElectric = getApplicationData().getFrame("/jigBase/tempAir_AfterElectric");
 		tempAirAfterOil = getApplicationData().getFrame("/jigBase/tempAir_AfterOil");
+		tempAirAfterElectric_iTj = getApplicationData().getFrame("/jigBase/tempAir_AfterElectric/insertToJig");
+		tempAirAfterOil_iTj = getApplicationData().getFrame("/jigBase/tempAir_AfterOil/insertToJig");
+		
 		jigCon_Electric = getApplicationData().getFrame("/jigBase/jigCon_Electric");
 		jigCon_Electric_aprAsy = getApplicationData().getFrame("/jigBase/jigCon_Electric/aprAsy");
 		jigCon_Electric_aprGrip = getApplicationData().getFrame("/jigBase/jigCon_Electric/aprGrip");
@@ -175,17 +179,17 @@ public class Kefico extends RoboticsAPIApplication {
 			case 0:
 				getLogger().info("Work selected");
 				// Insert
-				getLogger().info("Starting Insertion");
-				workInsert(Con.Oil_Big);
-				workInsert(Con.Oil_Small);
-				workInsert(Con.Electric);
+//				getLogger().info("Starting Insertion");
+//				workInsert(Con.Oil_Big);
+//				workInsert(Con.Oil_Small);
+//				workInsert(Con.Electric);
 				
 				tcp.move(ptp(home).setJointVelocityRel(1.0));
 				// Eject
-//				getLogger().info("Starting Ejection");
-//				workEject(Con.Oil_Big);
-//				workEject(Con.Oil_Small);
-//				workEject(Con.Electric);
+				getLogger().info("Starting Ejection");
+				workEject(Con.Electric);
+				workEject(Con.Oil_Small);
+				workEject(Con.Oil_Big);
 				break;
 			case 1: // END
 				getLogger().info("Ending the application");
@@ -233,23 +237,79 @@ public class Kefico extends RoboticsAPIApplication {
 		}
 		
 		// move in
+		ejectMoveIn(type);
 		
 		// part picking
 		pickCT.start();
 		pickPart(type);
 		pickCT.end();
 		
+		// move out
+		getLogger().info("Moving...");
+		CartesianImpedanceControlMode gripCICM = new CartesianImpedanceControlMode();
+		gripCICM.parametrize(CartDOF.Y).setStiffness(1500);
+		gripCICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(800).setDamping(0.3);
+		
+		tcp.move(lin(pick_aprAsy).setCartVelocity(500).setMode(gripCICM));
+		
+		moveInsert_To_Jig(type);
 		
 		// eject
 		ejectCT.start();
-		eject();
+		insert(type);
 		ejectCT.end();
+
+		// move out
+		getLogger().info("Moving...");
 		
-		placeCT.start();
-		place();
-		placeCT.end();
+		switch (type) {
+		case Electric:
+			Frame approach = place_aprGrip.copyWithRedundancy();
+			approach.transform(Transformation.ofTranslation(0, 0, -50));
+			
+			tcp.move(lin(place_aprGrip).setCartVelocity(500));
+			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
+			tcp.move(ptp(tempAirAfterElectric_iTj).setJointVelocityRel(1.0));
+			break;
+		case Oil_Big:
+			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
+			tcp.moveAsync(ptp(tempAirAfterOil_iTj).setJointVelocityRel(1.0).setBlendingRel(0.5));
+			break;
+		case Oil_Small:
+			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
+			tcp.moveAsync(ptp(tempAirAfterOil_iTj).setJointVelocityRel(1.0).setBlendingRel(0.5));
+			break;
+		}
 		
 		totalCT.end();
+	}
+
+	private void ejectMoveIn(Con type) {
+		SplineJP spl = null;
+		switch (type) {
+		case Electric:
+			spl = new SplineJP(
+					ptp(jTi_Electric.get(2)),
+					ptp(jTi_Electric.get(3)),
+					ptp(place_aprAsy)
+					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
+			break;
+		case Oil_Big:
+			spl = new SplineJP(
+					ptp(jTi_Oil_Big.get(2)),
+					ptp(jTi_Oil_Big.get(3)),
+					ptp(place_aprAsy)
+					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
+			break;
+		case Oil_Small:
+			spl = new SplineJP(
+					ptp(jTi_Oil_Small.get(2)),
+					ptp(jTi_Oil_Small.get(3)),
+					ptp(place_aprAsy)
+					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
+			break;
+		}
+		tcp.moveAsync(spl.setJointVelocityRel(1.0).setBlendingRel(0.5));
 	}
 
 	private void workInsert(Con type) {
@@ -318,11 +378,24 @@ public class Kefico extends RoboticsAPIApplication {
 			break;
 		case Oil_Big:
 			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
-			moveInsert_To_Jig(type);
+			tcp.moveAsync(new SplineJP(
+					ptp(jTi_Oil_Big.get(3)),
+					ptp(jTi_Oil_Big.get(2)),
+					ptp(jTi_Oil_Big.get(1)),
+					ptp(jTi_Oil_Big.get(0)),
+					ptp(tempAirAfterOil) )
+			.setJointVelocityRel(1.0).setBlendingRel(0.5));
 			break;
 		case Oil_Small:
 			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
-			moveInsert_To_Jig(type);
+
+			tcp.moveAsync( new SplineJP(
+					ptp(jTi_Oil_Small.get(3)),
+					ptp(jTi_Oil_Small.get(2)),
+					ptp(jTi_Oil_Small.get(1)),
+					ptp(jTi_Oil_Small.get(0)),
+					ptp(tempAirAfterOil) )
+			.setJointVelocityRel(1.0).setBlendingRel(0.5));
 			break;
 		}
 		
@@ -334,6 +407,13 @@ public class Kefico extends RoboticsAPIApplication {
 		SplineJP spl = null;
 		switch (type) {
 		case Electric:
+			spl = new SplineJP(
+					ptp(jTi_Electric.get(3)),
+					ptp(jTi_Electric.get(2)),
+					ptp(jTi_Electric.get(1)),
+					ptp(jTi_Electric.get(0)),
+					ptp(place_aprAsy)
+					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		case Oil_Big:
 			spl = new SplineJP(
@@ -341,7 +421,7 @@ public class Kefico extends RoboticsAPIApplication {
 					ptp(jTi_Oil_Big.get(2)),
 					ptp(jTi_Oil_Big.get(1)),
 					ptp(jTi_Oil_Big.get(0)),
-					ptp(tempAirAfterOil)
+					ptp(place_aprAsy)
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		case Oil_Small:
@@ -350,7 +430,7 @@ public class Kefico extends RoboticsAPIApplication {
 					ptp(jTi_Oil_Small.get(2)),
 					ptp(jTi_Oil_Small.get(1)),
 					ptp(jTi_Oil_Small.get(0)),
-					ptp(tempAirAfterOil)
+					ptp(place_aprAsy)
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		}
@@ -483,45 +563,6 @@ public class Kefico extends RoboticsAPIApplication {
 		
 	}
 	
-	private void eject() {
-		// Condition & CICM
-		CartesianSineImpedanceControlMode ejectCSICM = new CartesianSineImpedanceControlMode();
-		ejectCSICM.parametrize(CartDOF.Z).setStiffness(1000);
-		ejectCSICM.parametrize(CartDOF.X, CartDOF.Y).setStiffness(300).setDamping(0.3);
-		ejectCSICM.parametrize(CartDOF.A).setStiffness(100).setAmplitude(10.0).setFrequency(1.5);
-
-		if ( forceSend ) {
-			ftdSenderEject = new ForceTorqueDataSender(lbr, tcp, "172.31.1.101", 30000, -1, 5,
-					Type.FORCETORQUE_XYZABC, "Eject");
-			ftdSenderEject.start();
-		}
-		// eject
-		getLogger().info("Starting ejection with CICM");
-//		ejectCSICM.setAdditionalControlForce(0, 0, -10, 0, 0, 0);
-		tcp.move(lin(place_aprAsy).setCartVelocity(300).setMode(ejectCSICM));
-//		ejectCSICM.setAdditionalControlForceToDefaultValue();
-
-		tcp.moveAsync(ptp(place_aprAsy).setJointVelocityRel(1.0).setBlendingRel(0.5));
-		
-		getLogger().info("Ejection finished");
-		
-		if ( forceSend ) {
-			ftdSenderEject.interrupt();
-		}
-	}	
-
-	private void place() {
-		getLogger().info("Starting place part");
-		tcp.moveAsync(ptp(pick_aprAsy).setJointVelocityRel(1.0).setBlendingRel(1.0));
-		tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
-		tcp.move(lin(pick).setCartVelocity(200));
-		
-		exIO.gripperOpen();
-		// move out
-		getLogger().info("Moving...");
-		tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
-		tcp.move(lin(pick_aprAsy).setJointVelocityRel(1.0).setBlendingRel(1.0));
-	}
 	
 	private boolean evaluate(AbstractFrame target) {
 		double dist = lbr.getCurrentCartesianPosition(tcp, place).getZ();
