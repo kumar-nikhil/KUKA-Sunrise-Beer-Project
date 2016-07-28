@@ -410,6 +410,26 @@
                         </redundancy>
                     </redundancyData>
                 </frame>
+                <frame name="P5_iTj">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469670195198"/>
+                        <info key="Comment" type="java.lang.String" value="iTj"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
+                <frame name="P6_iTj">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469670202958"/>
+                        <info key="Comment" type="java.lang.String" value="iTj"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
             </frame>
             <frame name="SPLJigToInsert_Oil_Big">
                 <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
