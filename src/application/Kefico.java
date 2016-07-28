@@ -361,6 +361,7 @@ public class Kefico extends RoboticsAPIApplication {
 		gripCICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(800).setDamping(0.3);
 		
 		tcp.move(lin(pick_aprAsy).setCartVelocity(500).setMode(gripCICM));
+		tcp.move(ptp(lbr.getCurrentCartesianPosition(tcp)).setJointVelocityRel(1.0));
 		
 		moveJig_To_Insert(type);
 		
