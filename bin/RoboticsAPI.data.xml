@@ -176,9 +176,9 @@
                     </redundancyData>
                 </frame>
                 <frame name="aprAsy">
-                    <transformation a="-5.053331129229406E-6" b="5.0028726140173404E-5" c="1.1399850365971234E-5" x="0.03694979439319468" y="-60.0" z="0.033932238662600867"/>
+                    <transformation a="-5.053331129229406E-6" b="5.0028726140173404E-5" c="1.1399850365971234E-5" x="0.03694979439319468" y="-40.0" z="0.033932238662600867"/>
                     <additionalInformation>
-                        <info key="LastModificationTime" type="java.lang.Long" value="1469681980767"/>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469687497919"/>
                         <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                             <tcpTransformation a="-0.3926990816987242" b="0.0" c="0.0" x="0.0" y="0.0" z="150.0"/>
                         </info>
@@ -224,9 +224,9 @@
                     </redundancyData>
                 </frame>
                 <frame name="aprAsy">
-                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="-60.0" z="0.0"/>
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="-40.0" z="0.0"/>
                     <additionalInformation>
-                        <info key="LastModificationTime" type="java.lang.Long" value="1469681992218"/>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1469687492922"/>
                     </additionalInformation>
                     <redundancyData>
                         <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
