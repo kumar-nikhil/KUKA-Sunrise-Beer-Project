@@ -378,27 +378,27 @@ public class Kefico extends RoboticsAPIApplication {
 			break;
 		case Oil_Big:
 			getLogger().info("!!!!!!!!!!!!!!!!!!!");
-			approach.transform(Transformation.ofTranslation(-50, -20, -50));
+			approach.transform(Transformation.ofTranslation(-50, -20, 0));
 			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
 			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
-			tcp.moveAsync(new SplineJP(
+			tcp.move(new SplineJP(
 //					ptp(jTi_Oil_Big.get(3)),
 					ptp(jTi_Oil_Big.get(2)),
 					ptp(jTi_Oil_Big.get(1)),
 					ptp(jTi_Oil_Big.get(0)),
 					ptp(tempAirAfterOil) )
-			.setJointVelocityRel(1.0).setBlendingRel(0.5));
+			.setJointVelocityRel(1.0));
 			break;
 		case Oil_Small:
 			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
 
-			tcp.moveAsync( new SplineJP(
+			tcp.move( new SplineJP(
 					ptp(jTi_Oil_Small.get(3)),
 					ptp(jTi_Oil_Small.get(2)),
 					ptp(jTi_Oil_Small.get(1)),
 					ptp(jTi_Oil_Small.get(0)),
 					ptp(tempAirAfterOil) )
-			.setJointVelocityRel(1.0).setBlendingRel(0.5));
+			.setJointVelocityRel(1.0));
 			break;
 		}
 		
