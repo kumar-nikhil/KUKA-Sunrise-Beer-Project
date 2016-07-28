@@ -288,24 +288,23 @@ public class Kefico extends RoboticsAPIApplication {
 		SplineJP spl = null;
 		switch (type) {
 		case Electric:
+			Frame approach = place_aprGrip.copyWithRedundancy();
+			approach.transform(Transformation.ofTranslation(0, 0, -80));
 			spl = new SplineJP(
 					ptp(tempAirAfterElectric),
-//					ptp(jTi_Electric.get(2)),
-					ptp(pick_aprGrip)
+					ptp(approach)
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		case Oil_Big:
 			spl = new SplineJP(
 					ptp(jTi_Oil_Big.get(4)),
-					ptp(jTi_Oil_Big.get(5)),
-					ptp(pick_aprGrip)
+					ptp(jTi_Oil_Big.get(5))
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		case Oil_Small:
 			spl = new SplineJP(
 					ptp(jTi_Oil_Small.get(4)),
-					ptp(jTi_Oil_Small.get(5)),
-					ptp(pick_aprGrip)
+					ptp(jTi_Oil_Small.get(5))
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		}
