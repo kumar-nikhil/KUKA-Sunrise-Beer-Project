@@ -526,7 +526,7 @@ public class Kefico extends RoboticsAPIApplication {
 		if ( type == Con.Electric ) {
 //			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 10.0);
 			double tq1 = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
-			fC = new JointTorqueCondition(JointEnum.J1, tq1-4.0, tq1+4.0);
+			fC = new JointTorqueCondition(JointEnum.J1, tq1-7.0, tq1+7.0);
 			force[0] = 20;
 			force[1] = 50;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
@@ -534,7 +534,7 @@ public class Kefico extends RoboticsAPIApplication {
 			insertCSICM.parametrize(CartDOF.X).setStiffness(1000).setAmplitude(1.0).setFrequency(3);
 			insertCSICM.parametrize(CartDOF.Z).setStiffness(1000).setAmplitude(1.0).setFrequency(3);
 		} else {
-			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
+			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 15.0);
 			force[0] = 50;
 			force[1] = 90;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
@@ -592,7 +592,7 @@ public class Kefico extends RoboticsAPIApplication {
 		force[0] = 0; force[1] = 0;
 		CartesianSineImpedanceControlMode insertCSICM = new CartesianSineImpedanceControlMode();
 		if ( type == Con.Electric ) {
-			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
+			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 10.0);
 //			double tq1 = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
 //			fC = new JointTorqueCondition(JointEnum.J1, tq1-4.0, tq1+4.0);
 			force[0] = 20;
@@ -602,7 +602,7 @@ public class Kefico extends RoboticsAPIApplication {
 			insertCSICM.parametrize(CartDOF.X).setStiffness(1000).setAmplitude(1.0).setFrequency(3);
 			insertCSICM.parametrize(CartDOF.Z).setStiffness(1000).setAmplitude(1.0).setFrequency(3);
 		} else {
-			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
+			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 15.0);
 			force[0] = 50;
 			force[1] = 90;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
@@ -657,9 +657,9 @@ public class Kefico extends RoboticsAPIApplication {
 		double force = Math.abs( lbr.getExternalForceTorque(tcp).getForce().getZ() );
 		getLogger().info( String.format("Z directional Force : %03f", force));
 		boolean ret = false;
-		if ( dist >= 0.0 && force < 30 ) {
+		if ( Math.abs(dist) < 0.5 && force < 30 ) {	// success
 			ret = true;
-		} else {
+		} else {							// fail
 			ret = false;
 		}
 		return ret;
