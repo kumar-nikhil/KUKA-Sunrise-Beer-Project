@@ -385,6 +385,7 @@ public class Kefico extends RoboticsAPIApplication {
 					ptp(jTi_Oil_Big.get(2)),
 					ptp(jTi_Oil_Big.get(1)),
 					ptp(jTi_Oil_Big.get(0)),
+					ptp(getApplicationData().getFrame("/jigBase/TempAir_btwBigSmall")),
 					ptp(tempAirAfterOil) )
 			.setJointVelocityRel(1.0));
 			break;
