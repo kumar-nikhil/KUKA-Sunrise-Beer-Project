@@ -1,17 +1,21 @@
 package application;
 
 
-import java.util.concurrent.TimeUnit;
-
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.positionHold;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 import ioTool.ExternalIO;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import additionalFunction.CycleTimer;
 import additionalFunction.ForceTorqueDataSender;
 import additionalFunction.ForceTorqueDataSender.Type;
 
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
-import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
-
+import com.kuka.roboticsAPI.applicationModel.tasks.UseRoboticsAPIContext;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.conditionModel.ICallbackAction;
 import com.kuka.roboticsAPI.conditionModel.ICondition;
@@ -29,17 +33,14 @@ import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
-import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.geometricModel.math.CoordinateAxis;
 import com.kuka.roboticsAPI.geometricModel.math.Transformation;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
-import com.kuka.roboticsAPI.motionModel.OrientationReferenceSystem;
-import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.SplineJP;
-import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianSineImpedanceControlMode;
 import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
+import com.kuka.task.RoboticsAPITask;
 
 /**
  * @author Seulki-Kim , Jun 20, 2016 , KUKA Robotics Korea<p>
@@ -63,17 +64,21 @@ import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
  */
 @SuppressWarnings("unused")
 public class Kefico extends RoboticsAPIApplication {
-	private Controller		cabinet;
-	private LBR				lbr;
+	private Controller	cabinet;
+	private LBR			lbr;
 	// tool
-	private Tool			tool;
-	private ObjectFrame		tcp;
+	private Tool		tool;
+	private ObjectFrame	tcp;
 	// IO
-	private ExternalIO		exIO;
+	private ExternalIO	exIO;
 	// flag
-	private boolean			loopFlag;
+	private boolean		loopFlag;
+
 	// switch enum
-	private enum Con		{ Electric, Oil_Big, Oil_Small };
+	private enum Con {
+		Electric, Oil_Big, Oil_Small
+	};
+
 	// Frames
 	private JointPosition	home;
 	private ObjectFrame		tempAirAfterElectric, tempAirAfterOil;
@@ -81,20 +86,22 @@ public class Kefico extends RoboticsAPIApplication {
 	private ObjectFrame		jigCon_Electric_aprGrip, jigCon_Electric_aprAsy;
 	private ObjectFrame		jigCon_Oil_Big_aprGrip, jigCon_Oil_Big_aprAsy;
 	private ObjectFrame		jigCon_Oil_Small_aprGrip, jigCon_Oil_Small_aprAsy;
-	
+
 	private ObjectFrame		insertCon_Electric, insertCon_Oil_Big, insertCon_Oil_Small;
 	private ObjectFrame		insertCon_Electric_aprGrip, insertCon_Electric_aprAsy;
 	private ObjectFrame		insertCon_Oil_Big_aprGrip, insertCon_Oil_Big_aprAsy;
 	private ObjectFrame		insertCon_Oil_Small_aprGrip, insertCon_Oil_Small_aprAsy;
 
-	private Frame			pick, pick_aprGrip, pick_aprAsy;
-	private Frame			place, place_aprAsy, place_aprGrip;
+	private List<ObjectFrame>	jTi_Electric, jTi_Oil_Big, jTi_Oil_Small;
+	
+	private Frame				pick, pick_aprGrip, pick_aprAsy;
+	private Frame				place, place_aprAsy, place_aprGrip;
 	// CycleTimer
-	private CycleTimer		totalCT, pickCT, insertCT;
-	private CycleTimer		ejectCT, placeCT;
+	private CycleTimer			totalCT, pickCT, insertCT;
+	private CycleTimer			ejectCT, placeCT;
 	// FT
 	private ForceTorqueDataSender	ftdSenderInsert, ftdSenderEject;
-	final boolean			forceSend	= false;
+	final boolean					forceSend	= false;
 
 	@Override
 	public void initialize() {
@@ -143,7 +150,12 @@ public class Kefico extends RoboticsAPIApplication {
 		insertCon_Oil_Small_aprAsy = getApplicationData().getFrame("/jigBase/insertCon_Oil_Small/aprAsy");
 		insertCon_Oil_Small_aprGrip = getApplicationData().getFrame("/jigBase/insertCon_Oil_Small/aprGrip");
 		
-		
+		jTi_Electric = new ArrayList<ObjectFrame>();
+		jTi_Electric.addAll(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Electric").getChildren());
+		jTi_Oil_Big = new ArrayList<ObjectFrame>();
+		jTi_Oil_Big.addAll(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big").getChildren());
+		jTi_Oil_Small = new ArrayList<ObjectFrame>();
+		jTi_Oil_Small.addAll(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small").getChildren());
 	}
 	
 	@Override
@@ -190,20 +202,43 @@ public class Kefico extends RoboticsAPIApplication {
 	private void workEject(Con type) {
 		totalCT.start();
 
+		switch (type) {
+		case Electric:
+			getLogger().info("Electric connector");
+			pick = insertCon_Electric.copyWithRedundancy();
+			pick_aprAsy = insertCon_Electric_aprAsy.copyWithRedundancy();
+			pick_aprGrip = insertCon_Electric_aprGrip.copyWithRedundancy();
+			place = jigCon_Electric.copyWithRedundancy();
+			place_aprAsy = jigCon_Electric_aprAsy.copyWithRedundancy();
+			place_aprGrip = jigCon_Electric_aprGrip.copyWithRedundancy();
+			break;
+		case Oil_Big:
+			getLogger().info("Oil_Big connector");
+			pick = insertCon_Oil_Big.copyWithRedundancy();
+			pick_aprAsy = insertCon_Oil_Big_aprAsy.copyWithRedundancy();
+			pick_aprGrip = insertCon_Oil_Big_aprGrip.copyWithRedundancy();
+			place = jigCon_Oil_Big.copyWithRedundancy();
+			place_aprAsy = jigCon_Oil_Big_aprAsy.copyWithRedundancy();
+			place_aprGrip = jigCon_Oil_Big_aprGrip.copyWithRedundancy();
+			break;
+		case Oil_Small:
+			getLogger().info("Oil_Small connector");
+			pick = insertCon_Oil_Small.copyWithRedundancy();
+			pick_aprAsy = insertCon_Oil_Small_aprAsy.copyWithRedundancy();
+			pick_aprGrip = insertCon_Oil_Small_aprGrip.copyWithRedundancy();
+			place = jigCon_Oil_Small.copyWithRedundancy();
+			place_aprAsy = jigCon_Oil_Small_aprAsy.copyWithRedundancy();
+			place_aprGrip = jigCon_Oil_Small_aprGrip.copyWithRedundancy();
+			break;
+		}
+		
 		// move in
-		MotionPathCondition gOpenC = new MotionPathCondition(ReferenceType.DEST, 0, -100);
-		ITriggerAction gOpenAction = new ICallbackAction() {
-			@Override
-			public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
-				exIO.gripperOpen();				
-			}
-		};
-		getLogger().info("Starting PickPart");
-		tcp.moveAsync(ptp(place_aprAsy).setJointVelocityRel(1.0).setBlendingRel(1.0).triggerWhen(gOpenC, gOpenAction));
-		tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
-		tcp.move(lin(place).setCartVelocity(500));
-		// pick
-		exIO.gripperClose();
+		
+		// part picking
+		pickCT.start();
+		pickPart(type);
+		pickCT.end();
+		
 		
 		// eject
 		ejectCT.start();
@@ -302,19 +337,19 @@ public class Kefico extends RoboticsAPIApplication {
 			break;
 		case Oil_Big:
 			spl = new SplineJP(
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P4")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P3")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P2")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P1")),
+					ptp(jTi_Oil_Big.get(3)),
+					ptp(jTi_Oil_Big.get(2)),
+					ptp(jTi_Oil_Big.get(1)),
+					ptp(jTi_Oil_Big.get(0)),
 					ptp(tempAirAfterOil)
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		case Oil_Small:
 			spl = new SplineJP(
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P4")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P3")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P2")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P1")),
+					ptp(jTi_Oil_Small.get(3)),
+					ptp(jTi_Oil_Small.get(2)),
+					ptp(jTi_Oil_Small.get(1)),
+					ptp(jTi_Oil_Small.get(0)),
 					ptp(tempAirAfterOil)
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
@@ -327,28 +362,28 @@ public class Kefico extends RoboticsAPIApplication {
 		switch (type) {
 		case Electric:
 			spl = new SplineJP(
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Electric/P1")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Electric/P2")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Electric/P3")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Electric/P4")),
+					ptp(jTi_Electric.get(0)),
+					ptp(jTi_Electric.get(1)),
+					ptp(jTi_Electric.get(2)),
+					ptp(jTi_Electric.get(3)),
 					ptp(place_aprAsy)
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		case Oil_Big:
 			spl = new SplineJP(
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P1")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P2")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P3")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big/P4")),
+					ptp(jTi_Oil_Big.get(0)),
+					ptp(jTi_Oil_Big.get(1)),
+					ptp(jTi_Oil_Big.get(2)),
+					ptp(jTi_Oil_Big.get(3)),
 					ptp(place_aprAsy)
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		case Oil_Small:
 			spl = new SplineJP(
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P1")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P2")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P3")),
-					ptp(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small/P4")),
+					ptp(jTi_Oil_Small.get(0)),
+					ptp(jTi_Oil_Small.get(1)),
+					ptp(jTi_Oil_Small.get(2)),
+					ptp(jTi_Oil_Small.get(3)),
 					ptp(place_aprAsy)
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
