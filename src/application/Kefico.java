@@ -433,7 +433,7 @@ public class Kefico extends RoboticsAPIApplication {
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		}
-		tcp.moveAsync(spl.setJointVelocityRel(1.0).setBlendingRel(0.5));
+		tcp.move(spl.setJointVelocityRel(1.0));
 	}
 
 	private void moveJig_To_Insert(Con type) {
