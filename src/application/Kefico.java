@@ -173,25 +173,26 @@ public class Kefico extends RoboticsAPIApplication {
 //			triAxialOscillationTest();
 
 			int key = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
-					"Select what to do", "Work", "END");
+					"Select what to do", "Insert", "Eject", "END");
 			
 			switch (key) {
 			case 0:
 				getLogger().info("Work selected");
 				// Insert
-//				getLogger().info("Starting Insertion");
-//				workInsert(Con.Oil_Big);
-//				workInsert(Con.Oil_Small);
-//				workInsert(Con.Electric);
+				getLogger().info("Starting Insertion");
+				workInsert(Con.Oil_Big);
+				workInsert(Con.Oil_Small);
+				workInsert(Con.Electric);
 				
-				tcp.move(ptp(home).setJointVelocityRel(1.0));
+			case 1:
+//				tcp.move(ptp(home).setJointVelocityRel(1.0));
 				// Eject
 				getLogger().info("Starting Ejection");
 				workEject(Con.Electric);
 				workEject(Con.Oil_Small);
 				workEject(Con.Oil_Big);
 				break;
-			case 1: // END
+			case 2: // END
 				getLogger().info("Ending the application");
 				loopFlag = false;
 				break;
