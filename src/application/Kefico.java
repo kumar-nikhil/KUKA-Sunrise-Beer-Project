@@ -526,7 +526,7 @@ public class Kefico extends RoboticsAPIApplication {
 		if ( type == Con.Electric ) {
 //			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 10.0);
 			double tq1 = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
-			fC = new JointTorqueCondition(JointEnum.J1, tq1-7.0, tq1+7.0);
+			fC = new JointTorqueCondition(JointEnum.J1, tq1-3.0, tq1+3.0);
 			force[0] = 30;
 			force[1] = 50;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
@@ -593,7 +593,7 @@ public class Kefico extends RoboticsAPIApplication {
 		force[0] = 0; force[1] = 0;
 		CartesianSineImpedanceControlMode insertCSICM = new CartesianSineImpedanceControlMode();
 		if ( type == Con.Electric ) {
-			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 10.0);
+			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 5.0);
 //			double tq1 = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
 //			fC = new JointTorqueCondition(JointEnum.J1, tq1-4.0, tq1+4.0);
 			force[0] = 30;
