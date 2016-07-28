@@ -539,7 +539,7 @@ public class Kefico extends RoboticsAPIApplication {
 			force[1] = 90;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
 			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(1500).setDamping(0.3);
-			insertCSICM.parametrize(CartDOF.A).setStiffness(200).setAmplitude(5.0).setFrequency(1.5);	
+//			insertCSICM.parametrize(CartDOF.A).setStiffness(200).setAmplitude(5.0).setFrequency(1.5);	
 		}
 		
 		CartesianImpedanceControlMode contactCICM = new CartesianImpedanceControlMode();
@@ -607,7 +607,7 @@ public class Kefico extends RoboticsAPIApplication {
 			force[1] = 90;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
 			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(1500).setDamping(0.3);
-			insertCSICM.parametrize(CartDOF.A).setStiffness(200).setAmplitude(5.0).setFrequency(1.5);	
+//			insertCSICM.parametrize(CartDOF.A).setStiffness(200).setAmplitude(5.0).setFrequency(1.5);	
 		}
 		
 		CartesianImpedanceControlMode contactCICM = new CartesianImpedanceControlMode();
