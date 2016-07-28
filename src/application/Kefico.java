@@ -367,9 +367,9 @@ public class Kefico extends RoboticsAPIApplication {
 		// move out
 		getLogger().info("Moving...");
 		
+		Frame approach = place_aprGrip.copyWithRedundancy();
 		switch (type) {
 		case Electric:
-			Frame approach = place_aprGrip.copyWithRedundancy();
 			approach.transform(Transformation.ofTranslation(0, 0, -50));
 			
 			tcp.move(lin(place_aprGrip).setCartVelocity(500));
@@ -377,9 +377,11 @@ public class Kefico extends RoboticsAPIApplication {
 			tcp.move(ptp(tempAirAfterElectric).setJointVelocityRel(1.0));
 			break;
 		case Oil_Big:
+			approach.transform(Transformation.ofTranslation(0, 0, -70));
 			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
+			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
 			tcp.moveAsync(new SplineJP(
-					ptp(jTi_Oil_Big.get(3)),
+//					ptp(jTi_Oil_Big.get(3)),
 					ptp(jTi_Oil_Big.get(2)),
 					ptp(jTi_Oil_Big.get(1)),
 					ptp(jTi_Oil_Big.get(0)),
