@@ -183,7 +183,7 @@ public class Kefico extends RoboticsAPIApplication {
 				workInsert(Con.Oil_Big);
 				workInsert(Con.Oil_Small);
 				workInsert(Con.Electric);
-				
+				break;
 			case 1:
 //				tcp.move(ptp(home).setJointVelocityRel(1.0));
 				// Eject
@@ -377,7 +377,7 @@ public class Kefico extends RoboticsAPIApplication {
 			tcp.move(ptp(tempAirAfterElectric).setJointVelocityRel(1.0));
 			break;
 		case Oil_Big:
-			approach.transform(Transformation.ofTranslation(-70, -70, 0));
+			approach.transform(Transformation.ofTranslation(-90, -90, 0));
 			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
 			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
 			tcp.move(new SplineJP(
