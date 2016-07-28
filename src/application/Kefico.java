@@ -289,6 +289,7 @@ public class Kefico extends RoboticsAPIApplication {
 		switch (type) {
 		case Electric:
 			spl = new SplineJP(
+					ptp(tempAirAfterElectric),
 					ptp(jTi_Electric.get(2)),
 					ptp(pick_aprAsy)
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
