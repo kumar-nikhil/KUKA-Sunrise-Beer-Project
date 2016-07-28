@@ -290,7 +290,6 @@ public class Kefico extends RoboticsAPIApplication {
 		case Electric:
 			spl = new SplineJP(
 					ptp(jTi_Electric.get(2)),
-					ptp(jTi_Electric.get(3)),
 					ptp(pick_aprAsy)
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
