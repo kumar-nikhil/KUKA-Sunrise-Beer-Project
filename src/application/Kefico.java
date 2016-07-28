@@ -550,13 +550,13 @@ public class Kefico extends RoboticsAPIApplication {
 		IMotionContainer mc = tcp.move(lin(place).setCartVelocity(200).setMode(contactCICM).breakWhen(fC));
 		if ( mc.hasFired(fC) ) {
 			getLogger().info("Contact made!, trying insertion");
-			insertCSICM.setAdditionalControlForce(0, 25, 0, 0, 0, 0);		// 25
+			insertCSICM.setAdditionalControlForce(0, 40, 0, 0, 0, 0);		// 40
 			tcp.move(lin(place).setCartVelocity(100).setMode(insertCSICM));
 			insertCSICM.setAdditionalControlForceToDefaultValue();
 			// evaluate
 			if ( ! evaluate(place) ) {	// fail
 				getLogger().info("Distance or Force not in range, re-trying with 40N");
-				insertCSICM.setAdditionalControlForce(0, 40, 0, 0, 0, 0);	//40
+				insertCSICM.setAdditionalControlForce(0, 80, 0, 0, 0, 0);	//80
 				tcp.move(positionHold(insertCSICM, 1000, TimeUnit.MILLISECONDS));
 				insertCSICM.setAdditionalControlForceToDefaultValue();
 			}	// end of if
@@ -611,13 +611,13 @@ public class Kefico extends RoboticsAPIApplication {
 		IMotionContainer mc = tcp.move(lin(place).setCartVelocity(200).setMode(contactCICM).breakWhen(fC));
 		if ( mc.hasFired(fC) ) {
 			getLogger().info("Contact made!, trying insertion");
-			insertCSICM.setAdditionalControlForce(0, 25, 0, 0, 0, 0);		// 25
+			insertCSICM.setAdditionalControlForce(0, 40, 0, 0, 0, 0);		// 25
 			tcp.move(lin(place).setCartVelocity(100).setMode(insertCSICM));
 			insertCSICM.setAdditionalControlForceToDefaultValue();
 			// evaluate
 			if ( ! evaluate(place) ) {	// fail
 				getLogger().info("Distance or Force not in range, re-trying with 40N");
-				insertCSICM.setAdditionalControlForce(0, 40, 0, 0, 0, 0);	//40
+				insertCSICM.setAdditionalControlForce(0, 80, 0, 0, 0, 0);	//40
 				tcp.move(positionHold(insertCSICM, 1000, TimeUnit.MILLISECONDS));
 				insertCSICM.setAdditionalControlForceToDefaultValue();
 			}	// end of if
