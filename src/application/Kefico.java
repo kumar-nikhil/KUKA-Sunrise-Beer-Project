@@ -357,7 +357,7 @@ public class Kefico extends RoboticsAPIApplication {
 		// move out
 		getLogger().info("Moving...");
 		CartesianImpedanceControlMode gripCICM = new CartesianImpedanceControlMode();
-		gripCICM.parametrize(CartDOF.Y).setStiffness(1500);
+		gripCICM.parametrize(CartDOF.Y).setStiffness(2500);
 		gripCICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(800).setDamping(0.3);
 		
 		tcp.move(lin(pick_aprAsy).setCartVelocity(500).setMode(gripCICM));
@@ -519,17 +519,22 @@ public class Kefico extends RoboticsAPIApplication {
 		
 		// Condition & CICM
 		ICondition fC = null;
+		double[] force = new double[2];
 		CartesianSineImpedanceControlMode insertCSICM = new CartesianSineImpedanceControlMode();
 		if ( type == Con.Electric ) {
 //			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 10.0);
 			double tq1 = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
 			fC = new JointTorqueCondition(JointEnum.J1, tq1-4.0, tq1+4.0);
+			force[0] = 15;
+			force[2] = 30;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
 			insertCSICM.parametrize(CartDOF.ROT).setStiffness(200).setDamping(0.3);
 			insertCSICM.parametrize(CartDOF.X).setStiffness(500).setAmplitude(1.0).setFrequency(3);
 			insertCSICM.parametrize(CartDOF.Z).setStiffness(500).setAmplitude(1.0).setFrequency(3);
 		} else {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
+			force[0] = 30;
+			force[2] = 70;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
 			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(1500).setDamping(0.3);
 			insertCSICM.parametrize(CartDOF.A).setStiffness(200).setAmplitude(5.0).setFrequency(1.5);	
@@ -549,14 +554,14 @@ public class Kefico extends RoboticsAPIApplication {
 		getLogger().info("Moving until contact occurs");
 		IMotionContainer mc = tcp.move(lin(place).setCartVelocity(200).setMode(contactCICM).breakWhen(fC));
 		if ( mc.hasFired(fC) ) {
-			getLogger().info("Contact made!, trying insertion");
-			insertCSICM.setAdditionalControlForce(0, 30, 0, 0, 0, 0);		// 40
+			getLogger().info(String.format("Contact made!, trying insertion with %d N", force[0]));
+			insertCSICM.setAdditionalControlForce(0, force[0], 0, 0, 0, 0);
 			tcp.move(lin(place).setCartVelocity(100).setMode(insertCSICM));
 			insertCSICM.setAdditionalControlForceToDefaultValue();
 			// evaluate
 			if ( ! evaluate(place) ) {	// fail
-				getLogger().info("Distance or Force not in range, re-trying with 40N");
-				insertCSICM.setAdditionalControlForce(0, 60, 0, 0, 0, 0);	//80
+				getLogger().info(String.format("Distance or Force not in range, re-trying with %d N", force[1]));
+				insertCSICM.setAdditionalControlForce(0, force[1], 0, 0, 0, 0);
 				tcp.move(positionHold(insertCSICM, 1000, TimeUnit.MILLISECONDS));
 				insertCSICM.setAdditionalControlForceToDefaultValue();
 			}	// end of if
@@ -580,17 +585,22 @@ public class Kefico extends RoboticsAPIApplication {
 		
 		// Condition & CICM
 		ICondition fC = null;
+		double[] force = new double[2];
 		CartesianSineImpedanceControlMode insertCSICM = new CartesianSineImpedanceControlMode();
 		if ( type == Con.Electric ) {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
 //			double tq1 = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
 //			fC = new JointTorqueCondition(JointEnum.J1, tq1-4.0, tq1+4.0);
+			force[0] = 15;
+			force[2] = 30;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(1000);
 			insertCSICM.parametrize(CartDOF.ROT).setStiffness(200).setDamping(0.3);
 			insertCSICM.parametrize(CartDOF.X).setStiffness(500).setAmplitude(1.0).setFrequency(3);
 			insertCSICM.parametrize(CartDOF.Z).setStiffness(500).setAmplitude(1.0).setFrequency(3);
 		} else {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 4.0);
+			force[0] = 30;
+			force[2] = 70;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
 			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(1500).setDamping(0.3);
 			insertCSICM.parametrize(CartDOF.A).setStiffness(200).setAmplitude(5.0).setFrequency(1.5);	
@@ -610,14 +620,14 @@ public class Kefico extends RoboticsAPIApplication {
 		getLogger().info("Moving until contact occurs");
 		IMotionContainer mc = tcp.move(lin(place).setCartVelocity(200).setMode(contactCICM).breakWhen(fC));
 		if ( mc.hasFired(fC) ) {
-			getLogger().info("Contact made!, trying insertion");
-			insertCSICM.setAdditionalControlForce(0, 30, 0, 0, 0, 0);		// 25
+			getLogger().info(String.format("Contact made!, trying insertion with %d N", force[0]));
+			insertCSICM.setAdditionalControlForce(0, force[0], 0, 0, 0, 0);
 			tcp.move(lin(place).setCartVelocity(100).setMode(insertCSICM));
 			insertCSICM.setAdditionalControlForceToDefaultValue();
 			// evaluate
 			if ( ! evaluate(place) ) {	// fail
-				getLogger().info("Distance or Force not in range, re-trying with 40N");
-				insertCSICM.setAdditionalControlForce(0, 60, 0, 0, 0, 0);	//40
+				getLogger().info(String.format("Distance or Force not in range, re-trying with %d N", force[1]));
+				insertCSICM.setAdditionalControlForce(0, force[1], 0, 0, 0, 0);
 				tcp.move(positionHold(insertCSICM, 1000, TimeUnit.MILLISECONDS));
 				insertCSICM.setAdditionalControlForceToDefaultValue();
 			}	// end of if
