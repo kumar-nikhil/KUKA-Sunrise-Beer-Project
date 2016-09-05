@@ -500,7 +500,7 @@ public class Kefico extends RoboticsAPIApplication {
 						.triggerWhen(gOpenC, gOpenAction));
 				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
 				tcp.move(lin(pick).setCartVelocity(500));
-			} else {
+			} else if ( type == Con.Oil_Big ){
 				approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 150));
 				tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(0.5)
 						.triggerWhen(gOpenC, gOpenAction));
