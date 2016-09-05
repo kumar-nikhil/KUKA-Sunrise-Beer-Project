@@ -17,6 +17,7 @@ import com.kuka.roboticsAPI.uiModel.userKeys.UserKeyAlignment;
 import com.kuka.roboticsAPI.uiModel.userKeys.UserKeyEvent;
 import com.kuka.roboticsAPI.uiModel.userKeys.UserKeyLED;
 import com.kuka.roboticsAPI.uiModel.userKeys.UserKeyLEDSize;
+import com.kuka.task.ITaskLogger;
 
 /**
  * @author Seulki-Kim , Jun 20, 2016 , KUKA Robotics Korea<p>
@@ -74,6 +75,7 @@ public class NC_MakeFrame extends RoboticsAPIBackgroundTask {
 		IUserKey base = frameBar.addUserKey(0, keyListener, true);
 		base.setText(UserKeyAlignment.TopMiddle, "Create");
 		base.setLED(UserKeyAlignment.Middle, UserKeyLED.Grey, UserKeyLEDSize.Normal);
+		
 		
 		frameBar.publish();
 	}	// endof user key bar

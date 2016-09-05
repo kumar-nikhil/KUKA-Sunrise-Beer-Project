@@ -44,7 +44,7 @@ import com.kuka.task.RoboticsAPITask;
 
 /**
  * @author Seulki-Kim , Jun 20, 2016 , KUKA Robotics Korea<p>
- * @modified Seulki-Kim , Jul 27, 2016 , KUKA Robotics Korea<p>
+ * @modified Seulki-Kim , Sep 5, 2016 , KUKA Robotics Korea<p>
  * Implementation of a robot application.
  * <p>
  * The application provides a {@link RoboticsAPITask#initialize()} and a 
@@ -94,7 +94,7 @@ public class Kefico extends RoboticsAPIApplication {
 	private ObjectFrame		insertCon_Oil_Small_aprGrip, insertCon_Oil_Small_aprAsy;
 
 	private List<ObjectFrame>	jTi_Electric, jTi_Oil_Big, jTi_Oil_Small;
-	
+
 	private Frame				pick, pick_aprGrip, pick_aprAsy;
 	private Frame				place, place_aprAsy, place_aprGrip;
 	// CycleTimer
@@ -103,7 +103,10 @@ public class Kefico extends RoboticsAPIApplication {
 	// FT
 	private ForceTorqueDataSender	ftdSenderInsert, ftdSenderEject;
 	final boolean					forceSend	= false;
-
+	// Force process data
+	private double					forceE_1, forceE_2, forceOB_1, forceOB_2, forceOS_1, forceOS_2;
+	
+	
 	@Override
 	public void initialize() {
 		cabinet = getController("KUKA_Sunrise_Cabinet_1");
@@ -122,9 +125,26 @@ public class Kefico extends RoboticsAPIApplication {
 		insertCT = new CycleTimer("Insert", getLogger());
 		placeCT = new CycleTimer("Place", getLogger());
 		ejectCT = new CycleTimer("Eject", getLogger());
-
+		// Force process data
+		processDataUpdate();
+		
 		tool.attachTo(lbr.getFlange());
 //		exIO.gripperClose();
+	}
+
+	private void processDataUpdate() {
+		forceE_1 = getApplicationData().getProcessData("forceE_1").getValue();
+		getApplicationData().getProcessData("forceE_1").setDefaultValue(forceE_1);
+		forceE_2 = getApplicationData().getProcessData("forceE_2").getValue();
+		getApplicationData().getProcessData("forceE_2").setDefaultValue(forceE_2);
+		forceOB_1 = getApplicationData().getProcessData("forceOB_1").getValue();
+		getApplicationData().getProcessData("forceOB_1").setDefaultValue(forceOB_1);
+		forceOB_2 = getApplicationData().getProcessData("forceOB_2").getValue();
+		getApplicationData().getProcessData("forceOB_2").setDefaultValue(forceOB_2);
+		forceOS_1 = getApplicationData().getProcessData("forceOS_1").getValue();
+		getApplicationData().getProcessData("forceOS_1").setDefaultValue(forceOS_1);
+		forceOS_2 = getApplicationData().getProcessData("forceOS_2").getValue();
+		getApplicationData().getProcessData("forceOS_2").setDefaultValue(forceOS_2);
 	}
 
 	private void initFrames() {
@@ -134,32 +154,38 @@ public class Kefico extends RoboticsAPIApplication {
 		tempAirAfterElectric_iTj = getApplicationData().getFrame("/jigBase/tempAir_AfterElectric/insertToJig");
 		tempAirAfterOil_iTj = getApplicationData().getFrame("/jigBase/tempAir_AfterOil/insertToJig");
 		
-		jigCon_Electric = getApplicationData().getFrame("/jigBase/jigCon_Electric");
-		jigCon_Electric_aprAsy = getApplicationData().getFrame("/jigBase/jigCon_Electric/aprAsy");
-		jigCon_Electric_aprGrip = getApplicationData().getFrame("/jigBase/jigCon_Electric/aprGrip");
-		jigCon_Oil_Big = getApplicationData().getFrame("/jigBase/jigCon_Oil_Big");
-		jigCon_Oil_Big_aprAsy = getApplicationData().getFrame("/jigBase/jigCon_Oil_Big/aprAsy");
-		jigCon_Oil_Big_aprGrip = getApplicationData().getFrame("/jigBase/jigCon_Oil_Big/aprGrip");
-		jigCon_Oil_Small = getApplicationData().getFrame("/jigBase/jigCon_Oil_Small");
-		jigCon_Oil_Small_aprAsy = getApplicationData().getFrame("/jigBase/jigCon_Oil_Small/aprAsy");
-		jigCon_Oil_Small_aprGrip = getApplicationData().getFrame("/jigBase/jigCon_Oil_Small/aprGrip");
+		jigCon_Electric = getApplicationData().getFrame("/jigBase/jigCon/jigCon_Electric");
+		jigCon_Electric_aprAsy = getApplicationData().getFrame("/jigBase/jigCon/jigCon_Electric/aprAsy");
+		jigCon_Electric_aprGrip = getApplicationData().getFrame("/jigBase/jigCon/jigCon_Electric/aprGrip");
+		jigCon_Oil_Big = getApplicationData().getFrame("/jigBase/jigCon/jigCon_Oil_Big");
+		jigCon_Oil_Big_aprAsy = getApplicationData().getFrame("/jigBase/jigCon/jigCon_Oil_Big/aprAsy");
+		jigCon_Oil_Big_aprGrip = getApplicationData().getFrame("/jigBase/jigCon/jigCon_Oil_Big/aprGrip");
+		jigCon_Oil_Small = getApplicationData().getFrame("/jigBase/jigCon/jigCon_Oil_Small");
+		jigCon_Oil_Small_aprAsy = getApplicationData().getFrame("/jigBase/jigCon/jigCon_Oil_Small/aprAsy");
+		jigCon_Oil_Small_aprGrip = getApplicationData().getFrame("/jigBase/jigCon/jigCon_Oil_Small/aprGrip");
 		
-		insertCon_Electric = getApplicationData().getFrame("/jigBase/insertCon_Electric");
-		insertCon_Electric_aprAsy = getApplicationData().getFrame("/jigBase/insertCon_Electric/aprAsy");
-		insertCon_Electric_aprGrip = getApplicationData().getFrame("/jigBase/insertCon_Electric/aprGrip");
-		insertCon_Oil_Big = getApplicationData().getFrame("/jigBase/insertCon_Oil_Big");
-		insertCon_Oil_Big_aprAsy = getApplicationData().getFrame("/jigBase/insertCon_Oil_Big/aprAsy");
-		insertCon_Oil_Big_aprGrip = getApplicationData().getFrame("/jigBase/insertCon_Oil_Big/aprGrip");
-		insertCon_Oil_Small = getApplicationData().getFrame("/jigBase/insertCon_Oil_Small");
-		insertCon_Oil_Small_aprAsy = getApplicationData().getFrame("/jigBase/insertCon_Oil_Small/aprAsy");
-		insertCon_Oil_Small_aprGrip = getApplicationData().getFrame("/jigBase/insertCon_Oil_Small/aprGrip");
+		insertCon_Electric = getApplicationData().getFrame("/jigBase/insertCon/insertCon_Electric");
+		insertCon_Electric_aprAsy = getApplicationData().getFrame("/jigBase/insertCon/insertCon_Electric/aprAsy");
+		insertCon_Electric_aprGrip = getApplicationData().getFrame("/jigBase/insertCon/insertCon_Electric/aprGrip");
+		insertCon_Oil_Big = getApplicationData().getFrame("/jigBase/insertCon/insertCon_Oil_Big");
+		insertCon_Oil_Big_aprAsy = getApplicationData().getFrame("/jigBase/insertCon/insertCon_Oil_Big/aprAsy");
+		insertCon_Oil_Big_aprGrip = getApplicationData().getFrame("/jigBase/insertCon/insertCon_Oil_Big/aprGrip");
+		insertCon_Oil_Small = getApplicationData().getFrame("/jigBase/insertCon/insertCon_Oil_Small");
+		insertCon_Oil_Small_aprAsy = getApplicationData().getFrame("/jigBase/insertCon/insertCon_Oil_Small/aprAsy");
+		insertCon_Oil_Small_aprGrip = getApplicationData().getFrame("/jigBase/insertCon/insertCon_Oil_Small/aprGrip");
 		
 		jTi_Electric = new ArrayList<ObjectFrame>();
-		jTi_Electric.addAll(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Electric").getChildren());
+		jTi_Electric.addAll(getApplicationData().getFrame("/jigBase/SPL/SPLJigToInsert_Electric").getChildren());
 		jTi_Oil_Big = new ArrayList<ObjectFrame>();
-		jTi_Oil_Big.addAll(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Big").getChildren());
+		jTi_Oil_Big.addAll(getApplicationData().getFrame("/jigBase/SPL/SPLJigToInsert_Oil_Big").getChildren());
 		jTi_Oil_Small = new ArrayList<ObjectFrame>();
-		jTi_Oil_Small.addAll(getApplicationData().getFrame("/jigBase/SPLJigToInsert_Oil_Small").getChildren());
+		jTi_Oil_Small.addAll(getApplicationData().getFrame("/jigBase/SPL/SPLJigToInsert_Oil_Small").getChildren());
+		
+		getApplicationControl().clipApplicationOverride(0.3);
+		// if AppOverride is higher than 0.3	-> it will be clipped to 0.3 (30%)
+		// else it is lower than 0.3			-> clip method won't take any effect
+		// e.g) before [0.7]	-> after method	-> [0.3]
+		//		before [0.15]	-> after method	-> [0.15]
 	}
 	
 	@Override
@@ -169,8 +195,6 @@ public class Kefico extends RoboticsAPIApplication {
 			getLogger().info("Starting the application");
 
 			tcp.move(ptp(home).setJointVelocityRel(1.0));
-			
-//			triAxialOscillationTest();
 
 			int key = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
 					"Select what to do", "Insert", "Eject", "END");
@@ -521,29 +545,28 @@ public class Kefico extends RoboticsAPIApplication {
 		// Condition & CICM
 		ICondition fC = null;
 		double[] force = new double[2];
-		force[0] = 0; force[1] = 1;
 		CartesianSineImpedanceControlMode insertCSICM = new CartesianSineImpedanceControlMode();
 		if ( type == Con.Electric ) {
 //			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 10.0);
 			double tq1 = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
 			fC = new JointTorqueCondition(JointEnum.J1, tq1-3.0, tq1+3.0);
-			force[0] = 30;
-			force[1] = 50;
+			force[0] = forceE_1;
+			force[1] = forceE_2;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
 //			insertCSICM.parametrize(CartDOF.ROT).setStiffness(200).setDamping(0.3);
 			insertCSICM.parametrize(CartDOF.X).setStiffness(1000).setAmplitude(1.0).setFrequency(3);
 			insertCSICM.parametrize(CartDOF.Z).setStiffness(1000).setAmplitude(1.0).setFrequency(3);
 		} else if ( type == Con.Oil_Big ) {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 5.0);
-			force[0] = 50;
-			force[1] = 60;
+			force[0] = forceOB_1;
+			force[1] = forceOB_2;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
 			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(1500).setDamping(0.3);
 //			insertCSICM.parametrize(CartDOF.A).setStiffness(200).setAmplitude(5.0).setFrequency(1.5);	
 		} else if ( type == Con.Oil_Small ) {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 5.0);
-			force[0] = 80;
-			force[1] = 90;
+			force[0] = forceOS_1;
+			force[1] = forceOS_2;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
 			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(1500).setDamping(0.3);
 		}
@@ -602,23 +625,23 @@ public class Kefico extends RoboticsAPIApplication {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 5.0);
 //			double tq1 = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
 //			fC = new JointTorqueCondition(JointEnum.J1, tq1-4.0, tq1+4.0);
-			force[0] = 30;
-			force[1] = 50;
+			force[0] = forceE_1;
+			force[1] = forceE_2;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
 //			insertCSICM.parametrize(CartDOF.ROT).setStiffness(200).setDamping(0.3);
 			insertCSICM.parametrize(CartDOF.X).setStiffness(1000).setAmplitude(1.0).setFrequency(3);
 			insertCSICM.parametrize(CartDOF.Z).setStiffness(1000).setAmplitude(1.0).setFrequency(3);
 		} else if ( type == Con.Oil_Big ) {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 5.0);
-			force[0] = 50;
-			force[1] = 60;
+			force[0] = forceOB_1;
+			force[1] = forceOB_2;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
 			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(1500).setDamping(0.3);
 //			insertCSICM.parametrize(CartDOF.A).setStiffness(200).setAmplitude(5.0).setFrequency(1.5);	
 		} else if ( type == Con.Oil_Small ) {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 5.0);
-			force[0] = 80;
-			force[1] = 90;
+			force[0] = forceOS_1;
+			force[1] = forceOS_2;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
 			insertCSICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(1500).setDamping(0.3);
 		}
@@ -678,27 +701,5 @@ public class Kefico extends RoboticsAPIApplication {
 		}
 		return ret;
 	}
-	
-	
-	
-	private void triAxialOscillationTest() {
-		CartesianSineImpedanceControlMode triMode = new CartesianSineImpedanceControlMode();
-		triMode.parametrize(CartDOF.X).setStiffness(5000);
-		triMode.parametrize(CartDOF.X).setAmplitude(100.0);
-		triMode.parametrize(CartDOF.X).setFrequency(0.9);
-		//
-		triMode.parametrize(CartDOF.Y).setStiffness(5000);
-		triMode.parametrize(CartDOF.Y).setAmplitude(100.0);
-		triMode.parametrize(CartDOF.Y).setFrequency(1.0);
-		//
-		triMode.parametrize(CartDOF.Z).setStiffness(5000);
-		triMode.parametrize(CartDOF.Z).setAmplitude(100.0);
-		triMode.parametrize(CartDOF.Z).setFrequency(1.1);
 		
-		lbr.move(positionHold(triMode, 10, TimeUnit.SECONDS));
-	}
-
-	
-	
-	
 }
