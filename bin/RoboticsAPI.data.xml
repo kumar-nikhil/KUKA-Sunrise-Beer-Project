@@ -753,11 +753,11 @@
         </toolTemplate>
     </objectTemplates>
     <processDataContainer>
-        <processData comment="1st insert force Electric - [30]" dataType="java.lang.Double" defaultValue="30" displayName="Force Electric 1" id="forceE_1" max="80.0" min="0.0" unit="N" value="30"/>
-        <processData comment="2nd insert force Electric - [50]" dataType="java.lang.Double" defaultValue="50" displayName="Force Electric 2" id="forceE_2" max="80.0" min="0.0" unit="N" value="50"/>
-        <processData comment="1st insert force Oil Big - [50]" dataType="java.lang.Double" defaultValue="20" displayName="Force Oil Big 1" id="forceOB_1" max="80.0" min="0.0" unit="N" value="20"/>
-        <processData comment="2nd insert force Oil Big - [60]" dataType="java.lang.Double" defaultValue="40" displayName="Force Oil Big 2" id="forceOB_2" max="80.0" min="0.0" unit="N" value="40"/>
-        <processData comment="1st insert force Oil Small - [60]" dataType="java.lang.Double" defaultValue="20" displayName="Force Oil Small 1" id="forceOS_1" max="80.0" min="0.0" unit="N" value="20"/>
-        <processData comment="2nd insert force Oil Small - [80]" dataType="java.lang.Double" defaultValue="40" displayName="Force Oil Small 2" id="forceOS_2" max="80.0" min="0.0" unit="N" value="40"/>
+        <processData comment="1st insert force Electric - [30]" dataType="java.lang.Double" defaultValue="30.0" displayName="Force Electric 1" id="forceE_1" max="80.0" min="0.0" unit="N" value="30"/>
+        <processData comment="2nd insert force Electric - [50]" dataType="java.lang.Double" defaultValue="50.0" displayName="Force Electric 2" id="forceE_2" max="80.0" min="0.0" unit="N" value="50"/>
+        <processData comment="1st insert force Oil Big - [50]" dataType="java.lang.Double" defaultValue="20.0" displayName="Force Oil Big 1" id="forceOB_1" max="80.0" min="0.0" unit="N" value="20"/>
+        <processData comment="2nd insert force Oil Big - [60]" dataType="java.lang.Double" defaultValue="40.0" displayName="Force Oil Big 2" id="forceOB_2" max="80.0" min="0.0" unit="N" value="40"/>
+        <processData comment="1st insert force Oil Small - [60]" dataType="java.lang.Double" defaultValue="20.0" displayName="Force Oil Small 1" id="forceOS_1" max="80.0" min="0.0" unit="N" value="20"/>
+        <processData comment="2nd insert force Oil Small - [80]" dataType="java.lang.Double" defaultValue="40.0" displayName="Force Oil Small 2" id="forceOS_2" max="80.0" min="0.0" unit="N" value="40"/>
     </processDataContainer>
 </RoboticsAPIData>
