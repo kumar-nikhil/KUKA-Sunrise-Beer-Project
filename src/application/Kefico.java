@@ -79,6 +79,12 @@ public class Kefico extends RoboticsAPIApplication {
 	private enum Con {
 		Electric, Oil_Big, Oil_Small
 	};
+	
+	private enum Work {
+		Insert, Eject
+	};
+
+	private Work			workType;
 
 	// Frames
 	private JointPosition	home;
@@ -118,6 +124,7 @@ public class Kefico extends RoboticsAPIApplication {
 		exIO = new ExternalIO(cabinet, this);
 		
 		loopFlag = true;
+		workType = Work.Insert;
 		// frames
 		initFrames();
 		// CT
@@ -202,7 +209,8 @@ public class Kefico extends RoboticsAPIApplication {
 			
 			switch (key) {
 			case 0:
-				getLogger().info("Work selected");
+				getLogger().info("Insert selected");
+				workType = Work.Insert;
 				// Insert
 				getLogger().info("Starting Insertion");
 				workInsert(Con.Oil_Big);
@@ -211,6 +219,8 @@ public class Kefico extends RoboticsAPIApplication {
 				break;
 			case 1:
 //				tcp.move(ptp(home).setJointVelocityRel(1.0));
+				getLogger().info("Eject selected");
+				workType = Work.Eject;
 				// Eject
 				getLogger().info("Starting Ejection");
 				workEject(Con.Electric);
@@ -262,9 +272,6 @@ public class Kefico extends RoboticsAPIApplication {
 			break;
 		}
 		
-		// move in
-		ejectMoveIn(type);
-		
 		// part picking
 		pickCT.start();
 		pickPart(type);
@@ -312,33 +319,6 @@ public class Kefico extends RoboticsAPIApplication {
 		}
 		
 		totalCT.end();
-	}
-
-	private void ejectMoveIn(Con type) {
-		SplineJP spl = null;
-		switch (type) {
-		case Electric:
-			Frame approach = place_aprGrip.copyWithRedundancy();
-			approach.transform(Transformation.ofTranslation(0, 0, -80));
-			spl = new SplineJP(
-					ptp(jTi_Electric.get(4)),
-					ptp(jTi_Electric.get(5))
-					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
-			break;
-		case Oil_Big:
-			spl = new SplineJP(
-					ptp(jTi_Oil_Big.get(4)),
-					ptp(jTi_Oil_Big.get(5))
-					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
-			break;
-		case Oil_Small:
-			spl = new SplineJP(
-					ptp(jTi_Oil_Small.get(4)),
-					ptp(jTi_Oil_Small.get(5))
-					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
-			break;
-		}
-		tcp.moveAsync(spl.setJointVelocityRel(1.0).setBlendingRel(0.5));
 	}
 
 	private void workInsert(Con type) {
@@ -414,16 +394,17 @@ public class Kefico extends RoboticsAPIApplication {
 					ptp(jTi_Oil_Big.get(2)),
 					ptp(jTi_Oil_Big.get(1)),
 					ptp(jTi_Oil_Big.get(0)),
-					ptp(getApplicationData().getFrame("/jigBase/TempAir_btwBigSmall")),
-					ptp(tempAirAfterOil) )
+					ptp(getApplicationData().getFrame("/jigBase/TempAir_btwBigSmall"))	)
+//					ptp(tempAirAfterOil) )
 			.setJointVelocityRel(1.0));
 			break;
 		case Oil_Small:
 			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
 			approach.transform(Transformation.ofTranslation(0, 0, -90));
 			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
-			approach.transform(Transformation.ofTranslation(90, 90, 0));
+			approach.transform(Transformation.ofTranslation(250, -250, -90));
 			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
+			tcp.move(ptp(tempAirAfterOil).setJointVelocityRel(1.0));
 
 //			tcp.move( new SplineJP(
 //					ptp(jTi_Oil_Small.get(3)),
@@ -519,17 +500,47 @@ public class Kefico extends RoboticsAPIApplication {
 		Frame approach = pick_aprGrip.copyWithRedundancy();
 		
 		getLogger().info("Starting PickPart");
-		if ( type == Con.Electric ) {
-			approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 150));
-			tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(0.5).triggerWhen(gOpenC, gOpenAction));
-			tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
-			tcp.move(lin(pick).setCartVelocity(500));
-		} else {
-			approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 150));
-			tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(0.5).triggerWhen(gOpenC, gOpenAction));
-			tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
-			tcp.move(lin(pick).setCartVelocity(500));			
+		if ( workType == Work.Insert ) {
+			if (type == Con.Electric) {
+				approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 150));
+				tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(0.5)
+						.triggerWhen(gOpenC, gOpenAction));
+				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
+				tcp.move(lin(pick).setCartVelocity(500));
+			} else {
+				approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 150));
+				tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(0.5)
+						.triggerWhen(gOpenC, gOpenAction));
+				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
+				tcp.move(lin(pick).setCartVelocity(500));
+			}
+		} else if ( workType == Work.Eject ) {
+			switch (type) {
+			case Electric:
+				tcp.moveAsync(ptp(jTi_Electric.get(4)).setJointVelocityRel(1.0).setBlendingRel(0.5)
+						.triggerWhen(gOpenC, gOpenAction));
+				tcp.moveAsync(ptp(jTi_Electric.get(5)).setJointVelocityRel(1.0).setBlendingRel(0.5));
+				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
+				tcp.move(lin(pick).setCartVelocity(500));
+				break;
+			case Oil_Big:
+				tcp.moveAsync(ptp(jTi_Oil_Big.get(4)).setJointVelocityRel(1.0).setBlendingRel(0.5)
+						.triggerWhen(gOpenC, gOpenAction));
+				tcp.moveAsync(ptp(jTi_Oil_Big.get(5)).setJointVelocityRel(1.0).setBlendingRel(0.5));
+				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
+				tcp.move(lin(pick).setCartVelocity(500));
+				break;
+			case Oil_Small:
+				tcp.moveAsync(ptp(jTi_Oil_Small.get(4)).setJointVelocityRel(1.0).setBlendingRel(0.5)
+						.triggerWhen(gOpenC, gOpenAction));
+				tcp.moveAsync(ptp(jTi_Oil_Small.get(5)).setJointVelocityRel(1.0).setBlendingRel(0.5));
+				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
+				tcp.move(lin(pick).setCartVelocity(500));
+				break;
+			}
 		}
+		
+		
 		// pick
 		CartesianImpedanceControlMode gripCICM = new CartesianImpedanceControlMode();
 		gripCICM.parametrize(CartDOF.Y).setStiffness(1500);
