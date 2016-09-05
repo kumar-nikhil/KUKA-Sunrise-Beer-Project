@@ -297,10 +297,11 @@ public class Kefico extends RoboticsAPIApplication {
 		
 		Frame approach = place_aprGrip.copyWithRedundancy();
 		switch (type) {
-		case Electric:
-			approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 150));
-			
+		case Electric:			
 			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.2));
+			approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 200));
+			tcp.moveAsync(lin(approach).setJointVelocityRel(1.0).setBlendingRel(0.2));
+			approach.transform(Transformation.ofTranslation(0, 0, 200));
 			tcp.moveAsync(lin(approach).setJointVelocityRel(1.0).setBlendingRel(0.2));
 			tcp.move(ptp(tempAirAfterElectric_iTj).setJointVelocityRel(1.0));
 			break;
