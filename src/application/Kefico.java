@@ -189,11 +189,6 @@ public class Kefico extends RoboticsAPIApplication {
 		jTi_Oil_Small = new ArrayList<ObjectFrame>();
 		jTi_Oil_Small.addAll(getApplicationData().getFrame("/jigBase/SPL/SPLJigToInsert_Oil_Small").getChildren());
 		
-		getApplicationControl().clipApplicationOverride(0.3);
-		// if AppOverride is higher than 0.3	-> it will be clipped to 0.3 (30%)
-		// else it is lower than 0.3			-> clip method won't take any effect
-		// e.g) before [0.7]	-> after method	-> [0.3]
-		//		before [0.15]	-> after method	-> [0.15]
 	}
 	
 	@Override
