@@ -263,9 +263,9 @@
                     <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
                 </redundancyData>
                 <frame name="insertCon_Electric">
-                    <transformation a="3.1415756041497698" b="4.607677961507855E-5" c="-4.929516548642468E-4" x="-1.561959195579675" y="-59.58705547860867" z="50.89228262113767"/>
+                    <transformation a="3.1414476960763" b="-7.877041710752577E-5" c="-6.557355615706383E-4" x="-1.236156409548471" y="-58.68223139016412" z="50.827896432075505"/>
                     <additionalInformation>
-                        <info key="LastModificationTime" type="java.lang.Long" value="1473044435256"/>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1473113592954"/>
                         <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                             <tcpTransformation a="-0.3926990816987242" b="0.0" c="0.0" x="0.0" y="0.0" z="150.0"/>
                         </info>
@@ -274,7 +274,7 @@
                         <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
                             <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
                             <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="76" valueType="java.lang.Integer"/>
-                            <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.1205214932819088" valueType="java.lang.Double"/>
+                            <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.120573205205984" valueType="java.lang.Double"/>
                         </redundancy>
                     </redundancyData>
                     <frame name="aprGrip">
@@ -294,9 +294,9 @@
                         </redundancyData>
                     </frame>
                     <frame name="aprAsy">
-                        <transformation a="-2.528300939214401E-4" b="1.772351403752056E-5" c="-1.3179667692650706E-5" x="0.005299847633068566" y="30.001433778020534" z="-0.01887163048419893"/>
+                        <transformation a="-2.35355819345289E-4" b="1.1416578659295885E-4" c="-9.65539860704954E-5" x="0.023882593474809255" y="50.033265075030435" z="0.006880378129210385"/>
                         <additionalInformation>
-                            <info key="LastModificationTime" type="java.lang.Long" value="1473044626008"/>
+                            <info key="LastModificationTime" type="java.lang.Long" value="1473113662878"/>
                             <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                                 <tcpTransformation a="-0.3926990816987242" b="0.0" c="0.0" x="0.0" y="0.0" z="150.0"/>
                             </info>
@@ -304,8 +304,8 @@
                         <redundancyData>
                             <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
                                 <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
-                                <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="76" valueType="java.lang.Integer"/>
-                                <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.1204729572025742" valueType="java.lang.Double"/>
+                                <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="12" valueType="java.lang.Integer"/>
+                                <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.1204636095463494" valueType="java.lang.Double"/>
                             </redundancy>
                         </redundancyData>
                     </frame>
@@ -753,11 +753,11 @@
         </toolTemplate>
     </objectTemplates>
     <processDataContainer>
-        <processData comment="1st insert force Electric - [30]" dataType="java.lang.Double" defaultValue="30" displayName="Force Electric 1" id="forceE_1" max="80.0" min="0.0" unit="N" value="30"/>
-        <processData comment="2nd insert force Electric - [50]" dataType="java.lang.Double" defaultValue="50" displayName="Force Electric 2" id="forceE_2" max="80.0" min="0.0" unit="N" value="50"/>
-        <processData comment="1st insert force Oil Big - [50]" dataType="java.lang.Double" defaultValue="20" displayName="Force Oil Big 1" id="forceOB_1" max="80.0" min="0.0" unit="N" value="20"/>
-        <processData comment="2nd insert force Oil Big - [60]" dataType="java.lang.Double" defaultValue="40" displayName="Force Oil Big 2" id="forceOB_2" max="80.0" min="0.0" unit="N" value="40"/>
-        <processData comment="1st insert force Oil Small - [60]" dataType="java.lang.Double" defaultValue="20" displayName="Force Oil Small 1" id="forceOS_1" max="80.0" min="0.0" unit="N" value="20"/>
-        <processData comment="2nd insert force Oil Small - [80]" dataType="java.lang.Double" defaultValue="40" displayName="Force Oil Small 2" id="forceOS_2" max="80.0" min="0.0" unit="N" value="40"/>
+        <processData comment="1st insert force Electric - [30]" dataType="java.lang.Double" defaultValue="30.0" displayName="Force Electric 1" id="forceE_1" max="80.0" min="0.0" unit="N" value="30"/>
+        <processData comment="2nd insert force Electric - [50]" dataType="java.lang.Double" defaultValue="50.0" displayName="Force Electric 2" id="forceE_2" max="80.0" min="0.0" unit="N" value="50"/>
+        <processData comment="1st insert force Oil Big - [50]" dataType="java.lang.Double" defaultValue="20.0" displayName="Force Oil Big 1" id="forceOB_1" max="80.0" min="0.0" unit="N" value="20"/>
+        <processData comment="2nd insert force Oil Big - [60]" dataType="java.lang.Double" defaultValue="40.0" displayName="Force Oil Big 2" id="forceOB_2" max="80.0" min="0.0" unit="N" value="40"/>
+        <processData comment="1st insert force Oil Small - [60]" dataType="java.lang.Double" defaultValue="20.0" displayName="Force Oil Small 1" id="forceOS_1" max="80.0" min="0.0" unit="N" value="20"/>
+        <processData comment="2nd insert force Oil Small - [80]" dataType="java.lang.Double" defaultValue="40.0" displayName="Force Oil Small 2" id="forceOS_2" max="80.0" min="0.0" unit="N" value="40"/>
     </processDataContainer>
 </RoboticsAPIData>
