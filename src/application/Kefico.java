@@ -554,8 +554,8 @@ public class Kefico extends RoboticsAPIApplication {
 //			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 10.0);
 			double tq1 = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
 			fC = new JointTorqueCondition(JointEnum.J1, tq1-3.0, tq1+3.0);
-			force[0] = forceE_1;
-			force[1] = forceE_2;
+			force[0] = -forceE_1;
+			force[1] = -forceE_2;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
 //			insertCSICM.parametrize(CartDOF.ROT).setStiffness(200).setDamping(0.3);
 			insertCSICM.parametrize(CartDOF.X).setStiffness(1000).setAmplitude(1.0).setFrequency(3);
@@ -629,8 +629,8 @@ public class Kefico extends RoboticsAPIApplication {
 			fC = ForceCondition.createNormalForceCondition(tcp, CoordinateAxis.Y, 5.0);
 //			double tq1 = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
 //			fC = new JointTorqueCondition(JointEnum.J1, tq1-4.0, tq1+4.0);
-			force[0] = forceE_1;
-			force[1] = forceE_2;
+			force[0] = -forceE_1;
+			force[1] = -forceE_2;
 			insertCSICM.parametrize(CartDOF.Y).setStiffness(2000);
 //			insertCSICM.parametrize(CartDOF.ROT).setStiffness(200).setDamping(0.3);
 			insertCSICM.parametrize(CartDOF.X).setStiffness(1000).setAmplitude(1.0).setFrequency(3);
