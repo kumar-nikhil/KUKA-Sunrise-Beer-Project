@@ -33,6 +33,7 @@ import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
+import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.geometricModel.math.CoordinateAxis;
 import com.kuka.roboticsAPI.geometricModel.math.Transformation;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
@@ -399,18 +400,17 @@ public class Kefico extends RoboticsAPIApplication {
 		Frame approach = place_aprGrip.copyWithRedundancy();
 		switch (type) {
 		case Electric:
-			approach.transform(Transformation.ofTranslation(0, 0, -50));
-			
-			tcp.move(lin(place_aprGrip).setCartVelocity(500));
+			approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 100));
+			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.2));
 			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
 			tcp.move(ptp(tempAirAfterElectric).setJointVelocityRel(1.0));
 			break;
 		case Oil_Big:
-			approach.transform(Transformation.ofTranslation(-90, -90, 0));
+//			approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, -100, 100));
 			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
-			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
+//			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
 			tcp.move(new SplineJP(
-//					ptp(jTi_Oil_Big.get(3)),
+					ptp(jTi_Oil_Big.get(3)),
 					ptp(jTi_Oil_Big.get(2)),
 					ptp(jTi_Oil_Big.get(1)),
 					ptp(jTi_Oil_Big.get(0)),
@@ -520,13 +520,13 @@ public class Kefico extends RoboticsAPIApplication {
 		
 		getLogger().info("Starting PickPart");
 		if ( type == Con.Electric ) {
-			approach.transform(Transformation.ofTranslation(0, 0, -60));
-			tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(1.0).triggerWhen(gOpenC, gOpenAction));
-			tcp.move(lin(pick_aprGrip).setCartVelocity(500));
+			approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 150));
+			tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(0.5).triggerWhen(gOpenC, gOpenAction));
+			tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
 			tcp.move(lin(pick).setCartVelocity(500));
 		} else {
-			approach.transform(Transformation.ofTranslation(0, 0, -40));
-			tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(1.0).triggerWhen(gOpenC, gOpenAction));
+			approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 150));
+			tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(0.5).triggerWhen(gOpenC, gOpenAction));
 			tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
 			tcp.move(lin(pick).setCartVelocity(500));			
 		}
