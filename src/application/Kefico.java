@@ -106,8 +106,9 @@ public class Kefico extends RoboticsAPIApplication {
 	private Frame				pick, pick_aprGrip, pick_aprAsy;
 	private Frame				place, place_aprAsy, place_aprGrip;
 	// CycleTimer
-	private CycleTimer			totalCT, pickCT, insertCT;
+	private CycleTimer			processCT, pickCT, insertCT;
 	private CycleTimer			ejectCT, placeCT;
+	private CycleTimer			TotalCT;
 	// FT
 	private ForceTorqueDataSender	ftdSenderInsert, ftdSenderEject;
 	final boolean					forceSend	= false;
@@ -129,7 +130,8 @@ public class Kefico extends RoboticsAPIApplication {
 		// frames
 		initFrames();
 		// CT
-		totalCT = new CycleTimer("Total", getLogger());
+		TotalCT = new CycleTimer("Total", getLogger());
+		processCT = new CycleTimer("1 Process", getLogger());
 		pickCT = new CycleTimer("Pick", getLogger());
 		insertCT = new CycleTimer("Insert", getLogger());
 		placeCT = new CycleTimer("Place", getLogger());
@@ -238,7 +240,7 @@ public class Kefico extends RoboticsAPIApplication {
 	}
 
 	private void workEject(Con type) {
-		totalCT.start();
+		processCT.start();
 
 		switch (type) {
 		case Electric:
@@ -323,11 +325,11 @@ public class Kefico extends RoboticsAPIApplication {
 			break;
 		}
 		
-		totalCT.end();
+		processCT.end();
 	}
 
 	private void workInsert(Con type) {
-		totalCT.start();
+		processCT.start();
 //		exIO.gripperOpen();
 		
 		switch (type) {
@@ -414,7 +416,7 @@ public class Kefico extends RoboticsAPIApplication {
 		}
 		
 
-		totalCT.end();
+		processCT.end();
 	}
 	
 	private void moveInsert_To_Jig(Con type) {
