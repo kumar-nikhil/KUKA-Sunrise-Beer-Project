@@ -533,10 +533,11 @@ public class Kefico extends RoboticsAPIApplication {
 				tcp.move(lin(pick).setCartVelocity(500));
 				break;
 			case Oil_Small:
-				tcp.moveAsync(ptp(jTi_Oil_Small.get(4)).setJointVelocityRel(1.0).setBlendingRel(0.5)
+//				tcp.moveAsync(ptp(jTi_Oil_Small.get(4)).setJointVelocityRel(1.0).setBlendingRel(0.5)
+//						.triggerWhen(gOpenC, gOpenAction));
+//				tcp.moveAsync(ptp(jTi_Oil_Small.get(5)).setJointVelocityRel(1.0).setBlendingRel(0.5));
+				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5)
 						.triggerWhen(gOpenC, gOpenAction));
-				tcp.moveAsync(ptp(jTi_Oil_Small.get(5)).setJointVelocityRel(1.0).setBlendingRel(0.5));
-				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
 				tcp.move(lin(pick).setCartVelocity(500));
 				break;
 			}
