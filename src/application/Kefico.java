@@ -101,6 +101,7 @@ public class Kefico extends RoboticsAPIApplication {
 	private ObjectFrame		insertCon_Oil_Small_aprGrip, insertCon_Oil_Small_aprAsy;
 
 	private List<ObjectFrame>	jTi_Electric, jTi_Oil_Big, jTi_Oil_Small;
+	private List<ObjectFrame>	j_ElectricTI_Oil_Small;
 
 	private Frame				pick, pick_aprGrip, pick_aprAsy;
 	private Frame				place, place_aprAsy, place_aprGrip;
@@ -188,6 +189,8 @@ public class Kefico extends RoboticsAPIApplication {
 		jTi_Oil_Big.addAll(getApplicationData().getFrame("/jigBase/SPL/SPLJigToInsert_Oil_Big").getChildren());
 		jTi_Oil_Small = new ArrayList<ObjectFrame>();
 		jTi_Oil_Small.addAll(getApplicationData().getFrame("/jigBase/SPL/SPLJigToInsert_Oil_Small").getChildren());
+		j_ElectricTI_Oil_Small = new ArrayList<ObjectFrame>();
+		j_ElectricTI_Oil_Small.addAll(getApplicationData().getFrame("/jigBase/SPL/SPLJig_ElectricToInsert_Oil_Small").getChildren());
 		
 	}
 	
@@ -279,6 +282,7 @@ public class Kefico extends RoboticsAPIApplication {
 		gripCICM.parametrize(CartDOF.X, CartDOF.Z).setStiffness(800).setDamping(0.3);
 		
 		tcp.move(lin(pick_aprAsy).setCartVelocity(500).setMode(gripCICM));
+		tcp.move(ptp(lbr.getCurrentCartesianPosition(tcp)).setJointVelocityRel(1.0));
 		
 		moveInsert_To_Jig(type);
 		
@@ -293,12 +297,17 @@ public class Kefico extends RoboticsAPIApplication {
 		Frame approach = place_aprGrip.copyWithRedundancy();
 		switch (type) {
 		case Electric:			
-			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.2));
-			approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 200));
-			tcp.moveAsync(lin(approach).setJointVelocityRel(1.0).setBlendingRel(0.2));
-			approach.transform(Transformation.ofTranslation(0, 0, 200));
-			tcp.moveAsync(lin(approach).setJointVelocityRel(1.0).setBlendingRel(0.2));
-			tcp.move(ptp(tempAirAfterElectric_iTj).setJointVelocityRel(1.0));
+			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.1));
+
+			SplineJP spl = new SplineJP(
+					ptp(j_ElectricTI_Oil_Small.get(0)),
+					ptp(j_ElectricTI_Oil_Small.get(1)),
+					ptp(j_ElectricTI_Oil_Small.get(2)),
+					ptp(j_ElectricTI_Oil_Small.get(3)),
+					ptp(tempAirAfterElectric_iTj)
+					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
+			tcp.move(spl.setJointVelocityRel(1.0));
+			
 			break;
 		case Oil_Big:
 			approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 250));
@@ -509,10 +518,11 @@ public class Kefico extends RoboticsAPIApplication {
 		} else if ( workType == Work.Eject ) {
 			switch (type) {
 			case Electric:
-				tcp.moveAsync(ptp(jTi_Electric.get(4)).setJointVelocityRel(1.0).setBlendingRel(0.5)
+//				tcp.moveAsync(ptp(jTi_Electric.get(4)).setJointVelocityRel(1.0).setBlendingRel(0.5)
+//						.triggerWhen(gOpenC, gOpenAction));
+//				tcp.moveAsync(ptp(jTi_Electric.get(5)).setJointVelocityRel(1.0).setBlendingRel(0.5));
+				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5)
 						.triggerWhen(gOpenC, gOpenAction));
-				tcp.moveAsync(ptp(jTi_Electric.get(5)).setJointVelocityRel(1.0).setBlendingRel(0.5));
-				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
 				tcp.move(lin(pick).setCartVelocity(500));
 				break;
 			case Oil_Big:
