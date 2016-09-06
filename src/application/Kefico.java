@@ -201,6 +201,7 @@ public class Kefico extends RoboticsAPIApplication {
 
 		while (loopFlag) {
 			getLogger().info("Starting the application");
+			TotalCT.start();
 
 			tcp.move(ptp(home).setJointVelocityRel(1.0));
 
@@ -232,6 +233,7 @@ public class Kefico extends RoboticsAPIApplication {
 				loopFlag = false;
 				break;
 			}	// end of switch-case
+			TotalCT.end();
 		} // end of while()
 
 		tcp.move(ptp(home).setJointVelocityRel(1.0));
