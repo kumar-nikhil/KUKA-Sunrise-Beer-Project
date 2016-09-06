@@ -101,7 +101,7 @@ public class Kefico extends RoboticsAPIApplication {
 	private ObjectFrame		insertCon_Oil_Small_aprGrip, insertCon_Oil_Small_aprAsy;
 
 	private List<ObjectFrame>	jTi_Electric, jTi_Oil_Big, jTi_Oil_Small;
-	private List<ObjectFrame>	j_ElectricTI_Oil_Small;
+	private List<ObjectFrame>	j_ElectricTI_Oil_Small, homeToJig_OilBig;
 
 	private Frame				pick, pick_aprGrip, pick_aprAsy;
 	private Frame				place, place_aprAsy, place_aprGrip;
@@ -193,6 +193,8 @@ public class Kefico extends RoboticsAPIApplication {
 		jTi_Oil_Small.addAll(getApplicationData().getFrame("/jigBase/SPL/SPLJigToInsert_Oil_Small").getChildren());
 		j_ElectricTI_Oil_Small = new ArrayList<ObjectFrame>();
 		j_ElectricTI_Oil_Small.addAll(getApplicationData().getFrame("/jigBase/SPL/SPLJig_ElectricToInsert_Oil_Small").getChildren());
+		homeToJig_OilBig = new ArrayList<ObjectFrame>();
+		homeToJig_OilBig.addAll(getApplicationData().getFrame("/jigBase/SPL/SPLHomeToOilBigJig").getChildren());
 		
 	}
 	
@@ -465,7 +467,7 @@ public class Kefico extends RoboticsAPIApplication {
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		}
-		tcp.moveAsync(spl.setJointVelocityRel(1.0).setBlendingRel(0.2));
+		tcp.moveAsync(spl.setJointVelocityRel(1.0).setBlendingRel(0.05));
 	}
 
 	private void moveJig_To_Insert(Con type) {
@@ -499,7 +501,7 @@ public class Kefico extends RoboticsAPIApplication {
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		}
-		tcp.moveAsync(spl.setJointVelocityRel(1.0).setBlendingRel(0.2));
+		tcp.moveAsync(spl.setJointVelocityRel(1.0).setBlendingRel(0.05));
 	}
 
 	private void pickPart(Con type) {
