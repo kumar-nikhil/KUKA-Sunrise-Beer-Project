@@ -305,11 +305,12 @@ public class Kefico extends RoboticsAPIApplication {
 		getLogger().info("Moving...");
 		
 		Frame approach = place_aprGrip.copyWithRedundancy();
+		SplineJP spl = null;
 		switch (type) {
 		case Electric:			
 			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.1));
 
-			SplineJP spl = new SplineJP(
+			spl = new SplineJP(
 					ptp(j_ElectricTI_Oil_Small.get(0)),
 					ptp(j_ElectricTI_Oil_Small.get(1)),
 					ptp(j_ElectricTI_Oil_Small.get(2)),
@@ -330,6 +331,12 @@ public class Kefico extends RoboticsAPIApplication {
 		case Oil_Small:
 			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
 			tcp.moveAsync(ptp(tempAirAfterOil_iTj).setJointVelocityRel(1.0).setBlendingRel(0.5));
+			spl = new SplineJP(
+					ptp(homeToJig_OilBig.get(2)),
+					ptp(homeToJig_OilBig.get(1)),
+					ptp(homeToJig_OilBig.get(0))
+					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
+			tcp.moveAsync(spl.setJointVelocityRel(1.0).setBlendingRel(0.2));
 			break;
 		}
 		
@@ -524,6 +531,15 @@ public class Kefico extends RoboticsAPIApplication {
 				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.1));
 				tcp.move(lin(pick).setCartVelocity(200));
 			} else if ( type == Con.Oil_Big ){
+
+				SplineJP spl = new SplineJP(
+						ptp(homeToJig_OilBig.get(0)),
+						ptp(homeToJig_OilBig.get(1)),
+						ptp(homeToJig_OilBig.get(2)),
+						ptp(homeToJig_OilBig.get(3))
+						/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
+				tcp.moveAsync(spl.setJointVelocityRel(1.0).setBlendingRel(0.2));
+				
 				approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 150));
 				tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(0.5)
 						.triggerWhen(gOpenC, gOpenAction));
