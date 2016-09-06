@@ -386,17 +386,17 @@ public class Kefico extends RoboticsAPIApplication {
 		switch (type) {
 		case Electric:
 			approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 100));
-			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.2));
+			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.1));
 			tcp.move(lin(approach).setJointVelocityRel(1.0));
 //			tcp.move(ptp(tempAirAfterElectric).setJointVelocityRel(1.0));
 			break;
 		case Oil_Big:
 //			approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, -100, 100));
-			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
+			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.1));
 			tcp.move(ptp(getApplicationData().getFrame("/jigBase/TempAir_btwBigSmall")).setJointVelocityRel(1.0));
 			break;
 		case Oil_Small:
-			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
+			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.1));
 			approach.transform(Transformation.ofTranslation(0, 0, -90));
 			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
 			approach.transform(Transformation.ofTranslation(250, -250, -90));
@@ -502,18 +502,18 @@ public class Kefico extends RoboticsAPIApplication {
 				approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 150));
 				tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(0.5)
 						.triggerWhen(gOpenC, gOpenAction));
-				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.2));
-				tcp.move(lin(pick).setCartVelocity(500));
+				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.1));
+				tcp.move(lin(pick).setCartVelocity(200));
 			} else if ( type == Con.Oil_Big ){
 				approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 150));
 				tcp.moveAsync(ptp(approach).setJointVelocityRel(1.0).setBlendingRel(0.5)
 						.triggerWhen(gOpenC, gOpenAction));
-				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
-				tcp.move(lin(pick).setCartVelocity(500));
+				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.1));
+				tcp.move(lin(pick).setCartVelocity(200));
 			} else if ( type == Con.Oil_Small ){
-				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5)
+				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.1)
 						.triggerWhen(gOpenC, gOpenAction));
-				tcp.move(lin(pick).setCartVelocity(500));
+				tcp.move(lin(pick).setCartVelocity(200));
 			}
 		} else if ( workType == Work.Eject ) {
 			switch (type) {
@@ -521,24 +521,24 @@ public class Kefico extends RoboticsAPIApplication {
 //				tcp.moveAsync(ptp(jTi_Electric.get(4)).setJointVelocityRel(1.0).setBlendingRel(0.5)
 //						.triggerWhen(gOpenC, gOpenAction));
 //				tcp.moveAsync(ptp(jTi_Electric.get(5)).setJointVelocityRel(1.0).setBlendingRel(0.5));
-				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5)
+				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.1)
 						.triggerWhen(gOpenC, gOpenAction));
-				tcp.move(lin(pick).setCartVelocity(500));
+				tcp.move(lin(pick).setCartVelocity(200));
 				break;
 			case Oil_Big:
 				tcp.moveAsync(ptp(jTi_Oil_Big.get(4)).setJointVelocityRel(1.0).setBlendingRel(0.5)
 						.triggerWhen(gOpenC, gOpenAction));
 				tcp.moveAsync(ptp(jTi_Oil_Big.get(5)).setJointVelocityRel(1.0).setBlendingRel(0.5));
-				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5));
-				tcp.move(lin(pick).setCartVelocity(500));
+				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.1));
+				tcp.move(lin(pick).setCartVelocity(200));
 				break;
 			case Oil_Small:
 //				tcp.moveAsync(ptp(jTi_Oil_Small.get(4)).setJointVelocityRel(1.0).setBlendingRel(0.5)
 //						.triggerWhen(gOpenC, gOpenAction));
 //				tcp.moveAsync(ptp(jTi_Oil_Small.get(5)).setJointVelocityRel(1.0).setBlendingRel(0.5));
-				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.5)
+				tcp.moveAsync(lin(pick_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.1)
 						.triggerWhen(gOpenC, gOpenAction));
-				tcp.move(lin(pick).setCartVelocity(500));
+				tcp.move(lin(pick).setCartVelocity(200));
 				break;
 			}
 		}
