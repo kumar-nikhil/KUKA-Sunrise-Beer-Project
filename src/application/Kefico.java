@@ -440,10 +440,10 @@ public class Kefico extends RoboticsAPIApplication {
 			break;
 		case Oil_Small:
 			spl = new SplineJP(
-					ptp(jTi_Oil_Small.get(3)),
-					ptp(jTi_Oil_Small.get(2)),
-					ptp(jTi_Oil_Small.get(1)),
-					ptp(jTi_Oil_Small.get(0)),
+//					ptp(jTi_Oil_Small.get(3)),
+//					ptp(jTi_Oil_Small.get(2)),
+//					ptp(jTi_Oil_Small.get(1)),
+//					ptp(jTi_Oil_Small.get(0)),
 					ptp(place_aprAsy)
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
