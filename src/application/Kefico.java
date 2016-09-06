@@ -314,7 +314,7 @@ public class Kefico extends RoboticsAPIApplication {
 					ptp(j_ElectricTI_Oil_Small.get(3)),
 					ptp(tempAirAfterElectric_iTj)
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
-			tcp.move(spl.setJointVelocityRel(1.0));
+			tcp.moveAsync(spl.setJointVelocityRel(1.0).setBlendingRel(0.2));
 			
 			break;
 		case Oil_Big:
@@ -405,12 +405,21 @@ public class Kefico extends RoboticsAPIApplication {
 			break;
 		case Oil_Small:
 			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.1));
-			approach.transform(Transformation.ofTranslation(0, 0, -90));
-			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
-			approach.transform(Transformation.ofTranslation(250, -250, -90));
-			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
-			tcp.move(ptp(tempAirAfterOil).setJointVelocityRel(1.0));
+//			approach.transform(Transformation.ofTranslation(0, 0, -90));
+//			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
+//			approach.transform(Transformation.ofTranslation(250, -250, -90));
+//			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
+//			tcp.move(ptp(tempAirAfterOil).setJointVelocityRel(1.0));
 
+			SplineJP spl = new SplineJP(
+					ptp(j_ElectricTI_Oil_Small.get(3)),
+					ptp(j_ElectricTI_Oil_Small.get(2)),
+					ptp(j_ElectricTI_Oil_Small.get(1)),
+					ptp(j_ElectricTI_Oil_Small.get(0))
+//					ptp(tempAirAfterElectric_iTj)
+					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
+			tcp.moveAsync(spl.setJointVelocityRel(1.0).setBlendingRel(0.2));
+			
 //			tcp.move( new SplineJP(
 //					ptp(jTi_Oil_Small.get(3)),
 //					ptp(jTi_Oil_Small.get(2)),
@@ -456,7 +465,7 @@ public class Kefico extends RoboticsAPIApplication {
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		}
-		tcp.move(spl.setJointVelocityRel(1.0));
+		tcp.moveAsync(spl.setJointVelocityRel(1.0).setBlendingRel(0.2));
 	}
 
 	private void moveJig_To_Insert(Con type) {
@@ -490,7 +499,7 @@ public class Kefico extends RoboticsAPIApplication {
 					/*.setOrientationType(SplineOrientationType.OriJoint)*/ );
 			break;
 		}
-		tcp.move(spl.setJointVelocityRel(1.0));
+		tcp.moveAsync(spl.setJointVelocityRel(1.0).setBlendingRel(0.2));
 	}
 
 	private void pickPart(Con type) {
