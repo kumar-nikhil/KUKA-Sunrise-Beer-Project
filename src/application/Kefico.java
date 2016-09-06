@@ -387,8 +387,8 @@ public class Kefico extends RoboticsAPIApplication {
 		case Electric:
 			approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 100));
 			tcp.moveAsync(lin(place_aprGrip).setJointVelocityRel(1.0).setBlendingRel(0.2));
-			tcp.moveAsync(lin(approach).setCartVelocity(500).setBlendingRel(0.2));
-			tcp.move(ptp(tempAirAfterElectric).setJointVelocityRel(1.0));
+			tcp.move(lin(approach).setJointVelocityRel(1.0));
+//			tcp.move(ptp(tempAirAfterElectric).setJointVelocityRel(1.0));
 			break;
 		case Oil_Big:
 //			approach.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, -100, 100));
