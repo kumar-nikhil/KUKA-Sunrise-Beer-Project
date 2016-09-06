@@ -201,15 +201,16 @@ public class Kefico extends RoboticsAPIApplication {
 
 		while (loopFlag) {
 			getLogger().info("Starting the application");
-			TotalCT.start();
 
 			tcp.move(ptp(home).setJointVelocityRel(1.0));
 
 			int key = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION,
 					"Select what to do", "Insert", "Eject", "END");
 			
+			
 			switch (key) {
 			case 0:
+				TotalCT.start();
 				getLogger().info("Insert selected");
 				workType = Work.Insert;
 				// Insert
@@ -217,9 +218,10 @@ public class Kefico extends RoboticsAPIApplication {
 				workInsert(Con.Oil_Big);
 				workInsert(Con.Oil_Small);
 				workInsert(Con.Electric);
+				TotalCT.end();
 				break;
 			case 1:
-//				tcp.move(ptp(home).setJointVelocityRel(1.0));
+				TotalCT.start();
 				getLogger().info("Eject selected");
 				workType = Work.Eject;
 				// Eject
@@ -227,13 +229,15 @@ public class Kefico extends RoboticsAPIApplication {
 				workEject(Con.Electric);
 				workEject(Con.Oil_Small);
 				workEject(Con.Oil_Big);
+				TotalCT.end();
 				break;
 			case 2: // END
 				getLogger().info("Ending the application");
 				loopFlag = false;
 				break;
 			}	// end of switch-case
-			TotalCT.end();
+			
+			
 		} // end of while()
 
 		tcp.move(ptp(home).setJointVelocityRel(1.0));
