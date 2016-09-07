@@ -101,6 +101,8 @@ public class Beer extends RoboticsAPIApplication {
 
 		while (loopFlag) {
 			
+			lbr.move(ptp(home).setJointVelocityRel(0.3));
+			
 			int ret = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "To do?", "Start", "END");
 			switch (ret) {
 			case 0:
@@ -114,7 +116,8 @@ public class Beer extends RoboticsAPIApplication {
 			}	// end of switch
 						
 		}	// end of while
-		
+
+		lbr.move(ptp(home).setJointVelocityRel(0.3));
 		
 	}
 
