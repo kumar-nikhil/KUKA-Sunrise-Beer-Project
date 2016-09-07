@@ -48,40 +48,10 @@
     </Bus>
     <Bus BusDriverName="ECatIODriver" BusInstanceName="SYS-X44">
       <IOList>
-        <DigitalIO Name="External.IN1" Type="INPUT" Scope="USER_IO" StartBit="320" BitSize="1" Signed="false">
+        <DigitalIO Name="External.OUT15" Type="OUTPUT" Scope="USER_IO" StartBit="12590" BitSize="1" Signed="false">
           <Description />
         </DigitalIO>
-        <DigitalIO Name="External.IN2" Type="INPUT" Scope="USER_IO" StartBit="321" BitSize="1" Signed="false">
-          <Description />
-        </DigitalIO>
-        <DigitalIO Name="External.IN3" Type="INPUT" Scope="USER_IO" StartBit="322" BitSize="1" Signed="false">
-          <Description />
-        </DigitalIO>
-        <DigitalIO Name="External.IN4" Type="INPUT" Scope="USER_IO" StartBit="323" BitSize="1" Signed="false">
-          <Description />
-        </DigitalIO>
-        <DigitalIO Name="External.IN5" Type="INPUT" Scope="USER_IO" StartBit="324" BitSize="1" Signed="false">
-          <Description />
-        </DigitalIO>
-        <DigitalIO Name="External.OUT1" Type="OUTPUT" Scope="USER_IO" StartBit="12576" BitSize="1" Signed="false">
-          <Description />
-        </DigitalIO>
-        <DigitalIO Name="External.OUT2" Type="OUTPUT" Scope="USER_IO" StartBit="12577" BitSize="1" Signed="false">
-          <Description />
-        </DigitalIO>
-        <DigitalIO Name="External.OUT3" Type="OUTPUT" Scope="USER_IO" StartBit="12578" BitSize="1" Signed="false">
-          <Description />
-        </DigitalIO>
-        <DigitalIO Name="External.OUT4" Type="OUTPUT" Scope="USER_IO" StartBit="12579" BitSize="1" Signed="false">
-          <Description />
-        </DigitalIO>
-        <DigitalIO Name="External.OUT5" Type="OUTPUT" Scope="USER_IO" StartBit="12580" BitSize="1" Signed="false">
-          <Description />
-        </DigitalIO>
-        <DigitalIO Name="External.GripperClose" Type="OUTPUT" Scope="USER_IO" StartBit="12590" BitSize="1" Signed="false">
-          <Description />
-        </DigitalIO>
-        <DigitalIO Name="External.GripperOpen" Type="OUTPUT" Scope="USER_IO" StartBit="12591" BitSize="1" Signed="false">
+        <DigitalIO Name="External.OUT16" Type="OUTPUT" Scope="USER_IO" StartBit="12591" BitSize="1" Signed="false">
           <Description />
         </DigitalIO>
       </IOList>

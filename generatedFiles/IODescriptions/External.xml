@@ -5,40 +5,10 @@ Automatically generated IO group description. Please do NOT modify!
 <SunriseIOGroupDescription xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0">
   <IOGroup DisplayName="External" IconName="External" SignalTypes="InOut" TemplateName="External">
     <IOs>
-      <DigitalIOItem Name="IN1" DataType="BOOL" IOType="Input" UsedBitWidth="1" IsConnected="true">
+      <DigitalIOItem Name="OUT15" DataType="BOOL" IOType="Output" UsedBitWidth="1" IsConnected="true">
         <Description />
       </DigitalIOItem>
-      <DigitalIOItem Name="IN2" DataType="BOOL" IOType="Input" UsedBitWidth="1" IsConnected="true">
-        <Description />
-      </DigitalIOItem>
-      <DigitalIOItem Name="IN3" DataType="BOOL" IOType="Input" UsedBitWidth="1" IsConnected="true">
-        <Description />
-      </DigitalIOItem>
-      <DigitalIOItem Name="IN4" DataType="BOOL" IOType="Input" UsedBitWidth="1" IsConnected="true">
-        <Description />
-      </DigitalIOItem>
-      <DigitalIOItem Name="IN5" DataType="BOOL" IOType="Input" UsedBitWidth="1" IsConnected="true">
-        <Description />
-      </DigitalIOItem>
-      <DigitalIOItem Name="OUT1" DataType="BOOL" IOType="Output" UsedBitWidth="1" IsConnected="true">
-        <Description />
-      </DigitalIOItem>
-      <DigitalIOItem Name="OUT2" DataType="BOOL" IOType="Output" UsedBitWidth="1" IsConnected="true">
-        <Description />
-      </DigitalIOItem>
-      <DigitalIOItem Name="OUT3" DataType="BOOL" IOType="Output" UsedBitWidth="1" IsConnected="true">
-        <Description />
-      </DigitalIOItem>
-      <DigitalIOItem Name="OUT4" DataType="BOOL" IOType="Output" UsedBitWidth="1" IsConnected="true">
-        <Description />
-      </DigitalIOItem>
-      <DigitalIOItem Name="OUT5" DataType="BOOL" IOType="Output" UsedBitWidth="1" IsConnected="true">
-        <Description />
-      </DigitalIOItem>
-      <DigitalIOItem Name="GripperClose" DataType="BOOL" IOType="Output" UsedBitWidth="1" IsConnected="true">
-        <Description />
-      </DigitalIOItem>
-      <DigitalIOItem Name="GripperOpen" DataType="BOOL" IOType="Output" UsedBitWidth="1" IsConnected="true">
+      <DigitalIOItem Name="OUT16" DataType="BOOL" IOType="Output" UsedBitWidth="1" IsConnected="true">
         <Description />
       </DigitalIOItem>
     </IOs>
