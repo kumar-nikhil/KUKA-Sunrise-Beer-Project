@@ -48,6 +48,96 @@
     </Bus>
     <Bus BusDriverName="ECatIODriver" BusInstanceName="SYS-X44">
       <IOList>
+        <DigitalIO Name="External.IN01" Type="INPUT" Scope="USER_IO" StartBit="320" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.IN02" Type="INPUT" Scope="USER_IO" StartBit="321" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.IN03" Type="INPUT" Scope="USER_IO" StartBit="322" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.IN04" Type="INPUT" Scope="USER_IO" StartBit="323" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.IN05" Type="INPUT" Scope="USER_IO" StartBit="324" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.IN06" Type="INPUT" Scope="USER_IO" StartBit="325" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.IN07" Type="INPUT" Scope="USER_IO" StartBit="326" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.IN08" Type="INPUT" Scope="USER_IO" StartBit="327" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.IN09" Type="INPUT" Scope="USER_IO" StartBit="328" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.IN10" Type="INPUT" Scope="USER_IO" StartBit="329" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.IN11" Type="INPUT" Scope="USER_IO" StartBit="330" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.IN12" Type="INPUT" Scope="USER_IO" StartBit="331" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.IN13" Type="INPUT" Scope="USER_IO" StartBit="332" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.IN14" Type="INPUT" Scope="USER_IO" StartBit="333" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.IN15" Type="INPUT" Scope="USER_IO" StartBit="334" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.IN16" Type="INPUT" Scope="USER_IO" StartBit="335" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.OUT01" Type="OUTPUT" Scope="USER_IO" StartBit="12576" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.OUT02" Type="OUTPUT" Scope="USER_IO" StartBit="12577" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.OUT03" Type="OUTPUT" Scope="USER_IO" StartBit="12578" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.OUT04" Type="OUTPUT" Scope="USER_IO" StartBit="12579" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.OUT05" Type="OUTPUT" Scope="USER_IO" StartBit="12580" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.OUT06" Type="OUTPUT" Scope="USER_IO" StartBit="12581" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.OUT07" Type="OUTPUT" Scope="USER_IO" StartBit="12582" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.OUT08" Type="OUTPUT" Scope="USER_IO" StartBit="12583" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.OUT09" Type="OUTPUT" Scope="USER_IO" StartBit="12584" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.OUT10" Type="OUTPUT" Scope="USER_IO" StartBit="12585" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.OUT11" Type="OUTPUT" Scope="USER_IO" StartBit="12586" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.OUT12" Type="OUTPUT" Scope="USER_IO" StartBit="12587" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.OUT13" Type="OUTPUT" Scope="USER_IO" StartBit="12588" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
+        <DigitalIO Name="External.OUT14" Type="OUTPUT" Scope="USER_IO" StartBit="12589" BitSize="1" Signed="false">
+          <Description />
+        </DigitalIO>
         <DigitalIO Name="External.OUT15" Type="OUTPUT" Scope="USER_IO" StartBit="12590" BitSize="1" Signed="false">
           <Description />
         </DigitalIO>

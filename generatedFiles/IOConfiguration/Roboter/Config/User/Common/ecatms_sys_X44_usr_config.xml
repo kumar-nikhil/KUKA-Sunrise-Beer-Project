@@ -4,7 +4,7 @@
    <Config>
       <Master>
          <Info>
-            <Name><![CDATA[KUKA Master]]></Name>
+            <Name><![CDATA[KUKA Extension Bus (SYS-X44)]]></Name>
             <Destination>ffffffffffff</Destination>
             <Source>ffffffffffff</Source>
             <EtherType>a488</EtherType>
@@ -506,13 +506,13 @@
       </Slave>
       <Slave>
          <Info>
-            <!--EL1889 16Ch. Dig. Input 24V, 3ms, negative (1002)-->
-            <Name><![CDATA[EL1889 16Ch. Dig. Input 24V, 3ms, negative]]></Name>
+            <!--EL1809 16Ch. Dig. Input 24V, 3ms (1002)-->
+            <Name><![CDATA[EL1809 16Ch. Dig. Input 24V, 3ms]]></Name>
             <PhysAddr>1002</PhysAddr>
             <AutoIncAddr>65535</AutoIncAddr>
             <Physics>KK</Physics>
             <VendorId>2</VendorId>
-            <ProductCode>123809874</ProductCode>
+            <ProductCode>118566994</ProductCode>
             <RevisionNo>1048576</RevisionNo>
             <SerialNo>0</SerialNo>
          </Info>
@@ -853,7 +853,7 @@
                <Cnt>1</Cnt>
                <Retries>3</Retries>
                <Validate>
-                  <Data>52306107</Data>
+                  <Data>52301107</Data>
                   <Timeout>100</Timeout>
                </Validate>
             </InitCmd>
@@ -1115,13 +1115,13 @@
       </Slave>
       <Slave>
          <Info>
-            <!--EL2889 16Ch. Dig. Output 24V, 0.5A, negative (1003)-->
-            <Name><![CDATA[EL2889 16Ch. Dig. Output 24V, 0.5A, negative]]></Name>
+            <!--EL2809 16Ch. Dig. Output 24V, 0.5A (1003)-->
+            <Name><![CDATA[EL2809 16Ch. Dig. Output 24V, 0.5A]]></Name>
             <PhysAddr>1003</PhysAddr>
             <AutoIncAddr>65534</AutoIncAddr>
             <Physics>KK</Physics>
             <VendorId>2</VendorId>
-            <ProductCode>189345874</ProductCode>
+            <ProductCode>184102994</ProductCode>
             <RevisionNo>1048576</RevisionNo>
             <SerialNo>0</SerialNo>
          </Info>
@@ -1473,7 +1473,7 @@
                <Cnt>1</Cnt>
                <Retries>3</Retries>
                <Validate>
-                  <Data>5230490b</Data>
+                  <Data>5230f90a</Data>
                   <Timeout>100</Timeout>
                </Validate>
             </InitCmd>
@@ -1805,97 +1805,97 @@
          <Inputs>
             <ByteSize>1536</ByteSize>
             <Variable>
-               <Name>EL1889 16Ch. Dig. Input 24V, 3ms, negative.Channel 1.Input</Name>
+               <Name>EL1809 16Ch. Dig. Input 24V, 3ms.Channel 1.Input</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>320</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL1889 16Ch. Dig. Input 24V, 3ms, negative.Channel 2.Input</Name>
+               <Name>EL1809 16Ch. Dig. Input 24V, 3ms.Channel 2.Input</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>321</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL1889 16Ch. Dig. Input 24V, 3ms, negative.Channel 3.Input</Name>
+               <Name>EL1809 16Ch. Dig. Input 24V, 3ms.Channel 3.Input</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>322</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL1889 16Ch. Dig. Input 24V, 3ms, negative.Channel 4.Input</Name>
+               <Name>EL1809 16Ch. Dig. Input 24V, 3ms.Channel 4.Input</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>323</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL1889 16Ch. Dig. Input 24V, 3ms, negative.Channel 5.Input</Name>
+               <Name>EL1809 16Ch. Dig. Input 24V, 3ms.Channel 5.Input</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>324</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL1889 16Ch. Dig. Input 24V, 3ms, negative.Channel 6.Input</Name>
+               <Name>EL1809 16Ch. Dig. Input 24V, 3ms.Channel 6.Input</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>325</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL1889 16Ch. Dig. Input 24V, 3ms, negative.Channel 7.Input</Name>
+               <Name>EL1809 16Ch. Dig. Input 24V, 3ms.Channel 7.Input</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>326</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL1889 16Ch. Dig. Input 24V, 3ms, negative.Channel 8.Input</Name>
+               <Name>EL1809 16Ch. Dig. Input 24V, 3ms.Channel 8.Input</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>327</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL1889 16Ch. Dig. Input 24V, 3ms, negative.Channel 9.Input</Name>
+               <Name>EL1809 16Ch. Dig. Input 24V, 3ms.Channel 9.Input</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>328</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL1889 16Ch. Dig. Input 24V, 3ms, negative.Channel 10.Input</Name>
+               <Name>EL1809 16Ch. Dig. Input 24V, 3ms.Channel 10.Input</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>329</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL1889 16Ch. Dig. Input 24V, 3ms, negative.Channel 11.Input</Name>
+               <Name>EL1809 16Ch. Dig. Input 24V, 3ms.Channel 11.Input</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>330</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL1889 16Ch. Dig. Input 24V, 3ms, negative.Channel 12.Input</Name>
+               <Name>EL1809 16Ch. Dig. Input 24V, 3ms.Channel 12.Input</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>331</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL1889 16Ch. Dig. Input 24V, 3ms, negative.Channel 13.Input</Name>
+               <Name>EL1809 16Ch. Dig. Input 24V, 3ms.Channel 13.Input</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>332</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL1889 16Ch. Dig. Input 24V, 3ms, negative.Channel 14.Input</Name>
+               <Name>EL1809 16Ch. Dig. Input 24V, 3ms.Channel 14.Input</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>333</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL1889 16Ch. Dig. Input 24V, 3ms, negative.Channel 15.Input</Name>
+               <Name>EL1809 16Ch. Dig. Input 24V, 3ms.Channel 15.Input</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>334</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL1889 16Ch. Dig. Input 24V, 3ms, negative.Channel 16.Input</Name>
+               <Name>EL1809 16Ch. Dig. Input 24V, 3ms.Channel 16.Input</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>335</BitOffs>
@@ -1904,97 +1904,97 @@
          <Outputs>
             <ByteSize>1536</ByteSize>
             <Variable>
-               <Name>EL2889 16Ch. Dig. Output 24V, 0.5A, negative.Channel 1.Output</Name>
+               <Name>EL2809 16Ch. Dig. Output 24V, 0.5A.Channel 1.Output</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>208</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL2889 16Ch. Dig. Output 24V, 0.5A, negative.Channel 2.Output</Name>
+               <Name>EL2809 16Ch. Dig. Output 24V, 0.5A.Channel 2.Output</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>209</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL2889 16Ch. Dig. Output 24V, 0.5A, negative.Channel 3.Output</Name>
+               <Name>EL2809 16Ch. Dig. Output 24V, 0.5A.Channel 3.Output</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>210</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL2889 16Ch. Dig. Output 24V, 0.5A, negative.Channel 4.Output</Name>
+               <Name>EL2809 16Ch. Dig. Output 24V, 0.5A.Channel 4.Output</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>211</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL2889 16Ch. Dig. Output 24V, 0.5A, negative.Channel 5.Output</Name>
+               <Name>EL2809 16Ch. Dig. Output 24V, 0.5A.Channel 5.Output</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>212</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL2889 16Ch. Dig. Output 24V, 0.5A, negative.Channel 6.Output</Name>
+               <Name>EL2809 16Ch. Dig. Output 24V, 0.5A.Channel 6.Output</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>213</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL2889 16Ch. Dig. Output 24V, 0.5A, negative.Channel 7.Output</Name>
+               <Name>EL2809 16Ch. Dig. Output 24V, 0.5A.Channel 7.Output</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>214</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL2889 16Ch. Dig. Output 24V, 0.5A, negative.Channel 8.Output</Name>
+               <Name>EL2809 16Ch. Dig. Output 24V, 0.5A.Channel 8.Output</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>215</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL2889 16Ch. Dig. Output 24V, 0.5A, negative.Channel 9.Output</Name>
+               <Name>EL2809 16Ch. Dig. Output 24V, 0.5A.Channel 9.Output</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>216</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL2889 16Ch. Dig. Output 24V, 0.5A, negative.Channel 10.Output</Name>
+               <Name>EL2809 16Ch. Dig. Output 24V, 0.5A.Channel 10.Output</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>217</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL2889 16Ch. Dig. Output 24V, 0.5A, negative.Channel 11.Output</Name>
+               <Name>EL2809 16Ch. Dig. Output 24V, 0.5A.Channel 11.Output</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>218</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL2889 16Ch. Dig. Output 24V, 0.5A, negative.Channel 12.Output</Name>
+               <Name>EL2809 16Ch. Dig. Output 24V, 0.5A.Channel 12.Output</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>219</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL2889 16Ch. Dig. Output 24V, 0.5A, negative.Channel 13.Output</Name>
+               <Name>EL2809 16Ch. Dig. Output 24V, 0.5A.Channel 13.Output</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>220</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL2889 16Ch. Dig. Output 24V, 0.5A, negative.Channel 14.Output</Name>
+               <Name>EL2809 16Ch. Dig. Output 24V, 0.5A.Channel 14.Output</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>221</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL2889 16Ch. Dig. Output 24V, 0.5A, negative.Channel 15.Output</Name>
+               <Name>EL2809 16Ch. Dig. Output 24V, 0.5A.Channel 15.Output</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>222</BitOffs>
             </Variable>
             <Variable>
-               <Name>EL2889 16Ch. Dig. Output 24V, 0.5A, negative.Channel 16.Output</Name>
+               <Name>EL2809 16Ch. Dig. Output 24V, 0.5A.Channel 16.Output</Name>
                <DataType>BOOL</DataType>
                <BitSize>1</BitSize>
                <BitOffs>223</BitOffs>
