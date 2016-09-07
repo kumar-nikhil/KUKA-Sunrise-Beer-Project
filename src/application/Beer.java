@@ -43,6 +43,8 @@ public class Beer extends RoboticsAPIApplication {
 	private MediaFlangeIOGroup	mfIo;
 	private ExGripper			exIO;
 	private boolean				loopFlag;
+	// Object Frames
+	private ObjectFrame			beerBase, glassBase, pourBase;
 
 	@Override
 	public void initialize() {
