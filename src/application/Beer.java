@@ -84,7 +84,7 @@ public class Beer extends RoboticsAPIApplication {
 	}
 
 	private void initFrames() {
-		home = new JointPosition(0, Math.toRadians(30), 0, -Math.toRadians(60), 0, Math.toRadians(90), Math.toRadians(25));
+		home = new JointPosition(0, Math.toRadians(30), 0, -Math.toRadians(60), 0, Math.toRadians(90), 0);
 		beerBase = getApplicationData().getFrame("/myWorld/BeerBase");
 		glassBase = getApplicationData().getFrame("/myWorld/GlassBase");
 		pourBase = getApplicationData().getFrame("/myWorld/PourBase");
