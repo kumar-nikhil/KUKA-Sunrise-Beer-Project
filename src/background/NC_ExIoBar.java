@@ -76,7 +76,7 @@ public class NC_ExIoBar extends RoboticsAPIBackgroundTask {
 		
 		IUserKeyBar exIoBar = this.getApplicationUI().createUserKeyBar("BG ExIO");
 		IUserKey ledOut = exIoBar.addUserKey(0, ledOutListener, true);
-		ledOut.setText(UserKeyAlignment.TopMiddle, "Open");
+		ledOut.setText(UserKeyAlignment.TopMiddle, "Opened");
 		ledOut.setLED(UserKeyAlignment.Middle, UserKeyLED.Red, UserKeyLEDSize.Normal);
 		
 		

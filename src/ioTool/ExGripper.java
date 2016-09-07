@@ -11,15 +11,15 @@ public class ExGripper extends ExternalIOGroup {
 	}
 	
 	public void gripperOpen() {
-		setOUT01(true);
-		ThreadUtil.milliSleep(200);
-		setOUT01(false);
-	}
-	
-	public void gripperClose() {
 		setOUT02(true);
 		ThreadUtil.milliSleep(200);
 		setOUT02(false);
+	}
+	
+	public void gripperClose() {
+		setOUT01(true);
+		ThreadUtil.milliSleep(200);
+		setOUT01(false);
 	}
 
 }
