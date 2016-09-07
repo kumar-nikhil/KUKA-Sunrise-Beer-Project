@@ -1,12 +1,16 @@
 package application;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ioTool.ExGripper;
 
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 import com.kuka.roboticsAPI.controllerModel.Controller;
+import com.kuka.roboticsAPI.deviceModel.JointPosition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
@@ -43,8 +47,11 @@ public class Beer extends RoboticsAPIApplication {
 	private MediaFlangeIOGroup	mfIo;
 	private ExGripper			exIO;
 	private boolean				loopFlag;
-	// Object Frames
+	// Frames
+	private JointPosition		home;
 	private ObjectFrame			beerBase, glassBase, pourBase;
+	private ObjectFrame			tempHome, glassJig, pouring;
+	private List<ObjectFrame>	pouringSPL;
 
 	@Override
 	public void initialize() {
@@ -63,8 +70,30 @@ public class Beer extends RoboticsAPIApplication {
 		exIO = new ExGripper(cabinet);
 		// flag
 		loopFlag = true;
+		// Force process data
+		processDataUpdate();
+		
+		initFrames();
 		
 		tool.attachTo(lbr.getFlange());
+	}
+
+	private void processDataUpdate() {
+//		forceE_1 = getApplicationData().getProcessData("forceE_1").getValue();
+//		getApplicationData().getProcessData("forceE_1").setDefaultValue(forceE_1);
+	}
+
+	private void initFrames() {
+		home = new JointPosition(0, Math.toRadians(30), 0, -Math.toRadians(60), 0, Math.toRadians(90), Math.toRadians(25));
+		beerBase = getApplicationData().getFrame("/myWorld/BeerBase");
+		glassBase = getApplicationData().getFrame("/myWorld/GlassBase");
+		pourBase = getApplicationData().getFrame("/myWorld/PourBase");
+		glassJig = pourBase.getChild("GlassJig");
+		pouring = pourBase.getChild("Pouring");
+		tempHome = getApplicationData().getFrame("/myWorld/tempHome");
+		
+		pouringSPL = new ArrayList<ObjectFrame>();
+		pouringSPL.addAll(getApplicationData().getFrame("/myWorld/PourBase/").getChildren());
 	}
 
 	@Override
