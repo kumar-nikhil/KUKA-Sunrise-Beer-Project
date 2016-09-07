@@ -93,7 +93,7 @@ public class Beer extends RoboticsAPIApplication {
 		tempHome = getApplicationData().getFrame("/myWorld/tempHome");
 		
 		pouringSPL = new ArrayList<ObjectFrame>();
-		pouringSPL.addAll(getApplicationData().getFrame("/myWorld/PourBase/").getChildren());
+		pouringSPL.addAll(pouring.getChildren());
 	}
 
 	@Override
