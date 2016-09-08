@@ -102,7 +102,7 @@ public class Beer extends RoboticsAPIApplication {
 		
 		tool.attachTo(lbr.getFlange());
 		
-		getApplicationControl().clipApplicationOverride(0.3);
+//		getApplicationControl().clipApplicationOverride(0.3);
 	}
 
 	private void processDataUpdate() {
@@ -130,7 +130,7 @@ public class Beer extends RoboticsAPIApplication {
 
 		while (loopFlag) {
 			
-			lbr.move(ptp(home).setJointVelocityRel(0.3));
+			lbr.move(ptp(home).setJointVelocityRel(1.0));
 			
 			int ret = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "To do?", "Start", "END");
 			switch (ret) {
@@ -146,7 +146,7 @@ public class Beer extends RoboticsAPIApplication {
 						
 		}	// end of while
 
-		lbr.move(ptp(home).setJointVelocityRel(0.3));
+		lbr.move(ptp(home).setJointVelocityRel(1.0));
 		
 	}
 
