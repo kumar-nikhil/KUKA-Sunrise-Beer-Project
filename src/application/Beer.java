@@ -112,14 +112,14 @@ public class Beer extends RoboticsAPIApplication {
 
 	private void initFrames() {
 		home = new JointPosition(0, Math.toRadians(30), 0, -Math.toRadians(60), 0, Math.toRadians(90), 0);
-		beerBase = getApplicationData().getFrame("/myWorld/BeerBase");
-		glassBase = getApplicationData().getFrame("/myWorld/GlassBase");
+		beerBase = getApplicationData().getFrame("/BeerWorld/BeerBase");
+		glassBase = getApplicationData().getFrame("/BeerWorld/GlassBase");
 		glassDetect = glassBase.getChild("detect");
 		openerBase = getApplicationData().getFrame("/BeerWorld/OpenerBase");
-		pourBase = getApplicationData().getFrame("/myWorld/PourBase");
+		pourBase = getApplicationData().getFrame("/BeerWorld/PourBase");
 		glassJig = pourBase.getChild("GlassJig");
 		pouring = pourBase.getChild("Pouring");
-		tempHome = getApplicationData().getFrame("/myWorld/tempHome");
+		tempHome = getApplicationData().getFrame("/BeerWorld/tempHome");
 		
 		pouringSPL = new ArrayList<ObjectFrame>();
 		pouringSPL.addAll(pouring.getChildren());
