@@ -65,7 +65,7 @@ public class Beer extends RoboticsAPIApplication {
 	// Frames
 	private JointPosition		home;
 	private ObjectFrame			beerBase, glassBase, openerBase, pourBase;
-	private ObjectFrame			glassDetect, glassJig, pouring, tempHome;
+	private ObjectFrame			glassDetect, glassLean, pouring, tempHome;
 	private List<ObjectFrame>	pouringSPL;
 	
 
@@ -117,7 +117,8 @@ public class Beer extends RoboticsAPIApplication {
 		glassDetect = glassBase.getChild("detect");
 		openerBase = getApplicationData().getFrame("/BeerWorld/OpenerBase");
 		pourBase = getApplicationData().getFrame("/BeerWorld/PourBase");
-		glassJig = pourBase.getChild("GlassJig");
+//		glassLean = pourBase.getChild("GlassJig").getChild("leanPosition");
+		glassLean = getApplicationData().getFrame("/BeerWorld/PourBase/GlassJig/leanPosition");
 		pouring = pourBase.getChild("Pouring");
 		tempHome = getApplicationData().getFrame("/BeerWorld/tempHome");
 		
@@ -172,7 +173,7 @@ public class Beer extends RoboticsAPIApplication {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			getLogger().error("Application failed");
+			getLogger().error("!!!!! [ Application failed ] !!!!!");
 		}
 		
 		
@@ -216,6 +217,7 @@ public class Beer extends RoboticsAPIApplication {
 			tcpGrip.move(lin(target).setCartVelocity(300));
 			
 			exIO.gripperClose();
+			glass.attachTo(tcpGrip);
 		} else {
 			getLogger().error("!!!!! [ No glasses ] !!!!!");
 			throw Exception;
@@ -224,7 +226,7 @@ public class Beer extends RoboticsAPIApplication {
 		// move out
 		Frame targetAir = target.copyWithRedundancy();
 		targetAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0,0,200));
-		Frame glassJigAir = glassJig.copyWithRedundancy();
+		Frame glassJigAir = pourBase.copyWithRedundancy();
 		glassJigAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0,0,200));
 		
 		tcpGrip.moveAsync(lin(targetAir).setCartVelocity(1000));
@@ -235,11 +237,27 @@ public class Beer extends RoboticsAPIApplication {
 	private void putGlass() throws Exception {
 		getLogger().info("Placing a glass");
 		// move in (pourGlass) 
-		Frame air = glassJig.copyWithRedundancy();
+		Frame air = glassLean.copyWithRedundancy();
 		air.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0,0,50));
-		tcpGrip.move(ptp(air).setJointVelocityRel(1.0));
+		tcpGrip.moveAsync(lin(air).setJointVelocityRel(1.0).setBlendingRel(0.1));
+		tcpGrip.move(lin(glassLean).setCartVelocity(500));
 		
 		// detect floor (z)
+		double j2t = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J2);
+		getLogger().info(String.format("current Torque on J2 : %.2f", j2t) );
+		JointTorqueCondition j2tc = new JointTorqueCondition(JointEnum.J2, j2t-3.0, j2t+3.0);
+		CartesianImpedanceControlMode dFloorCICM = new CartesianImpedanceControlMode();
+		dFloorCICM.parametrize(CartDOF.Z).setStiffness(200);
+		dFloorCICM.setReferenceSystem(World.Current.getRootFrame());
+		
+		IMotionContainer mc = tcpGrip.move(linRel(0, 0, -80, World.Current.getRootFrame()).setCartVelocity(200).setMode(dFloorCICM).breakWhen(j2tc));
+		if ( mc.hasFired(j2tc) ) {
+			
+		} else {
+			getLogger().error("!!!!! [ Floor detection failed ] !!!!!");
+			throw Exception;
+		}
+		
 		
 		// leaning & detect hole (y)
 		
