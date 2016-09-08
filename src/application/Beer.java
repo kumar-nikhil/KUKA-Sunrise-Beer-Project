@@ -198,7 +198,7 @@ public class Beer extends RoboticsAPIApplication {
 		
 		IMotionContainer mc = tcpTip.move(linRel(0, 0, 500).setCartVelocity(200).setMode(detectCICM).breakWhen(j1tc));
 		
-		Frame target;
+		Frame target = null;
 		// move & grasp
 		if ( mc.hasFired(j1tc) ) {
 			double detectedZOffset = lbr.getCurrentCartesianPosition(tcpTip, glassBase).getZ();
@@ -247,7 +247,7 @@ public class Beer extends RoboticsAPIApplication {
 		
 		// move out
 
-		throw Exception;
+//		throw Exception;
 	}
 
 	private void getBottle() throws Throwable {
@@ -260,7 +260,7 @@ public class Beer extends RoboticsAPIApplication {
 		
 		// move out
 
-		throw Exception;
+//		throw Exception;
 	}
 
 	private void openBottle() throws Throwable {
@@ -273,7 +273,7 @@ public class Beer extends RoboticsAPIApplication {
 		
 		// move out
 
-		throw Exception;
+//		throw Exception;
 	}
 
 	private void pourBeer() throws Throwable {
@@ -288,7 +288,7 @@ public class Beer extends RoboticsAPIApplication {
 		
 		// move out
 
-		throw Exception;
+//		throw Exception;
 	}
 
 	private void trashBottle() throws Throwable {
@@ -299,7 +299,7 @@ public class Beer extends RoboticsAPIApplication {
 		
 		// move out
 
-		throw Exception;
+//		throw Exception;
 	}
 
 	private void serveGlass() throws Throwable {
@@ -314,7 +314,7 @@ public class Beer extends RoboticsAPIApplication {
 		
 		// move out (home)
 
-		throw Exception;
+//		throw Exception;
 	}
 	
 }
