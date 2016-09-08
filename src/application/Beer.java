@@ -233,9 +233,9 @@ public class Beer extends RoboticsAPIApplication {
 	private void putGlass() throws Throwable {
 		getLogger().info("Placing a glass");
 		// move in (pourGlass) 
-		tcpGrip.move(ptp( glassJig.copyWithRedundancy().transform(
-				World.Current.getRootFrame(), Transformation.ofTranslation(0,0,50))
-				).setJointVelocityRel(1.0));
+		Frame air = glassJig.copyWithRedundancy();
+		air.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0,0,50));
+		tcpGrip.move(ptp(air).setJointVelocityRel(1.0));
 		
 		// detect floor (z)
 		
