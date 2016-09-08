@@ -19,7 +19,7 @@ import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
 
 /**
  * @author Seulki-Kim , Sep 7, 2016 , KUKA Robotics Korea<p>
- * @modified Seulki-Kim , Sep 7, 2016 , KUKA Robotics Korea<p>
+ * @modified Seulki-Kim , Sep 8, 2016 , KUKA Robotics Korea<p>
  * Implementation of a robot application.
  * <p>
  * The application provides a {@link RoboticsAPITask#initialize()} and a 
@@ -122,8 +122,112 @@ public class Beer extends RoboticsAPIApplication {
 	}
 
 	private void beerApp() {
-		// TODO Auto-generated method stub
+		// glass preparation
+		getGlass();
+		putGlass();
+		
+		// bottle preparation
+		getBottle();
+		openBottle();
+		
+		// pouring
+		pourBeer();
+		
+		// trashing bottle
+		trashBottle();
+		
+		// serving glass
+		serveGlass();
+		
 		
 	}
 
+
+	private void getGlass() {
+		getLogger().info("Getting a glass");
+		// move in (glassBase)
+		
+		// detect glass position
+		
+		// move & grasp
+		
+		// move out
+		
+	}
+
+	private void putGlass() {
+		getLogger().info("Placing a glass");
+		// move in (pourGlass) 
+		
+		// detect floor (z)
+		
+		// leaning & detect hole (y)
+		
+		// release
+		
+		// move out
+		
+	}
+
+	private void getBottle() {
+		getLogger().info("Getting a bottle");
+		// move in (bootleBase)
+		
+		// detect bottle position
+		
+		// move & grasp
+		
+		// move out
+		
+	}
+
+	private void openBottle() {
+		getLogger().info("Opening a bottle cap");
+		// move in (openerBase) 
+		
+		// detect contact
+		
+		// opening motion
+		
+		// move out
+		
+	}
+
+	private void pourBeer() {
+		getLogger().info("Pouring beer");
+		// move in (pouring)
+		
+		// pouring motion
+		
+		// shaking motion
+		
+		// pouring bottom-up
+		
+		// move out
+	}
+
+	private void trashBottle() {
+		getLogger().info("Trashing bottle");
+		// move in (trashBeer)
+		
+		// release
+		
+		// move out
+		
+	}
+
+	private void serveGlass() {
+		getLogger().info("Serving glass");
+		// move in (pourGlass) 
+		
+		// grasp
+		
+		// move out
+		
+		// move to serve position & wait
+		
+		// move out (home)
+		
+	}
+	
 }
