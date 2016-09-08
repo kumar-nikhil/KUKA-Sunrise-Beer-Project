@@ -97,9 +97,9 @@
                         </redundancy>
                     </redundancyData>
                     <frame name="leanPosition">
-                        <transformation a="0.06596146764427922" b="-0.914978370995454" c="-0.03134460091765083" x="-35.86746712674871" y="4.068205212967541" z="78.20526914010986"/>
+                        <transformation a="0.06623844976231952" b="-0.9151412446169357" c="-0.03168793558985791" x="-17.98740396131268" y="4.558001425237876" z="64.27706389817013"/>
                         <additionalInformation>
-                            <info key="LastModificationTime" type="java.lang.Long" value="1473230104440"/>
+                            <info key="LastModificationTime" type="java.lang.Long" value="1473317840546"/>
                             <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP_Grip" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                                 <tcpTransformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="126.26"/>
                             </info>
@@ -109,7 +109,7 @@
                             <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
                                 <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
                                 <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="8" valueType="java.lang.Integer"/>
-                                <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="0.41590024151882005" valueType="java.lang.Double"/>
+                                <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="0.41583834298056577" valueType="java.lang.Double"/>
                             </redundancy>
                         </redundancyData>
                     </frame>
