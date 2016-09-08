@@ -52,6 +52,7 @@ import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
  * @see #dispose()
  */
 public class Beer extends RoboticsAPIApplication {
+	private static final Exception	Exception	= null;
 	private Controller			cabinet;
 	private LBR					lbr;
 	private Tool				tool;
@@ -67,7 +68,6 @@ public class Beer extends RoboticsAPIApplication {
 	private ObjectFrame			glassDetect, glassJig, pouring, tempHome;
 	private List<ObjectFrame>	pouringSPL;
 	
-	private static final Exception	Exception	= null;
 
 	// gripper Open
 	MotionPathCondition gOpenC = new MotionPathCondition(ReferenceType.DEST, 0, -300);
@@ -170,7 +170,7 @@ public class Beer extends RoboticsAPIApplication {
 			// serving glass
 			serveGlass();
 			
-		} catch (Throwable e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			getLogger().error("Application failed");
 		}
@@ -180,7 +180,7 @@ public class Beer extends RoboticsAPIApplication {
 	}
 
 
-	private void getGlass() throws Throwable {
+	private void getGlass() throws Exception {
 		getLogger().info("Getting a glass");
 		// move in (glassBase)
 		Frame detectAir = glassDetect.copyWithRedundancy();
@@ -232,7 +232,7 @@ public class Beer extends RoboticsAPIApplication {
 
 	}
 
-	private void putGlass() throws Throwable {
+	private void putGlass() throws Exception {
 		getLogger().info("Placing a glass");
 		// move in (pourGlass) 
 		Frame air = glassJig.copyWithRedundancy();
@@ -250,7 +250,7 @@ public class Beer extends RoboticsAPIApplication {
 //		throw Exception;
 	}
 
-	private void getBottle() throws Throwable {
+	private void getBottle() throws Exception {
 		getLogger().info("Getting a bottle");
 		// move in (bootleBase)
 		
@@ -263,7 +263,7 @@ public class Beer extends RoboticsAPIApplication {
 //		throw Exception;
 	}
 
-	private void openBottle() throws Throwable {
+	private void openBottle() throws Exception {
 		getLogger().info("Opening a bottle cap");
 		// move in (openerBase) 
 		
@@ -276,7 +276,7 @@ public class Beer extends RoboticsAPIApplication {
 //		throw Exception;
 	}
 
-	private void pourBeer() throws Throwable {
+	private void pourBeer() throws Exception {
 		getLogger().info("Pouring beer");
 		// move in (pouring)
 		
@@ -291,7 +291,7 @@ public class Beer extends RoboticsAPIApplication {
 //		throw Exception;
 	}
 
-	private void trashBottle() throws Throwable {
+	private void trashBottle() throws Exception {
 		getLogger().info("Trashing bottle");
 		// move in (trashBeer)
 		
@@ -302,7 +302,7 @@ public class Beer extends RoboticsAPIApplication {
 //		throw Exception;
 	}
 
-	private void serveGlass() throws Throwable {
+	private void serveGlass() throws Exception {
 		getLogger().info("Serving glass");
 		// move in (pourGlass) 
 		
