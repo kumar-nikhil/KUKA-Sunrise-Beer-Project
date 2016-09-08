@@ -5,10 +5,10 @@
         <additionalInformation>
             <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="true"/>
         </additionalInformation>
-        <frame name="myWorld">
+        <frame name="BeerWorld">
             <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
             <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1473226331079"/>
+                <info key="LastModificationTime" type="java.lang.Long" value="1473310104304"/>
             </additionalInformation>
             <redundancyData>
                 <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
