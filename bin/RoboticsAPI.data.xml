@@ -39,6 +39,15 @@
                         <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="0.4158821452906369" valueType="java.lang.Double"/>
                     </redundancy>
                 </redundancyData>
+                <frame name="detect">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1473310064968"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                </frame>
             </frame>
             <frame name="PourBase">
                 <transformation a="-1.6719795235192554" b="-1.5584611351521402" c="0.1526926254601034" x="540.5148938224863" y="293.9377983078479" z="106.70453766324937"/>
