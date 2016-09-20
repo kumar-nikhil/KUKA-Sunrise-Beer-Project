@@ -180,10 +180,10 @@
                         <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-0.7022326759611179" valueType="java.lang.Double"/>
                     </redundancy>
                 </redundancyData>
-                <frame name="Approach">
+                <frame name="Approach01">
                     <transformation a="-3.745202658037387E-5" b="7.245320265070648E-5" c="5.117126945040558E-5" x="28.811296749070607" y="12.757438177575494" z="-68.69769298770268"/>
                     <additionalInformation>
-                        <info key="LastModificationTime" type="java.lang.Long" value="1474349541573"/>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1474356940665"/>
                         <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP_Grip" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                             <tcpTransformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="126.26"/>
                         </info>
@@ -194,6 +194,15 @@
                             <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="119" valueType="java.lang.Integer"/>
                             <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-0.7022085876903635" valueType="java.lang.Double"/>
                         </redundancy>
+                    </redundancyData>
+                </frame>
+                <frame name="Approach02">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1474356947593"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
                     </redundancyData>
                 </frame>
             </frame>
