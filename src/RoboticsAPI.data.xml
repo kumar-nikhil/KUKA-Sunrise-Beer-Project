@@ -47,9 +47,9 @@
                     </redundancy>
                 </redundancyData>
                 <frame name="detect">
-                    <transformation a="-0.881159360572461" b="-1.5734302389176568E-4" c="1.9515868277361772E-4" x="139.9202294433401" y="16.477698639010157" z="-65.68139083602622"/>
+                    <transformation a="-0.9398574162200921" b="-0.008025805513081758" c="0.04345463811781287" x="-46.45219704505219" y="11.824102101922563" z="-64.39598253156349"/>
                     <additionalInformation>
-                        <info key="LastModificationTime" type="java.lang.Long" value="1474350274726"/>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1474414395572"/>
                         <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP_Tip" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                             <tcpTransformation a="0.0" b="0.0" c="0.0" x="-30.5611" y="-55.7192" z="126.26"/>
                         </info>
@@ -58,7 +58,7 @@
                         <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
                             <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
                             <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="73" valueType="java.lang.Integer"/>
-                            <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="0.4157670368994771" valueType="java.lang.Double"/>
+                            <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="0.4157337806323281" valueType="java.lang.Double"/>
                         </redundancy>
                     </redundancyData>
                 </frame>
@@ -237,9 +237,7 @@
             <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="0.0" cogY="0.0" cogZ="0.0" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="0.32637"/>
         </workpieceTemplate>
     </objectTemplates>
-    
-   <processDataContainer>
-      <processData displayName="AOV Clip" dataType="java.lang.Double" defaultValue="1.0" id="aovClip" min="0.05" max="1.0" value="1.0" unit="[1 = 100%]" comment="clip application override"/>
-   </processDataContainer>
-   
+    <processDataContainer>
+        <processData comment="clip application override" dataType="java.lang.Double" defaultValue="1.0" displayName="AOV Clip" id="aovClip" max="1.0" min="0.05" unit="[1 = 100%]" value="1.0"/>
+    </processDataContainer>
 </RoboticsAPIData>
