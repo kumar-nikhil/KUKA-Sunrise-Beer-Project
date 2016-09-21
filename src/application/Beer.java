@@ -67,6 +67,8 @@ public class Beer extends RoboticsAPIApplication {
 	private ObjectFrame			beerBase, glassBase, openerBase, pourBase;
 	private ObjectFrame			glassDetect, glassLean, pouring, tempHome;
 	private List<ObjectFrame>	pouringSPL;
+	// Process data
+	private double				aov;
 	
 
 	// gripper Open
@@ -108,6 +110,9 @@ public class Beer extends RoboticsAPIApplication {
 	private void processDataUpdate() {
 //		forceE_1 = getApplicationData().getProcessData("forceE_1").getValue();
 //		getApplicationData().getProcessData("forceE_1").setDefaultValue(forceE_1);
+		
+		aov = getApplicationData().getProcessData("aovClip").getValue();
+		getApplicationData().getProcessData("aovClip").setDefaultValue(aov);
 	}
 
 	private void initFrames() {
@@ -197,22 +202,24 @@ public class Beer extends RoboticsAPIApplication {
 		CartesianImpedanceControlMode detectCICM = new CartesianImpedanceControlMode();
 		detectCICM.parametrize(CartDOF.Z).setStiffness(200);
 		
-		IMotionContainer mc = tcpTip.move(linRel(0, 0, 500).setCartVelocity(200).setMode(detectCICM).breakWhen(j1tc));
+		IMotionContainer mc = tcpTip.move(linRel(0, 0, 500).setCartVelocity(100).setMode(detectCICM).breakWhen(j1tc));
 		
 		Frame target = null;
 		// move & grasp
 		if ( mc.hasFired(j1tc) ) {
+			getLogger().error("Glass detected");
 			double detectedZOffset = lbr.getCurrentCartesianPosition(tcpTip, glassBase).getZ();
 			target = glassBase.copyWithRedundancy();
-			target.transform(glassBase, Transformation.ofTranslation(-70, 0, detectedZOffset+37));
+			
+			target.transform(glassBase, Transformation.ofTranslation(0, 0, detectedZOffset+37));
 			Frame targetGripApr = target.copyWithRedundancy();
-			targetGripApr.transform(glassBase, Transformation.ofTranslation(-50, 0, 0));
-			Frame targetAir = target.copyWithRedundancy();
-			targetAir.transform(glassBase, Transformation.ofTranslation(-50, 0, -70));
+			targetGripApr.transform(glassBase, Transformation.ofDeg(50, 0, 0, 0, 20, 0));
+			Frame targetAir = targetGripApr.copyWithRedundancy();
+			targetAir.transform(glassBase, Transformation.ofTranslation(0, 0, -70));
 			
 			tcpTip.move(ptp(lbr.getCurrentCartesianPosition(tcpTip)));
 			tcpTip.moveAsync(linRel(0, 0, -50).setCartVelocity(1000).setBlendingRel(0.1));
-			tcpGrip.moveAsync(lin(targetAir).setCartVelocity(1000).setBlendingRel(0.1));
+			tcpGrip.moveAsync(lin(targetAir).setJointVelocityRel(1.0).setBlendingRel(0.1));
 			tcpGrip.moveAsync(lin(targetGripApr).setCartVelocity(600).setBlendingRel(0.1));
 			tcpGrip.move(lin(target).setCartVelocity(300));
 			

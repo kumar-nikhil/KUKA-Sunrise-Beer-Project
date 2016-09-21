@@ -237,4 +237,9 @@
             <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="0.0" cogY="0.0" cogZ="0.0" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="0.32637"/>
         </workpieceTemplate>
     </objectTemplates>
+    
+   <processDataContainer>
+      <processData displayName="AOV Clip" dataType="java.lang.Double" defaultValue="1.0" id="aovClip" min="0.05" max="1.0" value="1.0" unit="[1 = 100%]" comment="clip application override"/>
+   </processDataContainer>
+   
 </RoboticsAPIData>
