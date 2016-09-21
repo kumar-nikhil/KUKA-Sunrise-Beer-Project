@@ -427,11 +427,11 @@ public class Beer extends RoboticsAPIApplication {
 		double fX = lbr.getExternalForceTorque(tcpGrip, openerBase).getForce().getX();
 		double fY = lbr.getExternalForceTorque(tcpGrip, openerBase).getForce().getY();
 		getLogger().info(String.format("Current Force X : %.03f,  Y : %.03f", fX, fY));
-		ForceCondition detectX = ForceCondition.createNormalForceCondition(tcpGrip, openerBase, CoordinateAxis.X, 2.0);
-		ForceCondition detectY = ForceCondition.createNormalForceCondition(tcpGrip, openerBase, CoordinateAxis.Y, 2.0);
-		tcpGrip.move(linRel(-40, 0, 0, openerBase).setCartVelocity(20).setMode(contactCICM).breakWhen(detectX));
+		ForceCondition detectX = ForceCondition.createNormalForceCondition(tcpGrip, openerBase, CoordinateAxis.X, 5.0);
+		ForceCondition detectY = ForceCondition.createNormalForceCondition(tcpGrip, openerBase, CoordinateAxis.Y, 5.0);
+		tcpGrip.move(linRel(-60, 0, 0, openerBase).setCartVelocity(20).setMode(contactCICM).breakWhen(detectX));
 		ThreadUtil.milliSleep(500);
-		tcpGrip.move(linRel(0, -40, 0, openerBase).setCartVelocity(20).setMode(contactCICM).breakWhen(detectX));
+		tcpGrip.move(linRel(0, -60, 0, openerBase).setCartVelocity(20).setMode(contactCICM).breakWhen(detectX));
 		
 		// opening motion
 		lbr.setESMState("2");
@@ -440,7 +440,7 @@ public class Beer extends RoboticsAPIApplication {
 		openCICM.parametrize(CartDOF.X, CartDOF.Y).setStiffness(200);
 		openCICM.setReferenceSystem(openerBase);
 
-		openCICM.setAdditionalControlForce(-5, -5, 0, 0, 0, 0);
+		openCICM.setAdditionalControlForce(-10, -10, 0, 0, 0, 0);
 		tcpBottleCap.move(linRel(0, 0, 0, Math.toRadians(30), 0, 0).setMode(openCICM));
 		
 		// move out
