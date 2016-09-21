@@ -205,7 +205,7 @@ public class Beer extends RoboticsAPIApplication {
 		CartesianImpedanceControlMode detectCICM = new CartesianImpedanceControlMode();
 		detectCICM.parametrize(CartDOF.Z).setStiffness(200);
 		
-		IMotionContainer mc = tcpTip.move(linRel(0, 0, 500).setCartVelocity(30).setMode(detectCICM).breakWhen(j1tc));
+		IMotionContainer mc = tcpTip.move(linRel(0, 0, 500, glassBase).setCartVelocity(30).setMode(detectCICM).breakWhen(j1tc));
 		
 		Frame target = null;
 		// move & grasp
@@ -217,8 +217,8 @@ public class Beer extends RoboticsAPIApplication {
 			target.transform(glassBase, Transformation.ofTranslation(0, 0, detectedZOffset+37));
 			Frame targetGripApr = target.copyWithRedundancy();
 			targetGripApr.transform(glassBase, Transformation.ofDeg(50, 0, 0, 0, -20, 0));
-			Frame targetAir = targetGripApr.copyWithRedundancy();
-			targetAir.transform(glassBase, Transformation.ofTranslation(0, 0, -70));
+			Frame targetAir = target.copyWithRedundancy();
+			targetAir.transform(glassBase, Transformation.ofDeg(50, 0, -70, 0, -20, 0));
 			
 			tcpTip.move(ptp(lbr.getCurrentCartesianPosition(tcpTip)));
 			tcpTip.moveAsync(linRel(0, 0, -50).setCartVelocity(1000).setBlendingRel(0.1));
