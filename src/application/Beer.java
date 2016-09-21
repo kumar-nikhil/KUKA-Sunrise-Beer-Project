@@ -316,9 +316,9 @@ public class Beer extends RoboticsAPIApplication {
 		for (int i = 0; i < beers.size(); i++) {
 			Frame target = beers.get(i).copyWithRedundancy();
 			Frame targetAir = target.copyWithRedundancy();
-			targetAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 250));
+			targetAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 200));
 			
-			tcpGrip.moveAsync(ptp(targetAir).setJointVelocityRel(1.0).setBlendingRel(0.1));
+			tcpGrip.moveAsync(ptp(targetAir).setJointVelocityRel(1.0).setBlendingRel(0.2));
 			tcpGrip.move(lin(target).setCartVelocity(600));
 
 			exIO.gripperClose();
@@ -328,16 +328,20 @@ public class Beer extends RoboticsAPIApplication {
 			int key = evaluateLoad();
 			
 			switch (key) {
-			case 2:	// Full bottle
-				getLogger().info("Good to go to open the bottle");
+			case 0: // Nothing
+				getLogger().info("Try next position");
 				break;
 			case 1:	// Empty bottle
-				getLogger().error("The bottle is empty...");
+				getLogger().info("The bottle is empty...");
 				trashBottle();
-				
-				throw Exception;
-				
-			default:
+				break;
+			case 2:	// Full bottle
+				getLogger().info("Good to go to open the bottle");
+				i = beers.size();
+				break;
+			case 3:
+			case 4:
+			case 10:
 				getLogger().error("!!!!! Undesired object is gripped !!!!!");
 				tcpGrip.move(lin(target).setCartVelocity(600));
 				
@@ -348,8 +352,8 @@ public class Beer extends RoboticsAPIApplication {
 				tcpGrip.move(lin(targetAir).setCartVelocity(1000));
 				
 				throw Exception;
-			}
-		}
+			}	// end of sw-case
+		}	// end of for
 		
 		// move out
 
