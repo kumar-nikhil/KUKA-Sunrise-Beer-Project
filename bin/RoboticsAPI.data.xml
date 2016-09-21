@@ -29,6 +29,30 @@
                         <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-0.7022729428886231" valueType="java.lang.Double"/>
                     </redundancy>
                 </redundancyData>
+                <frame name="P1">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1474426478768"/>
+                    </additionalInformation>
+                </frame>
+                <frame name="P2">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1474426480079"/>
+                    </additionalInformation>
+                </frame>
+                <frame name="P3">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1474426481226"/>
+                    </additionalInformation>
+                </frame>
+                <frame name="P4">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1474426482730"/>
+                    </additionalInformation>
+                </frame>
             </frame>
             <frame name="GlassBase">
                 <transformation a="3.0849174033926388" b="-1.5589626315387024" c="0.062227423922409424" x="149.4546978042668" y="-412.78246745700886" z="59.956621302337766"/>

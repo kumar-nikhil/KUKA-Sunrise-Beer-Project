@@ -66,6 +66,7 @@ public class Beer extends RoboticsAPIApplication {
 	private JointPosition		home;
 	private ObjectFrame			beerBase, glassBase, openerBase, pourBase;
 	private ObjectFrame			glassDetect, glassLean, pouring, tempHome;
+	private List<ObjectFrame>	beers;
 	private List<ObjectFrame>	pouringSPL;
 	// Process data
 	private double				aov;
@@ -127,6 +128,8 @@ public class Beer extends RoboticsAPIApplication {
 		pouring = pourBase.getChild("Pouring");
 		tempHome = getApplicationData().getFrame("/BeerWorld/tempHome");
 		
+		beers = new ArrayList<ObjectFrame>();
+		beers.addAll(beerBase.getChildren());
 		pouringSPL = new ArrayList<ObjectFrame>();
 		pouringSPL.addAll(pouring.getChildren());
 	}
@@ -253,31 +256,41 @@ public class Beer extends RoboticsAPIApplication {
 		// move in (pourGlass) 
 		Frame air = glassLean.copyWithRedundancy();
 		air.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0,0,50));
-		tcpGrip.moveAsync(lin(air).setJointVelocityRel(1.0).setBlendingRel(0.1));
-		tcpGrip.move(lin(glassLean).setCartVelocity(500));
-		
-		// detect floor (z)
-		double j2t = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J2);
-		getLogger().info(String.format("current Torque on J2 : %.2f", j2t) );
-		JointTorqueCondition j2tc = new JointTorqueCondition(JointEnum.J2, j2t-3.0, j2t+3.0);
+		tcpGrip.move(lin(air).setJointVelocityRel(1.0));
+
 		CartesianImpedanceControlMode dFloorCICM = new CartesianImpedanceControlMode();
 		dFloorCICM.parametrize(CartDOF.Z).setStiffness(200);
 		dFloorCICM.setReferenceSystem(World.Current.getRootFrame());
 		
-		IMotionContainer mc = tcpGrip.move(linRel(0, 0, -80, World.Current.getRootFrame()).setCartVelocity(200).setMode(dFloorCICM).breakWhen(j2tc));
+		tcpGrip.move(lin(glassLean).setCartVelocity(100).setMode(dFloorCICM));
+		tcpGrip.move(ptp(lbr.getCurrentCartesianPosition(tcpGrip)));
+		/*
+		// detect floor (z)
+		double j2t = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J2);
+		getLogger().info(String.format("current Torque on J2 : %.2f", j2t) );
+		JointTorqueCondition j2tc = new JointTorqueCondition(JointEnum.J2, j2t-2.0, j2t+2.0);
+		CartesianImpedanceControlMode dFloorCICM = new CartesianImpedanceControlMode();
+		dFloorCICM.parametrize(CartDOF.Z).setStiffness(200);
+		dFloorCICM.setReferenceSystem(World.Current.getRootFrame());
+		
+		IMotionContainer mc = tcpGrip.move(linRel(0, 0, -80, World.Current.getRootFrame()).setCartVelocity(50).setMode(dFloorCICM).breakWhen(j2tc));
 		if ( mc.hasFired(j2tc) ) {
+			getLogger().info("Floor detected");
 			
 		} else {
 			getLogger().error("!!!!! [ Floor detection failed ] !!!!!");
 			throw Exception;
 		}
-		
+		*/
 		
 		// leaning & detect hole (y)
 		
 		// release
-		
+		exIO.gripperOpen();
 		// move out
+		tcpTip.moveAsync(linRel(0, -50, 20, World.Current.getRootFrame()).setCartVelocity(600).setBlendingRel(0.1));
+		tcpTip.moveAsync(linRel(0, -20, 50, World.Current.getRootFrame()).setCartVelocity(1000).setBlendingRel(0.1));
+		tcpGrip.move(ptp(tempHome).setJointVelocityRel(1.0));
 
 //		throw Exception;
 	}
