@@ -11,7 +11,9 @@ import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 
+import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.conditionModel.ICallbackAction;
+import com.kuka.roboticsAPI.conditionModel.ICondition;
 import com.kuka.roboticsAPI.conditionModel.ITriggerAction;
 import com.kuka.roboticsAPI.conditionModel.JointTorqueCondition;
 import com.kuka.roboticsAPI.conditionModel.MotionPathCondition;
@@ -27,6 +29,7 @@ import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.geometricModel.Workpiece;
 import com.kuka.roboticsAPI.geometricModel.World;
+import com.kuka.roboticsAPI.geometricModel.math.CoordinateAxis;
 import com.kuka.roboticsAPI.geometricModel.math.Transformation;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
@@ -407,16 +410,35 @@ public class Beer extends RoboticsAPIApplication {
 
 	private void openBottle() throws Exception {
 		getLogger().info("Opening a bottle cap");
+		Frame openerAir = openerBase.copyWithRedundancy();
+		openerAir.transform(openerBase, Transformation.ofTranslation(10, 10, 0));
 		// move in (openerBase) 
 		tcpGrip.moveAsync(ptp(openerBase.getChildren().iterator().next()).setJointVelocityRel(1.0).setBlendingRel(0.1));
-		tcpGrip.moveAsync(lin(openerBase.getChildren().iterator().next()).setCartVelocity(300).setBlendingRel(0.1));
-		tcpGrip.moveAsync(lin(openerBase.getChildren().iterator().next()).setCartVelocity(50).setBlendingRel(0.1));
-		tcpGrip.move(lin(openerBase).setCartVelocity(50));
+//		tcpGrip.moveAsync(lin(openerBase.getChildren().iterator().next()).setCartVelocity(300).setBlendingRel(0.1));
+//		tcpGrip.moveAsync(lin(openerBase.getChildren().iterator().next()).setCartVelocity(50).setBlendingRel(0.1));
+		tcpGrip.move(lin(openerAir).setCartVelocity(50));
 		
+		// contact
+		CartesianImpedanceControlMode contactCICM = new CartesianImpedanceControlMode();
+		contactCICM.parametrize(CartDOF.X, CartDOF.Y).setStiffness(200);
+		contactCICM.setReferenceSystem(openerBase);
 		
-		// detect contact
+		double fX = lbr.getExternalForceTorque(tcpGrip, openerBase).getForce().getX();
+		double fY = lbr.getExternalForceTorque(tcpGrip, openerBase).getForce().getY();
+		getLogger().info(String.format("Current Force X : %.03f,  Y : %.03f", fX, fY));
+		ForceCondition detectX = ForceCondition.createNormalForceCondition(tcpGrip, openerBase, CoordinateAxis.X, 2.0);
+		ForceCondition detectY = ForceCondition.createNormalForceCondition(tcpGrip, openerBase, CoordinateAxis.Y, 2.0);
+		tcpGrip.move(linRel(-40, 0, 0, openerBase).setCartVelocity(20).setMode(contactCICM).breakWhen(detectX));
+		ThreadUtil.milliSleep(500);
+		tcpGrip.move(linRel(0, -40, 0, openerBase).setCartVelocity(20).setMode(contactCICM).breakWhen(detectX));
 		
-		// opening motion
+		// opening motion	// A+
+		CartesianImpedanceControlMode openCICM = new CartesianImpedanceControlMode();
+		openCICM.parametrize(CartDOF.X, CartDOF.Y).setStiffness(200);
+		openCICM.setReferenceSystem(openerBase);
+
+		openCICM.setAdditionalControlForce(-5, -5, 0, 0, 0, 0);
+		tcpGrip.move(linRel(0, 0, 0, Math.toRadians(65), 0, 0).setMode(openCICM));
 		
 		// move out
 
