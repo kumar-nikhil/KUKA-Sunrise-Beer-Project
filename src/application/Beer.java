@@ -6,6 +6,7 @@ import java.util.List;
 
 import ioTool.ExGripper;
 
+import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
@@ -287,6 +288,7 @@ public class Beer extends RoboticsAPIApplication {
 		
 		// release
 		exIO.gripperOpen();
+		ThreadUtil.milliSleep(500);
 		// move out
 		tcpTip.moveAsync(linRel(0, 0, -50, pourBase).setCartVelocity(600).setBlendingRel(0.1));
 		tcpTip.moveAsync(linRel(50, 0, -50, World.Current.getRootFrame()).setCartVelocity(1000).setBlendingRel(0.1));
