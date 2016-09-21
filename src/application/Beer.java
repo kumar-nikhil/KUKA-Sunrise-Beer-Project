@@ -191,9 +191,12 @@ public class Beer extends RoboticsAPIApplication {
 		// move in (glassBase)
 		Frame detectAir = glassDetect.copyWithRedundancy();
 		detectAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 200));
+		Frame detectApr = glassDetect.copyWithRedundancy();
+		detectApr.transform(glassBase, Transformation.ofTranslation(0, 0, -30));
+		
 		tcpTip.moveAsync(ptp(detectAir).setJointVelocityRel(1.0).setBlendingRel(0.2)
 				.triggerWhen(gOpenC, gOpenAction) );
-		tcpTip.move(lin(glassDetect).setCartVelocity(1000));
+		tcpTip.move(lin(detectApr).setCartVelocity(1000));
 		
 		// detect glass position
 		double j1t = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
