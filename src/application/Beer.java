@@ -104,7 +104,7 @@ public class Beer extends RoboticsAPIApplication {
 		
 		tool.attachTo(lbr.getFlange());
 		
-//		getApplicationControl().clipApplicationOverride(0.3);
+		getApplicationControl().clipApplicationOverride(aov);
 	}
 
 	private void processDataUpdate() {
