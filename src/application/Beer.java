@@ -439,9 +439,11 @@ public class Beer extends RoboticsAPIApplication {
 		openCICM.setReferenceSystem(openerBase);
 
 		openCICM.setAdditionalControlForce(-5, -5, 0, 0, 0, 0);
-		tcpBottleCap.move(linRel(0, 0, 0, Math.toRadians(65), 0, 0).setMode(openCICM));
+		tcpBottleCap.move(linRel(0, 0, 0, Math.toRadians(30), 0, 0).setMode(openCICM));
 		
 		// move out
+		tcpGrip.moveAsync(linRel(0, 0, -50, World.Current.getRootFrame()).setCartVelocity(100).setBlendingRel(0.1));
+		tcpGrip.move(linRel(0, -50, 0, World.Current.getRootFrame()).setCartVelocity(100));
 
 //		throw Exception;
 	}
