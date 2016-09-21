@@ -374,20 +374,20 @@ public class Beer extends RoboticsAPIApplication {
 		if ( Math.abs(load) <= 0.1 ) {	// 0.0 +- 0.1
 			getLogger().info("Load evaluation : Nothing");
 			ret = 0;
-		} else if ( Math.abs( load - bottleMass ) <= 0.1 ) {	// 0.273 +- 0.1
+		} else if ( ( Math.abs(load) - Math.abs(bottleMass) ) <= 0.1 ) {	// 0.273 +- 0.1
 			getLogger().info("Load evaluation : Empty bottle");
 			bottle.attachTo(tcpGrip);
 			ret = 1;
-		} else if ( Math.abs( load - (bottleMass + fluidMass) ) <= 0.15) {	// 0.599 +- 0.1
+		} else if ( ( Math.abs(load) - Math.abs(bottleMass + fluidMass) ) <= 0.15) {	// 0.599 +- 0.1
 			getLogger().info("Load evaluation : Full bottle");
 			bottle.attachTo(tcpGrip);
 			fluid.attachTo(tcpGrip);
 			ret = 2;
-		} else if ( Math.abs( load - glassMass ) <= 0.1) {	//	0.450 +- 0.1
+		} else if ( ( Math.abs(load) - Math.abs(glassMass) ) <= 0.1) {	//	0.450 +- 0.1
 			getLogger().info("Load evaluation : Empty glass");
 			glass.attachTo(tcpGrip);
 			ret = 3;
-		} else if ( Math.abs( load - (glassMass + fluidMass) ) <= 0.1) {	// 0.776 +- 0.1
+		} else if ( ( Math.abs(load) - Math.abs(glassMass + fluidMass) ) <= 0.1) {	// 0.776 +- 0.1
 			getLogger().info("Load evaluation : Full glass");
 			glass.attachTo(tcpGrip);
 			fluid.attachTo(tcpGrip);
