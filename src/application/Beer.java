@@ -221,9 +221,9 @@ public class Beer extends RoboticsAPIApplication {
 			target.transform(glassBase, Transformation.ofTranslation(0, 0, (detectedZOffset+64) ));
 			
 			Frame targetGripApr = target.copyWithRedundancy();
-			targetGripApr.transform(glassBase, Transformation.ofDeg(0, 0, 0, 0, -20, 0));
+			targetGripApr.transform(glassBase, Transformation.ofDeg(-10, 0, 0, 0, -20, 0));
 			Frame targetAir02 = target.copyWithRedundancy();
-			targetAir02.transform(glassBase, Transformation.ofDeg(-30, 0, -70, 0, -20, 0));
+			targetAir02.transform(glassBase, Transformation.ofDeg(-10, 0, -70, 0, -20, 0));
 			Frame targetAir01 = target.copyWithRedundancy();
 			targetAir01.transform(glassBase, Transformation.ofDeg(0, 0, -70, 0, -20, 0));
 			
@@ -231,7 +231,7 @@ public class Beer extends RoboticsAPIApplication {
 			tcpTip.moveAsync(linRel(50, 0, -50, glassBase).setCartVelocity(1000).setBlendingRel(0.1));
 			tcpGrip.moveAsync(lin(targetAir01).setJointVelocityRel(1.0).setBlendingRel(0.1));
 			tcpGrip.moveAsync(lin(targetAir02).setJointVelocityRel(1.0).setBlendingRel(0.1));
-//			tcpGrip.moveAsync(lin(targetGripApr).setCartVelocity(600).setBlendingRel(0.1));
+			tcpGrip.moveAsync(lin(targetGripApr).setCartVelocity(600).setBlendingRel(0.1));
 			tcpGrip.move(lin(target).setCartVelocity(300));
 			
 			exIO.gripperClose();
