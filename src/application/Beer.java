@@ -215,7 +215,7 @@ public class Beer extends RoboticsAPIApplication {
 			getLogger().info("detectedZOffset : " + detectedZOffset);
 			target = glassBase.copyWithRedundancy();
 			
-			target.transform(glassBase, Transformation.ofTranslation(0, 0, detectedZOffset+37+40));
+			target.transform(glassBase, Transformation.ofTranslation(0, 0, detectedZOffset+64));
 			Frame targetGripApr = target.copyWithRedundancy();
 			targetGripApr.transform(glassBase, Transformation.ofDeg(-30, 0, 0, 0, -20, 0));
 			Frame targetAir02 = target.copyWithRedundancy();
