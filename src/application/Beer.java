@@ -378,7 +378,7 @@ public class Beer extends RoboticsAPIApplication {
 			getLogger().info("Load evaluation : Empty bottle");
 			bottle.attachTo(tcpGrip);
 			ret = 1;
-		} else if ( Math.abs( load - (bottleMass + fluidMass) ) <= 0.1) {	// 0.599 +- 0.1
+		} else if ( Math.abs( load - (bottleMass + fluidMass) ) <= 0.15) {	// 0.599 +- 0.1
 			getLogger().info("Load evaluation : Full bottle");
 			bottle.attachTo(tcpGrip);
 			fluid.attachTo(tcpGrip);
