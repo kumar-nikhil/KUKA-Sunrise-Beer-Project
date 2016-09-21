@@ -190,7 +190,7 @@ public class Beer extends RoboticsAPIApplication {
 		getLogger().info("Getting a glass");
 		// move in (glassBase)
 		Frame detectAir = glassDetect.copyWithRedundancy();
-		detectAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 200));
+		detectAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 350));
 		Frame detectApr = glassDetect.copyWithRedundancy();
 		detectApr.transform(glassBase, Transformation.ofTranslation(0, 0, -30));
 		
