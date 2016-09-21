@@ -409,8 +409,8 @@ public class Beer extends RoboticsAPIApplication {
 		getLogger().info("Opening a bottle cap");
 		// move in (openerBase) 
 		tcpGrip.moveAsync(ptp(openerBase.getChildren().iterator().next()).setJointVelocityRel(1.0).setBlendingRel(0.1));
-		tcpGrip.moveAsync(ptp(openerBase.getChildren().iterator().next()).setJointVelocityRel(0.3).setBlendingRel(0.1));
-		tcpGrip.moveAsync(ptp(openerBase.getChildren().iterator().next()).setJointVelocityRel(0.3).setBlendingRel(0.1));
+		tcpGrip.moveAsync(lin(openerBase.getChildren().iterator().next()).setCartVelocity(300).setBlendingRel(0.1));
+		tcpGrip.moveAsync(lin(openerBase.getChildren().iterator().next()).setCartVelocity(50).setBlendingRel(0.1));
 		tcpGrip.move(lin(openerBase).setCartVelocity(50));
 		
 		
