@@ -201,11 +201,11 @@ public class Beer extends RoboticsAPIApplication {
 		// detect glass position
 		double j1t = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
 		getLogger().info(String.format("current Torque on J1 : %.2f", j1t) );
-		JointTorqueCondition j1tc = new JointTorqueCondition(JointEnum.J1, j1t-3.0, j1t+3.0);
+		JointTorqueCondition j1tc = new JointTorqueCondition(JointEnum.J1, j1t-1.0, j1t+1.0);
 		CartesianImpedanceControlMode detectCICM = new CartesianImpedanceControlMode();
 		detectCICM.parametrize(CartDOF.Z).setStiffness(200);
 		
-		IMotionContainer mc = tcpTip.move(linRel(0, 0, 500).setCartVelocity(100).setMode(detectCICM).breakWhen(j1tc));
+		IMotionContainer mc = tcpTip.move(linRel(0, 0, 500).setCartVelocity(30).setMode(detectCICM).breakWhen(j1tc));
 		
 		Frame target = null;
 		// move & grasp
