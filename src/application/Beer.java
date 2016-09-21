@@ -60,7 +60,7 @@ public class Beer extends RoboticsAPIApplication {
 	private Controller			cabinet;
 	private LBR					lbr;
 	private Tool				tool;
-	private ObjectFrame			tcpGrip, tcpTip;
+	private ObjectFrame			tcpGrip, tcpTip, tcpBottleCap;
 	private Workpiece			bottle, glass, fluid;
 	// IO
 	private MediaFlangeIOGroup	mfIo;
@@ -95,6 +95,7 @@ public class Beer extends RoboticsAPIApplication {
 		tool = getApplicationData().createFromTemplate("Tool");
 		tcpGrip = tool.getFrame("TCP_Grip");
 		tcpTip = tool.getFrame("TCP_Tip");
+		tcpBottleCap = tool.getFrame("TCP_BottleCap");
 		// wp
 		bottle = getApplicationData().createFromTemplate("Bottle");
 		glass = getApplicationData().createFromTemplate("Glass");
@@ -438,7 +439,7 @@ public class Beer extends RoboticsAPIApplication {
 		openCICM.setReferenceSystem(openerBase);
 
 		openCICM.setAdditionalControlForce(-5, -5, 0, 0, 0, 0);
-		tcpGrip.move(linRel(0, 0, 0, Math.toRadians(65), 0, 0).setMode(openCICM));
+		tcpBottleCap.move(linRel(0, 0, 0, Math.toRadians(65), 0, 0).setMode(openCICM));
 		
 		// move out
 
