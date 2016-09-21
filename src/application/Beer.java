@@ -367,9 +367,9 @@ public class Beer extends RoboticsAPIApplication {
 				bottleMass, fluidMass, glassMass));
 		
 		double zForce = lbr.getExternalForceTorque(tcpGrip, World.Current.getRootFrame()).getForce().getZ();
-		getLogger().info("Rated force is : " + zForce + " N");
+		getLogger().info("Rated force is : " + Math.abs(zForce) + " N");
 		double load = zForce / 9.8;
-		getLogger().info("Rated load is : " + load + " kg");
+		getLogger().info("Rated load is : " + Math.abs(load) + " kg");
 		
 		if ( Math.abs(load) <= 0.1 ) {	// 0.0 +- 0.1
 			getLogger().info("Load evaluation : Nothing");
