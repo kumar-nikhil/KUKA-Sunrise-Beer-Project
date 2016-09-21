@@ -64,9 +64,9 @@
                 </frame>
             </frame>
             <frame name="PourBase">
-                <transformation a="-1.6719795235192554" b="-1.5584611351521402" c="0.1526926254601034" x="540.5148938224863" y="293.9377983078479" z="106.70453766324937"/>
+                <transformation a="-1.6843937405498235" b="-1.5585686439510384" c="0.165188478355959" x="579.3418871556875" y="-135.452838263797" z="85.57317525779371"/>
                 <additionalInformation>
-                    <info key="LastModificationTime" type="java.lang.Long" value="1473230136098"/>
+                    <info key="LastModificationTime" type="java.lang.Long" value="1474415979491"/>
                     <info key="UseAsBaseForJogging" type="java.lang.Boolean" value="true"/>
                     <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP_Grip" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                         <tcpTransformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="126.26"/>
@@ -77,7 +77,7 @@
                     <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
                         <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
                         <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="9" valueType="java.lang.Integer"/>
-                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="0.4158454136366148" valueType="java.lang.Double"/>
+                        <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="0.4158508065949204" valueType="java.lang.Double"/>
                     </redundancy>
                 </redundancyData>
                 <frame name="GlassJig">
@@ -97,9 +97,9 @@
                         </redundancy>
                     </redundancyData>
                     <frame name="leanPosition">
-                        <transformation a="0.06623844976231952" b="-0.9151412446169357" c="-0.03168793558985791" x="-17.98740396131268" y="4.558001425237876" z="64.27706389817013"/>
+                        <transformation a="0.06626677648956258" b="-0.9151022529749882" c="-0.031611549415192244" x="-28.034815416894077" y="4.383010456709485" z="61.79304382011375"/>
                         <additionalInformation>
-                            <info key="LastModificationTime" type="java.lang.Long" value="1473317840546"/>
+                            <info key="LastModificationTime" type="java.lang.Long" value="1474416097019"/>
                             <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP_Grip" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                                 <tcpTransformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="126.26"/>
                             </info>
@@ -108,8 +108,8 @@
                         <redundancyData>
                             <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
                                 <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
-                                <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="8" valueType="java.lang.Integer"/>
-                                <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="0.41583834298056577" valueType="java.lang.Double"/>
+                                <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="9" valueType="java.lang.Integer"/>
+                                <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="0.41577356824878725" valueType="java.lang.Double"/>
                             </redundancy>
                         </redundancyData>
                     </frame>
