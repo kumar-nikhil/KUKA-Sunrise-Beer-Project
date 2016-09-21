@@ -249,7 +249,7 @@
                     <transformation a="0.0" b="0.0" c="0.0" x="-30.5611" y="-55.7192" z="126.26"/>
                 </frame>
             </frames>
-            <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="22.933602598653415" cogY="26.03007042644266" cogZ="57.51135913271936" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="1.1996015396345225"/>
+            <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="-3.611909101443107" cogY="-5.161130405809214" cogZ="-6.38239836633886" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="1.893780850777776"/>
         </toolTemplate>
         <workpieceTemplate class="" name="Bottle">
             <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="0.0" cogY="0.0" cogZ="0.0" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="0.27363"/>
