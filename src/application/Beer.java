@@ -201,7 +201,7 @@ public class Beer extends RoboticsAPIApplication {
 		// detect glass position
 		double j1t = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
 		getLogger().info(String.format("current Torque on J1 : %.2f", j1t) );
-		JointTorqueCondition j1tc = new JointTorqueCondition(JointEnum.J1, j1t-1.0, j1t+1.0);
+		JointTorqueCondition j1tc = new JointTorqueCondition(JointEnum.J1, j1t-1.5, j1t+1.5);
 		CartesianImpedanceControlMode detectCICM = new CartesianImpedanceControlMode();
 		detectCICM.parametrize(CartDOF.Z).setStiffness(200);
 		
@@ -216,7 +216,7 @@ public class Beer extends RoboticsAPIApplication {
 			
 			target.transform(glassBase, Transformation.ofTranslation(0, 0, detectedZOffset+37));
 			Frame targetGripApr = target.copyWithRedundancy();
-			targetGripApr.transform(glassBase, Transformation.ofDeg(50, 0, 0, 0, 20, 0));
+			targetGripApr.transform(glassBase, Transformation.ofDeg(50, 0, 0, 0, -20, 0));
 			Frame targetAir = targetGripApr.copyWithRedundancy();
 			targetAir.transform(glassBase, Transformation.ofTranslation(0, 0, -70));
 			
