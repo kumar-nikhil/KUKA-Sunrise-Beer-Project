@@ -430,8 +430,11 @@ public class Beer extends RoboticsAPIApplication {
 		ForceCondition detectX = ForceCondition.createNormalForceCondition(tcpGrip, openerBase, CoordinateAxis.X, 5.0);
 		ForceCondition detectY = ForceCondition.createNormalForceCondition(tcpGrip, openerBase, CoordinateAxis.Y, 5.0);
 		tcpGrip.move(linRel(-60, 0, 0, openerBase).setCartVelocity(20).setMode(contactCICM).breakWhen(detectX));
+		getLogger().info("X directional contact made");
 		ThreadUtil.milliSleep(500);
 		tcpGrip.move(linRel(0, -60, 0, openerBase).setCartVelocity(20).setMode(contactCICM).breakWhen(detectX));
+		getLogger().info("Y directional contact made");
+		ThreadUtil.milliSleep(500);
 		
 		// opening motion
 		lbr.setESMState("2");
@@ -456,6 +459,7 @@ public class Beer extends RoboticsAPIApplication {
 	private void pourBeer() throws Exception {
 		getLogger().info("Pouring beer");
 		// move in (pouring)
+		tcpGrip.move(lin(pouring).setJointVelocityRel(3.0));
 		
 		// pouring motion
 		
