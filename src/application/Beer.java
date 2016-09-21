@@ -78,7 +78,9 @@ public class Beer extends RoboticsAPIApplication {
 	ITriggerAction gOpenAction = new ICallbackAction() {
 		@Override
 		public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
-			exIO.gripperOpen();				
+			exIO.gripperOpen();
+			lbr.detachAll();
+			tool.attachTo(lbr.getFlange());
 		}
 	};
 	
@@ -164,8 +166,9 @@ public class Beer extends RoboticsAPIApplication {
 		
 		try {
 			// glass preparation
-			getGlass();
-			putGlass();
+//			getGlass();
+//			putGlass();
+			// finished
 			
 			// bottle preparation
 			getBottle();
@@ -263,7 +266,7 @@ public class Beer extends RoboticsAPIApplication {
 		dFloorCICM.parametrize(CartDOF.Z).setStiffness(200);
 		dFloorCICM.setReferenceSystem(World.Current.getRootFrame());
 		
-		tcpGrip.move(lin(glassLean).setCartVelocity(100).setMode(dFloorCICM));
+		tcpGrip.move(lin(glassLean).setCartVelocity(50).setMode(dFloorCICM));
 		tcpGrip.move(ptp(lbr.getCurrentCartesianPosition(tcpGrip)));
 		/*
 		// detect floor (z)
@@ -288,6 +291,9 @@ public class Beer extends RoboticsAPIApplication {
 		
 		// release
 		exIO.gripperOpen();
+		lbr.detachAll();
+		tool.attachTo(lbr.getFlange());
+		
 		ThreadUtil.milliSleep(500);
 		// move out
 		tcpTip.moveAsync(linRel(0, 0, -50, pourBase).setCartVelocity(600).setBlendingRel(0.1));
@@ -300,14 +306,98 @@ public class Beer extends RoboticsAPIApplication {
 	private void getBottle() throws Exception {
 		getLogger().info("Getting a bottle");
 		// move in (bootleBase)
+		Frame beerAir = beerBase.copyWithRedundancy();
+		beerAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 300));
 		
-		// detect bottle position
+		tcpGrip.moveAsync(ptp(beerAir).setJointVelocityRel(1.0).setBlendingRel(0.2)
+				.triggerWhen(gOpenC, gOpenAction) );
 		
-		// move & grasp
+		// move & grasp & evaluate Load
+		for (int i = 0; i < beers.size(); i++) {
+			Frame target = beers.get(i).copyWithRedundancy();
+			Frame targetAir = target.copyWithRedundancy();
+			targetAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 250));
+			
+			tcpGrip.moveAsync(ptp(targetAir).setJointVelocityRel(1.0).setBlendingRel(0.1));
+			tcpGrip.move(lin(target).setCartVelocity(600));
+
+			exIO.gripperClose();
+			
+			tcpGrip.move(lin(targetAir).setCartVelocity(1000));
+			
+			int key = evaluateLoad();
+			
+			switch (key) {
+			case 2:	// Full bottle
+				getLogger().info("Good to go to open the bottle");
+				break;
+			case 1:	// Empty bottle
+				getLogger().error("The bottle is empty...");
+				trashBottle();
+				
+				throw Exception;
+				
+			default:
+				getLogger().error("!!!!! Undesired object is gripped !!!!!");
+				tcpGrip.move(lin(target).setCartVelocity(600));
+				
+				exIO.gripperOpen();
+				lbr.detachAll();
+				tool.attachTo(lbr.getFlange());
+				
+				tcpGrip.move(lin(targetAir).setCartVelocity(1000));
+				
+				throw Exception;
+			}
+		}
 		
 		// move out
 
 //		throw Exception;
+	}
+
+	private int evaluateLoad() {
+		int ret = 0;
+		ThreadUtil.milliSleep(500);
+		
+		double bottleMass = bottle.getLoadData().getMass();
+		double fluidMass = fluid.getLoadData().getMass();
+		double glassMass = glass.getLoadData().getMass();
+		getLogger().info(String.format("Mass - [Bottle : %.03f], [Fluid : %.03f], [Glass : %.03f]",
+				bottleMass, fluidMass, glassMass));
+		
+		double zForce = lbr.getExternalForceTorque(tcpGrip, World.Current.getRootFrame()).getForce().getZ();
+		getLogger().info("Rated force is : " + zForce + " N");
+		double load = zForce / 9.8;
+		getLogger().info("Rated load is : " + load + " kg");
+		
+		if ( Math.abs(load) <= 0.1 ) {	// 0.0 +- 0.1
+			getLogger().info("Load evaluation : Nothing");
+			ret = 0;
+		} else if ( Math.abs( load - bottleMass ) <= 0.1 ) {	// 0.273 +- 0.1
+			getLogger().info("Load evaluation : Empty bottle");
+			bottle.attachTo(tcpGrip);
+			ret = 1;
+		} else if ( Math.abs( load - (bottleMass + fluidMass) ) <= 0.1) {	// 0.599 +- 0.1
+			getLogger().info("Load evaluation : Full bottle");
+			bottle.attachTo(tcpGrip);
+			fluid.attachTo(tcpGrip);
+			ret = 2;
+		} else if ( Math.abs( load - glassMass ) <= 0.1) {	//	0.450 +- 0.1
+			getLogger().info("Load evaluation : Empty glass");
+			glass.attachTo(tcpGrip);
+			ret = 3;
+		} else if ( Math.abs( load - (glassMass + fluidMass) ) <= 0.1) {	// 0.776 +- 0.1
+			getLogger().info("Load evaluation : Full glass");
+			glass.attachTo(tcpGrip);
+			fluid.attachTo(tcpGrip);
+			ret = 4;
+		} else {
+			getLogger().info(String.format("Load evaluation : Unknown object, Mass = %.03f", load));
+			ret = 10;
+		}
+		
+		return ret;
 	}
 
 	private void openBottle() throws Exception {
