@@ -221,11 +221,11 @@ public class Beer extends RoboticsAPIApplication {
 			target.transform(glassBase, Transformation.ofTranslation(0, 0, (detectedZOffset+64) ));
 			
 			Frame targetGripApr = target.copyWithRedundancy();
-			targetGripApr.transform(glassBase, Transformation.ofDeg(-10, 0, 0, 0, -20, 0));
+			targetGripApr.transform(target, Transformation.ofDeg(-30, 0, 0, 0, -20, 0));
 			Frame targetAir02 = target.copyWithRedundancy();
-			targetAir02.transform(glassBase, Transformation.ofDeg(-10, 0, -70, 0, -20, 0));
+			targetAir02.transform(target, Transformation.ofDeg(-30, 0, -70, 0, -20, 0));
 			Frame targetAir01 = target.copyWithRedundancy();
-			targetAir01.transform(glassBase, Transformation.ofDeg(0, 0, -70, 0, -20, 0));
+			targetAir01.transform(target, Transformation.ofDeg(0, 0, -70, 0, -20, 0));
 			
 			tcpTip.move(ptp(lbr.getCurrentCartesianPosition(tcpTip)));
 			tcpTip.moveAsync(linRel(50, 0, -50, glassBase).setCartVelocity(1000).setBlendingRel(0.1));
