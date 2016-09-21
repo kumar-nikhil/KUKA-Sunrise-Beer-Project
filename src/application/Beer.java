@@ -291,7 +291,7 @@ public class Beer extends RoboticsAPIApplication {
 		ThreadUtil.milliSleep(500);
 		// move out
 		tcpTip.moveAsync(linRel(0, 0, -50, pourBase).setCartVelocity(600).setBlendingRel(0.1));
-		tcpTip.moveAsync(linRel(50, 0, -50, World.Current.getRootFrame()).setCartVelocity(1000).setBlendingRel(0.1));
+		tcpTip.moveAsync(linRel(50, 0, -50, pourBase).setCartVelocity(1000).setBlendingRel(0.1));
 		tcpGrip.move(ptp(tempHome).setJointVelocityRel(1.0));
 
 //		throw Exception;
