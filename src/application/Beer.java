@@ -231,7 +231,7 @@ public class Beer extends RoboticsAPIApplication {
 			tcpTip.moveAsync(linRel(50, 0, -50, glassBase).setCartVelocity(1000).setBlendingRel(0.1));
 			tcpGrip.moveAsync(lin(targetAir01).setJointVelocityRel(1.0).setBlendingRel(0.1));
 			tcpGrip.moveAsync(lin(targetAir02).setJointVelocityRel(1.0).setBlendingRel(0.1));
-			tcpGrip.moveAsync(lin(targetGripApr).setCartVelocity(600).setBlendingRel(0.1));
+//			tcpGrip.moveAsync(lin(targetGripApr).setCartVelocity(600).setBlendingRel(0.1));
 			tcpGrip.move(lin(target).setCartVelocity(300));
 			
 			exIO.gripperClose();
