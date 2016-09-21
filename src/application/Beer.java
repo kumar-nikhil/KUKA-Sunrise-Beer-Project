@@ -212,7 +212,7 @@ public class Beer extends RoboticsAPIApplication {
 		if ( mc.hasFired(j1tc) ) {
 			getLogger().info("Glass detected");
 			double detectedZOffset = lbr.getCurrentCartesianPosition(tcpTip, glassBase).getZ();
-			getLogger().info("detectedZOffset : " + detectedZOffset);
+			getLogger().info("detectedZOffset from Base : " + detectedZOffset+64);
 			target = glassBase.copyWithRedundancy();
 			
 			target.transform(glassBase, Transformation.ofTranslation(0, 0, detectedZOffset+64));
