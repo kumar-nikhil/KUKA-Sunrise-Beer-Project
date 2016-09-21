@@ -433,7 +433,9 @@ public class Beer extends RoboticsAPIApplication {
 		ThreadUtil.milliSleep(500);
 		tcpGrip.move(linRel(0, -40, 0, openerBase).setCartVelocity(20).setMode(contactCICM).breakWhen(detectX));
 		
-		// opening motion	// A+
+		// opening motion
+		lbr.setESMState("2");
+		getLogger().info("ESM state chaanged into 2");
 		CartesianImpedanceControlMode openCICM = new CartesianImpedanceControlMode();
 		openCICM.parametrize(CartDOF.X, CartDOF.Y).setStiffness(200);
 		openCICM.setReferenceSystem(openerBase);
@@ -445,6 +447,9 @@ public class Beer extends RoboticsAPIApplication {
 		tcpGrip.moveAsync(linRel(0, 0, -50, World.Current.getRootFrame()).setCartVelocity(100).setBlendingRel(0.1));
 		tcpGrip.move(linRel(0, -50, 0, World.Current.getRootFrame()).setCartVelocity(100));
 
+		lbr.setESMState("1");
+		getLogger().info("ESM state chaanged into 1");
+		
 //		throw Exception;
 	}
 
