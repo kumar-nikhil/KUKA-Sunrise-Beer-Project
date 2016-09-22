@@ -470,8 +470,8 @@ public class Beer extends RoboticsAPIApplication {
 		// move in (pouring)
 		Frame pouringAir = pouring.copyWithRedundancy();
 		pouringAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 30, 30));
-		tcpGrip.moveAsync(lin(pouringAir).setJointVelocityRel(0.3).setBlendingRel(0.2));
-		tcpGrip.move(lin(pouring).setJointVelocityRel(0.3));
+		tcpTip.moveAsync(lin(pouringAir).setJointVelocityRel(0.3).setBlendingRel(0.2));
+		tcpTip.move(lin(pouring).setJointVelocityRel(0.3));
 		
 		// pouring motion
 		Spline pouringSpl = new Spline(
@@ -483,7 +483,7 @@ public class Beer extends RoboticsAPIApplication {
 				spl(pouringSPL.get(5)),
 				spl(pouringSPL.get(6))
 				).setOrientationVelocity(0.3).setJointVelocityRel(0.2);
-		tcpGrip.move(pouringSpl);
+		tcpTip.move(pouringSpl);
 		ThreadUtil.milliSleep(500);
 		
 		// shaking motion
@@ -493,7 +493,7 @@ public class Beer extends RoboticsAPIApplication {
 		shakingCSICM.parametrize(CartDOF.B).setStiffness(300).setAmplitude(5.0).setFrequency(0.5).setPhaseDeg(90);
 		shakingCSICM.setReferenceSystem(World.Current.getRootFrame());
 		
-		tcpGrip.move(positionHold(shakingCSICM, 6, TimeUnit.SECONDS));
+		tcpTip.move(positionHold(shakingCSICM, 6, TimeUnit.SECONDS));
 		
 		// pouring bottom-up
 		getLogger().info("Finishing pouring");
@@ -501,14 +501,14 @@ public class Beer extends RoboticsAPIApplication {
 				spl(bottomUpSPL.get(0)),
 				spl(bottomUpSPL.get(1)).setOrientationVelocity(0.1)
 				).setOrientationVelocity(0.3).setJointVelocityRel(0.5);
-		tcpGrip.move(buSpl);
+		tcpTip.move(buSpl);
 		ThreadUtil.milliSleep(500);
 
 		CartesianSineImpedanceControlMode shakingCSICM2 = new CartesianSineImpedanceControlMode();
 		shakingCSICM2.parametrize(CartDOF.Z).setStiffness(300).setAmplitude(5.0).setFrequency(1);
 		shakingCSICM2.setReferenceSystem(World.Current.getRootFrame());
 		
-		tcpGrip.move(positionHold(shakingCSICM2, 3, TimeUnit.SECONDS));
+		tcpTip.move(positionHold(shakingCSICM2, 3, TimeUnit.SECONDS));
 		
 		
 		// move out
@@ -517,7 +517,7 @@ public class Beer extends RoboticsAPIApplication {
 				spl(moveOutSPL.get(0)),
 				spl(moveOutSPL.get(1))
 				).setJointVelocityRel(1.0);
-		tcpGrip.move(moSPL);
+		tcpTip.move(moSPL);
 		ThreadUtil.milliSleep(500);
 		
 
