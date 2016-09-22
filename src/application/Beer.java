@@ -3,6 +3,7 @@ package application;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import ioTool.ExGripper;
 
@@ -32,7 +33,9 @@ import com.kuka.roboticsAPI.geometricModel.World;
 import com.kuka.roboticsAPI.geometricModel.math.CoordinateAxis;
 import com.kuka.roboticsAPI.geometricModel.math.Transformation;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
+import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
+import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianSineImpedanceControlMode;
 import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
 
 /**
@@ -72,6 +75,8 @@ public class Beer extends RoboticsAPIApplication {
 	private ObjectFrame			glassDetect, glassLean, pouring, tempHome;
 	private List<ObjectFrame>	beers;
 	private List<ObjectFrame>	pouringSPL;
+	private List<ObjectFrame>	bottomUpSPL;
+	private List<ObjectFrame>	moveOutSPL;
 	// Process data
 	private double				aov;
 	
@@ -139,6 +144,10 @@ public class Beer extends RoboticsAPIApplication {
 		beers.addAll(beerBase.getChildren());
 		pouringSPL = new ArrayList<ObjectFrame>();
 		pouringSPL.addAll(pouring.getChildren());
+		bottomUpSPL = new ArrayList<ObjectFrame>();
+		bottomUpSPL.addAll(getApplicationData().getFrame("/BeerWorld/PourBase/BottomUp").getChildren());
+		moveOutSPL = new ArrayList<ObjectFrame>();
+		moveOutSPL.addAll(getApplicationData().getFrame("/BeerWorld/PourBase/MoveOut").getChildren());
 	}
 
 	@Override
@@ -459,15 +468,58 @@ public class Beer extends RoboticsAPIApplication {
 	private void pourBeer() throws Exception {
 		getLogger().info("Pouring beer");
 		// move in (pouring)
-		tcpGrip.move(lin(pouring).setJointVelocityRel(3.0));
+		Frame pouringAir = pouring.copyWithRedundancy();
+		pouringAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 30, 30));
+		tcpGrip.moveAsync(lin(pouringAir).setJointVelocityRel(0.3).setBlendingRel(0.2));
+		tcpGrip.move(lin(pouring).setJointVelocityRel(0.3));
 		
 		// pouring motion
+		Spline pouringSpl = new Spline(
+				spl(pouringSPL.get(0)),
+				spl(pouringSPL.get(1)),
+				spl(pouringSPL.get(2)).setOrientationVelocity(0.15),
+				spl(pouringSPL.get(3)).setOrientationVelocity(0.15),
+				spl(pouringSPL.get(4)),
+				spl(pouringSPL.get(5)),
+				spl(pouringSPL.get(6))
+				).setOrientationVelocity(0.3).setJointVelocityRel(0.2);
+		tcpGrip.move(pouringSpl);
+		ThreadUtil.milliSleep(500);
 		
 		// shaking motion
+		getLogger().info("Shaking beer");
+		CartesianSineImpedanceControlMode shakingCSICM = new CartesianSineImpedanceControlMode();
+		shakingCSICM.parametrize(CartDOF.C).setStiffness(300).setAmplitude(5.0).setFrequency(0.5);
+		shakingCSICM.parametrize(CartDOF.B).setStiffness(300).setAmplitude(5.0).setFrequency(0.5).setPhaseDeg(90);
+		shakingCSICM.setReferenceSystem(World.Current.getRootFrame());
+		
+		tcpGrip.move(positionHold(shakingCSICM, 6, TimeUnit.SECONDS));
 		
 		// pouring bottom-up
+		getLogger().info("Finishing pouring");
+		Spline buSpl = new Spline(
+				spl(bottomUpSPL.get(0)),
+				spl(bottomUpSPL.get(1)).setOrientationVelocity(0.1)
+				).setOrientationVelocity(0.3).setJointVelocityRel(0.5);
+		tcpGrip.move(buSpl);
+		ThreadUtil.milliSleep(500);
+
+		CartesianSineImpedanceControlMode shakingCSICM2 = new CartesianSineImpedanceControlMode();
+		shakingCSICM2.parametrize(CartDOF.Z).setStiffness(300).setAmplitude(5.0).setFrequency(1);
+		shakingCSICM2.setReferenceSystem(World.Current.getRootFrame());
+		
+		tcpGrip.move(positionHold(shakingCSICM2, 3, TimeUnit.SECONDS));
+		
 		
 		// move out
+		getLogger().info("Moving out");
+		Spline moSPL = new Spline(
+				spl(moveOutSPL.get(0)),
+				spl(moveOutSPL.get(1))
+				).setJointVelocityRel(1.0);
+		tcpGrip.move(moSPL);
+		ThreadUtil.milliSleep(500);
+		
 
 //		throw Exception;
 	}
