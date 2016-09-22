@@ -179,8 +179,8 @@ public class Beer extends RoboticsAPIApplication {
 		
 		try {
 			// glass preparation
-//			getGlass();
-//			putGlass();
+			getGlass();
+			putGlass();
 			// finished
 			
 			// bottle preparation
