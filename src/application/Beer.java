@@ -456,8 +456,7 @@ public class Beer extends RoboticsAPIApplication {
 		tcpBottleCap.move(linRel(0, 0, 0, Math.toRadians(30), 0, 0).setMode(openCICM));
 		
 		// move out
-		tcpGrip.moveAsync(linRel(0, 0, -50, World.Current.getRootFrame()).setCartVelocity(100).setBlendingRel(0.1));
-		tcpGrip.move(linRel(0, -50, 0, World.Current.getRootFrame()).setCartVelocity(100));
+		tcpGrip.move(lin(getApplicationData().getFrame("/BeerWorld/OpenerBase/Out01")).setCartVelocity(100).setOrientationVelocity(0.3));
 
 		lbr.setESMState("1");
 		getLogger().info("ESM state chaanged into 1");
