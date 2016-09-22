@@ -426,7 +426,7 @@ public class Beer extends RoboticsAPIApplication {
 		tcpGrip.moveAsync(ptp(openerBase.getChildren().get(0)).setJointVelocityRel(1.0).setBlendingRel(0.1));
 		tcpGrip.moveAsync(ptp(openerBase.getChildren().get(1)).setJointVelocityRel(1.0).setBlendingRel(0.1));
 		tcpGrip.moveAsync(ptp(openerBase.getChildren().get(2)).setJointVelocityRel(1.0).setBlendingRel(0.1));
-		tcpGrip.move(ptp(openerAir).setJointVelocityRel(0.15));
+		tcpGrip.move(lin(openerAir).setJointVelocityRel(0.15));
 		
 		// contact
 		CartesianImpedanceControlMode contactCICM = new CartesianImpedanceControlMode();
