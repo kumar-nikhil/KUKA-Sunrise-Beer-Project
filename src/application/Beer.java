@@ -279,7 +279,8 @@ public class Beer extends RoboticsAPIApplication {
 		dFloorCICM.parametrize(CartDOF.Z).setStiffness(200);
 		dFloorCICM.setReferenceSystem(World.Current.getRootFrame());
 		
-		tcpGrip.move(lin(glassLean).setCartVelocity(50).setMode(dFloorCICM));
+//		tcpGrip.move(lin(glassLean).setCartVelocity(50).setMode(dFloorCICM));
+		tcpGrip.move(linRel(0, 0, -60, World.Current.getRootFrame()).setCartVelocity(50).setMode(dFloorCICM));
 		tcpGrip.move(ptp(lbr.getCurrentCartesianPosition(tcpGrip)));
 		/*
 		// detect floor (z)
