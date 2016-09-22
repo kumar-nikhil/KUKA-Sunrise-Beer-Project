@@ -424,8 +424,8 @@ public class Beer extends RoboticsAPIApplication {
 		openerAir.transform(openerBase, Transformation.ofTranslation(10, 10, 0));
 		// move in (openerBase) 
 		tcpGrip.moveAsync(ptp(openerBase.getChildren().iterator().next()).setJointVelocityRel(1.0).setBlendingRel(0.1));
-//		tcpGrip.moveAsync(lin(openerBase.getChildren().iterator().next()).setCartVelocity(300).setBlendingRel(0.1));
-//		tcpGrip.moveAsync(lin(openerBase.getChildren().iterator().next()).setCartVelocity(50).setBlendingRel(0.1));
+		tcpGrip.moveAsync(ptp(openerBase.getChildren().iterator().next()).setJointVelocityRel(1.0).setBlendingRel(0.1));
+		tcpGrip.moveAsync(ptp(openerBase.getChildren().iterator().next()).setJointVelocityRel(1.0).setBlendingRel(0.1));
 		tcpGrip.move(lin(openerAir).setCartVelocity(50));
 		
 		// contact
