@@ -276,11 +276,16 @@ public class Beer extends RoboticsAPIApplication {
 		tcpGrip.move(lin(air).setJointVelocityRel(1.0));
 
 		CartesianImpedanceControlMode dFloorCICM = new CartesianImpedanceControlMode();
-		dFloorCICM.parametrize(CartDOF.Z).setStiffness(200);
+		dFloorCICM.parametrize(CartDOF.Z).setStiffness(600);
 		dFloorCICM.setReferenceSystem(World.Current.getRootFrame());
 		
-//		tcpGrip.move(lin(glassLean).setCartVelocity(50).setMode(dFloorCICM));
-		tcpGrip.move(linRel(0, 0, -60, World.Current.getRootFrame()).setCartVelocity(50).setMode(dFloorCICM));
+		tcpGrip.move(lin(glassLean).setCartVelocity(50).setMode(dFloorCICM));
+		double dist = lbr.getCurrentCartesianPosition(tcpGrip).distanceTo(glassLean);
+		getLogger().info("Distance offset : " + dist );
+		if ( dist >= 5.0 ) {
+			tcpGrip.move(linRel(0, 0, -(dist*2), World.Current.getRootFrame()).setCartVelocity(50).setMode(dFloorCICM));
+			getLogger().info("Distance offset : " + dist );			
+		}
 		tcpGrip.move(ptp(lbr.getCurrentCartesianPosition(tcpGrip)));
 		/*
 		// detect floor (z)
