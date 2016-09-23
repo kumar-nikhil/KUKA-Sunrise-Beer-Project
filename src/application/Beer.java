@@ -521,7 +521,7 @@ public class Beer extends RoboticsAPIApplication {
 		getLogger().info("Finishing pouring");
 		Spline buSpl = new Spline(
 				spl(bottomUpSPL.get(0)),
-				lin(bottomUpSPL.get(1)).setOrientationVelocity(0.03),
+				lin(bottomUpSPL.get(1)).setOrientationVelocity(0.2),
 				lin(bottomUpSPL.get(2)).setJointVelocityRel(0.2)
 				).setOrientationVelocity(0.3).setJointVelocityRel(0.3);
 		tcpGrip.move(buSpl);
