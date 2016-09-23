@@ -369,6 +369,7 @@ public class Beer extends RoboticsAPIApplication {
 				break;
 			case 2:	// Full bottle
 				getLogger().info("Good to go to open the bottle");
+				ret = i;
 				i = beers.size();
 				break;
 			case 3:
@@ -385,7 +386,6 @@ public class Beer extends RoboticsAPIApplication {
 				
 				throw Exception;
 			}	// end of sw-case
-			ret = i;
 		}	// end of for
 		
 		
@@ -520,8 +520,8 @@ public class Beer extends RoboticsAPIApplication {
 		getLogger().info("Finishing pouring");
 		Spline buSpl = new Spline(
 				spl(bottomUpSPL.get(0)),
-				lin(bottomUpSPL.get(1)).setOrientationVelocity(0.2),
-				lin(bottomUpSPL.get(2))
+				lin(bottomUpSPL.get(1)).setOrientationVelocity(0.1),
+				lin(bottomUpSPL.get(2)).setJointVelocityRel(0.2)
 				).setOrientationVelocity(0.3).setJointVelocityRel(0.3);
 		tcpGrip.move(buSpl);
 		ThreadUtil.milliSleep(500);
