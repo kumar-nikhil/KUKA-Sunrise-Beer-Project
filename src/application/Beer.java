@@ -496,7 +496,7 @@ public class Beer extends RoboticsAPIApplication {
 				spl(pouringSPL.get(0)),
 				spl(pouringSPL.get(1)).setOrientationVelocity(0.1),	// contact
 				spl(pouringSPL.get(2)).setOrientationVelocity(0.04),	// pouring start
-				spl(pouringSPL.get(3)).setOrientationVelocity(0.015),	// pouring
+				spl(pouringSPL.get(3)).setOrientationVelocity(0.014),	// pouring
 				spl(pouringSPL.get(4)).setOrientationVelocity(0.1),	// stand up 1
 				spl(pouringSPL.get(5)).setOrientationVelocity(0.1),		// stand up 2
 				spl(pouringSPL.get(6)).setOrientationVelocity(0.2),		// out 1
