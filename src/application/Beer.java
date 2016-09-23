@@ -154,13 +154,6 @@ public class Beer extends RoboticsAPIApplication {
 	@Override
 	public void run() {
 
-
-		try {
-			pourBeer();
-		} catch (java.lang.Exception e) {
-			e.printStackTrace();
-		}
-		
 		while (loopFlag) {
 			
 			lbr.move(ptp(home).setJointVelocityRel(0.3));
