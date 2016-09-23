@@ -512,7 +512,7 @@ public class Beer extends RoboticsAPIApplication {
 				spl(bottomUpSPL.get(0)),
 				spl(bottomUpSPL.get(1)).setOrientationVelocity(0.1)
 				).setOrientationVelocity(0.3).setJointVelocityRel(0.5);
-		tcpTip.move(buSpl);
+		tcpGrip.move(buSpl);
 		ThreadUtil.milliSleep(500);
 
 		CartesianSineImpedanceControlMode shakingCSICM2 = new CartesianSineImpedanceControlMode();
@@ -529,7 +529,7 @@ public class Beer extends RoboticsAPIApplication {
 				spl(moveOutSPL.get(0)),
 				spl(moveOutSPL.get(1))
 				).setJointVelocityRel(1.0);
-		tcpTip.move(moSPL);
+		tcpGrip.move(moSPL);
 		ThreadUtil.milliSleep(500);
 		
 
