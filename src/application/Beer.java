@@ -514,35 +514,19 @@ public class Beer extends RoboticsAPIApplication {
 		CartesianSineImpedanceControlMode shakingCSICM = new CartesianSineImpedanceControlMode();
 		shakingCSICM.parametrize(CartDOF.TRANSL).setStiffness(3000);
 		shakingCSICM.parametrize(CartDOF.ROT).setStiffness(300);
-		shakingCSICM.parametrize(CartDOF.C).setStiffness(150).setAmplitude(15.0).setFrequency(1.5);
-		shakingCSICM.parametrize(CartDOF.B).setStiffness(150).setAmplitude(15.0).setFrequency(1.5).setPhaseDeg(90);
+		shakingCSICM.parametrize(CartDOF.C).setStiffness(150).setAmplitude(20.0).setFrequency(1.5);
+		shakingCSICM.parametrize(CartDOF.B).setStiffness(150).setAmplitude(20.0).setFrequency(1.5).setPhaseDeg(90);
 		shakingCSICM.setReferenceSystem(World.Current.getRootFrame());
 		
 		tcpTip.move(positionHold(shakingCSICM, 4500, TimeUnit.MILLISECONDS));
 		
-/*		Frame current = lbr.getCurrentCartesianPosition(tcpGrip);
-		Frame c1 = current.copyWithRedundancy();
-		Frame c2 = current.copyWithRedundancy();
-		Frame c3 = current.copyWithRedundancy();
-		Frame c4 = current.copyWithRedundancy();
-		c1.transform(Transformation.ofDeg(0, 0, 0, 0, -15, 0));
-		c2.transform(Transformation.ofDeg(0, 0, 0, 15, 0, 0));
-		c3.transform(Transformation.ofDeg(0, 0, 0, 0, 15, 0));
-		c4.transform(Transformation.ofDeg(0, 0, 0, -15, 0, 0));
-		
-		tcpGrip.move(new Spline(
-				spl(c1), spl(c2), spl(c3), spl(c4),
-				spl(c1), spl(c2), spl(c3), spl(c4),
-				spl(c1), spl(c2), spl(c3), spl(c4),
-				spl(current)
-				).setOrientationVelocity(0.7).setJointVelocityRel(0.7)	);
-		*/
 		
 		// pouring bottom-up
 		getLogger().info("Finishing pouring");
 		Spline buSpl = new Spline(
 				spl(bottomUpSPL.get(0)),
-				lin(bottomUpSPL.get(1)).setOrientationVelocity(0.1)
+				lin(bottomUpSPL.get(1)).setOrientationVelocity(0.1),
+				lin(bottomUpSPL.get(2))
 				).setOrientationVelocity(0.3).setJointVelocityRel(0.3);
 		tcpGrip.move(buSpl);
 		ThreadUtil.milliSleep(500);
@@ -557,7 +541,7 @@ public class Beer extends RoboticsAPIApplication {
 		// move out
 		getLogger().info("Moving out");
 		SplineJP moSPL = new SplineJP(
-				ptp(bottomUpSPL.get(0)).setJointVelocityRel(0.3),
+				ptp(bottomUpSPL.get(2)).setJointVelocityRel(0.3),
 				ptp(moveOutSPL.get(0)),
 				ptp(moveOutSPL.get(1))
 				).setJointVelocityRel(0.3);
