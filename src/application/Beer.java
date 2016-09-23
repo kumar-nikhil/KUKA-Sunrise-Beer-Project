@@ -503,12 +503,29 @@ public class Beer extends RoboticsAPIApplication {
 		
 		// shaking motion
 		getLogger().info("Shaking beer");
-		CartesianSineImpedanceControlMode shakingCSICM = new CartesianSineImpedanceControlMode();
-		shakingCSICM.parametrize(CartDOF.C).setStiffness(1000).setAmplitude(20.0).setFrequency(0.5);
-		shakingCSICM.parametrize(CartDOF.B).setStiffness(1000).setAmplitude(20.0).setFrequency(0.5).setPhaseDeg(90);
-		shakingCSICM.setReferenceSystem(World.Current.getRootFrame());
+//		CartesianSineImpedanceControlMode shakingCSICM = new CartesianSineImpedanceControlMode();
+//		shakingCSICM.parametrize(CartDOF.C).setStiffness(300).setAmplitude(20.0).setFrequency(0.5);
+//		shakingCSICM.parametrize(CartDOF.B).setStiffness(300).setAmplitude(20.0).setFrequency(0.5).setPhaseDeg(90);
+//		shakingCSICM.setReferenceSystem(World.Current.getRootFrame());
+//		
+//		tcpTip.move(positionHold(shakingCSICM, 6, TimeUnit.SECONDS));
 		
-		tcpTip.move(positionHold(shakingCSICM, 6, TimeUnit.SECONDS));
+		Frame current = lbr.getCurrentCartesianPosition(tcpGrip);
+		Frame c1 = current.copyWithRedundancy();
+		Frame c2 = current.copyWithRedundancy();
+		Frame c3 = current.copyWithRedundancy();
+		Frame c4 = current.copyWithRedundancy();
+		c1.transform(Transformation.ofDeg(0, 0, 0, 0, -30, 0));
+		c2.transform(Transformation.ofDeg(0, 0, 0, 30, 0, 0));
+		c3.transform(Transformation.ofDeg(0, 0, 0, 0, 30, 0));
+		c4.transform(Transformation.ofDeg(0, 0, 0, -30, 0, 0));
+		
+		tcpGrip.move(new Spline(
+				spl(c1), spl(c2), spl(c3), spl(c4),
+				spl(c1), spl(c2), spl(c3), spl(c4),
+				spl(c1), spl(c2), spl(c3), spl(c4)
+				).setOrientationVelocity(0.3).setJointVelocityRel(0.3)	);
+		
 		
 		// pouring bottom-up
 		getLogger().info("Finishing pouring");
