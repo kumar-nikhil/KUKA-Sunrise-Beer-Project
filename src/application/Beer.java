@@ -515,10 +515,10 @@ public class Beer extends RoboticsAPIApplication {
 		Frame c2 = current.copyWithRedundancy();
 		Frame c3 = current.copyWithRedundancy();
 		Frame c4 = current.copyWithRedundancy();
-		c1.transform(Transformation.ofDeg(0, 0, 0, 0, -30, 0));
-		c2.transform(Transformation.ofDeg(0, 0, 0, 30, 0, 0));
-		c3.transform(Transformation.ofDeg(0, 0, 0, 0, 30, 0));
-		c4.transform(Transformation.ofDeg(0, 0, 0, -30, 0, 0));
+		c1.transform(Transformation.ofDeg(0, 0, 0, 0, -15, 0));
+		c2.transform(Transformation.ofDeg(0, 0, 0, 15, 0, 0));
+		c3.transform(Transformation.ofDeg(0, 0, 0, 0, 15, 0));
+		c4.transform(Transformation.ofDeg(0, 0, 0, -15, 0, 0));
 		
 		tcpGrip.move(new Spline(
 				spl(c1), spl(c2), spl(c3), spl(c4),
