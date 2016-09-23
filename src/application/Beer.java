@@ -247,8 +247,8 @@ public class Beer extends RoboticsAPIApplication {
 			tcpTip.moveAsync(linRel(50, 0, -50, glassBase).setCartVelocity(300).setBlendingRel(0.1));
 			tcpGrip.moveAsync(lin(targetAir01).setJointVelocityRel(0.3).setBlendingRel(0.1));
 			tcpGrip.moveAsync(lin(targetAir02).setJointVelocityRel(0.3).setBlendingRel(0.1));
-			tcpGrip.moveAsync(lin(targetGripApr).setCartVelocity(300).setBlendingRel(0.1));
-			tcpGrip.move(lin(target).setCartVelocity(300));
+			tcpGrip.moveAsync(lin(targetGripApr).setCartVelocity(100).setOrientationVelocity(0.3).setBlendingRel(0.1));
+			tcpGrip.move(lin(target).setCartVelocity(100).setOrientationVelocity(0.3));
 			
 			exIO.gripperClose();
 			glass.attachTo(tcpGrip);
@@ -279,11 +279,15 @@ public class Beer extends RoboticsAPIApplication {
 		dFloorCICM.parametrize(CartDOF.TRANSL).setStiffness(5000);
 		dFloorCICM.parametrize(CartDOF.ROT).setStiffness(300);
 		dFloorCICM.parametrize(CartDOF.Z).setStiffness(300);
+		dFloorCICM.parametrize(CartDOF.C).setStiffness(30);
 		dFloorCICM.setReferenceSystem(World.Current.getRootFrame());
 		
 		tcpGrip.move(lin(glassLean).setCartVelocity(50).setMode(dFloorCICM));
 		double dist = lbr.getCurrentCartesianPosition(tcpGrip).distanceTo(glassLean);
 		getLogger().info("Distance offset : " + dist );
+		tcpGrip.move(linRel(0, 0, -(dist*2), World.Current.getRootFrame()).setCartVelocity(50).setMode(dFloorCICM));
+		getLogger().info("Distance offset : " + dist );
+		
 		if ( dist >= 5.0 ) {
 			tcpGrip.move(linRel(0, 0, -(dist*2), World.Current.getRootFrame()).setCartVelocity(50).setMode(dFloorCICM));
 			getLogger().info("Distance offset : " + dist );			
