@@ -189,9 +189,9 @@
                         </redundancyData>
                     </frame>
                     <frame name="P2">
-                        <transformation a="0.09116996126249313" b="-1.7497360197117203E-4" c="-1.7123657810994486E-5" x="-1.7736169498006689" y="-10.597617003481794" z="0.0016809607616323774"/>
+                        <transformation a="0.2859074234338305" b="-3.3311696358039625E-4" c="-1.3559156393798969E-4" x="-1.8657567436963802" y="-10.588010914456639" z="0.038201307914619065"/>
                         <additionalInformation>
-                            <info key="LastModificationTime" type="java.lang.Long" value="1474591510961"/>
+                            <info key="LastModificationTime" type="java.lang.Long" value="1474604646997"/>
                             <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP_Tip" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                                 <tcpTransformation a="0.0" b="0.0" c="0.0" x="-30.5611" y="-55.7192" z="126.26"/>
                             </info>
@@ -200,14 +200,14 @@
                             <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
                                 <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="1" valueType="java.lang.Integer"/>
                                 <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="71" valueType="java.lang.Integer"/>
-                                <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.0734544685958365" valueType="java.lang.Double"/>
+                                <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.0735393170138408" valueType="java.lang.Double"/>
                             </redundancy>
                         </redundancyData>
                     </frame>
                     <frame name="P3">
-                        <transformation a="0.5884294952257576" b="-1.522272962351201E-5" c="4.004942444483503E-5" x="-1.6976280220106332" y="-10.630407690750651" z="-0.019210732806072883"/>
+                        <transformation a="0.7022597785099602" b="2.590252732454243E-4" c="8.094536438984415E-5" x="-1.5670581448429175" y="-10.569706410214359" z="0.0392340968710414"/>
                         <additionalInformation>
-                            <info key="LastModificationTime" type="java.lang.Long" value="1474591497557"/>
+                            <info key="LastModificationTime" type="java.lang.Long" value="1474604801887"/>
                             <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP_Tip" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                                 <tcpTransformation a="0.0" b="0.0" c="0.0" x="-30.5611" y="-55.7192" z="126.26"/>
                             </info>
@@ -216,7 +216,7 @@
                             <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
                                 <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="1" valueType="java.lang.Integer"/>
                                 <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="71" valueType="java.lang.Integer"/>
-                                <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.0734598615541422" valueType="java.lang.Double"/>
+                                <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.0733870574351398" valueType="java.lang.Double"/>
                             </redundancy>
                         </redundancyData>
                     </frame>
