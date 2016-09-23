@@ -221,9 +221,9 @@
                         </redundancyData>
                     </frame>
                     <frame name="P4">
-                        <transformation a="0.3592649084632999" b="1.582323401371212E-4" c="4.445940043157079E-4" x="-84.84203508449178" y="17.76706587131529" z="-1.4413702322987092"/>
+                        <transformation a="0.3593092847347474" b="1.0934396827253184E-4" c="4.900207032639642E-4" x="-80.9953565626343" y="7.41102207222459" z="-1.4895549887440893"/>
                         <additionalInformation>
-                            <info key="LastModificationTime" type="java.lang.Long" value="1474598795753"/>
+                            <info key="LastModificationTime" type="java.lang.Long" value="1474602265116"/>
                             <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP_Tip" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                                 <tcpTransformation a="0.0" b="0.0" c="0.0" x="-30.5611" y="-55.7192" z="126.26"/>
                             </info>
@@ -232,7 +232,7 @@
                             <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
                                 <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="1" valueType="java.lang.Integer"/>
                                 <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="71" valueType="java.lang.Integer"/>
-                                <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.0732578075137156" valueType="java.lang.Double"/>
+                                <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.0732582869338445" valueType="java.lang.Double"/>
                             </redundancy>
                         </redundancyData>
                     </frame>
