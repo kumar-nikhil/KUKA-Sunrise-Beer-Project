@@ -493,6 +493,6 @@
         </workpieceTemplate>
     </objectTemplates>
     <processDataContainer>
-        <processData comment="clip application override" dataType="java.lang.Double" defaultValue="1.0" displayName="AOV Clip" id="aovClip" max="1.0" min="0.05" unit="[1 = 100%]" value="1.0"/>
+        <processData comment="clip application override" dataType="java.lang.Double" defaultValue="0.25" displayName="AOV Clip" id="aovClip" max="1.0" min="0.05" unit="[1 = 100%]" value="0.25"/>
     </processDataContainer>
 </RoboticsAPIData>
