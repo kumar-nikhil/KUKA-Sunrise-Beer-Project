@@ -530,8 +530,9 @@ public class Beer extends RoboticsAPIApplication {
 		tcpGrip.move(new Spline(
 				spl(c1), spl(c2), spl(c3), spl(c4),
 				spl(c1), spl(c2), spl(c3), spl(c4),
-				spl(c1), spl(c2), spl(c3), spl(c4)
-				).setOrientationVelocity(0.3).setJointVelocityRel(0.3)	);
+				spl(c1), spl(c2), spl(c3), spl(c4),
+				spl(current)
+				).setOrientationVelocity(0.7).setJointVelocityRel(0.7)	);
 		
 		
 		// pouring bottom-up
