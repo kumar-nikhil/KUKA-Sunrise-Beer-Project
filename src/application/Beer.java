@@ -34,6 +34,7 @@ import com.kuka.roboticsAPI.geometricModel.math.CoordinateAxis;
 import com.kuka.roboticsAPI.geometricModel.math.Transformation;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.Spline;
+import com.kuka.roboticsAPI.motionModel.SplineJP;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianSineImpedanceControlMode;
 import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
@@ -541,7 +542,7 @@ public class Beer extends RoboticsAPIApplication {
 		getLogger().info("Finishing pouring");
 		Spline buSpl = new Spline(
 				spl(bottomUpSPL.get(0)),
-				spl(bottomUpSPL.get(1)).setOrientationVelocity(0.1)
+				lin(bottomUpSPL.get(1)).setOrientationVelocity(0.1)
 				).setOrientationVelocity(0.3).setJointVelocityRel(0.3);
 		tcpGrip.move(buSpl);
 		ThreadUtil.milliSleep(500);
@@ -555,10 +556,10 @@ public class Beer extends RoboticsAPIApplication {
 		
 		// move out
 		getLogger().info("Moving out");
-		Spline moSPL = new Spline(
-//				spl(bottomUpSPL.get(0)).setJointVelocityRel(0.3),
-				spl(moveOutSPL.get(0)),
-				spl(moveOutSPL.get(1))
+		SplineJP moSPL = new SplineJP(
+				ptp(bottomUpSPL.get(0)).setJointVelocityRel(0.3),
+				ptp(moveOutSPL.get(0)),
+				ptp(moveOutSPL.get(1))
 				).setJointVelocityRel(0.3);
 		tcpGrip.move(moSPL);
 		ThreadUtil.milliSleep(500);
