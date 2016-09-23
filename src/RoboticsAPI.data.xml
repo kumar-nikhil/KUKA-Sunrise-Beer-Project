@@ -383,6 +383,33 @@
                         </redundancyData>
                     </frame>
                 </frame>
+                <frame name="Serving">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                    <additionalInformation>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1474616797007"/>
+                    </additionalInformation>
+                    <redundancyData>
+                        <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
+                    </redundancyData>
+                    <frame name="P1">
+                        <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                        <additionalInformation>
+                            <info key="LastModificationTime" type="java.lang.Long" value="1474617207645"/>
+                        </additionalInformation>
+                    </frame>
+                    <frame name="P2">
+                        <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                        <additionalInformation>
+                            <info key="LastModificationTime" type="java.lang.Long" value="1474617209513"/>
+                        </additionalInformation>
+                    </frame>
+                    <frame name="P3">
+                        <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                        <additionalInformation>
+                            <info key="LastModificationTime" type="java.lang.Long" value="1474617214503"/>
+                        </additionalInformation>
+                    </frame>
+                </frame>
             </frame>
             <frame name="tempHome">
                 <transformation a="-3.141530452103513" b="1.0869646686344275E-4" c="-3.1415621141635475" x="610.0075568514762" y="-0.01772856511096646" z="471.48966493034476"/>

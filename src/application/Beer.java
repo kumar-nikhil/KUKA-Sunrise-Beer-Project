@@ -192,14 +192,14 @@ public class Beer extends RoboticsAPIApplication {
 			// finished
 			
 			// bottle preparation
-			getBottle();
+			int bottleNo = getBottle();
 			openBottle();
 			
 			// pouring
 			pourBeer();
 			
 			// trashing bottle
-			trashBottle();
+			trashBottle(bottleNo);
 			
 			// serving glass
 			serveGlass();
@@ -340,7 +340,7 @@ public class Beer extends RoboticsAPIApplication {
 //		throw Exception;
 	}
 
-	private void getBottle() throws Exception {
+	private int getBottle() throws Exception {
 		getLogger().info("Getting a bottle");
 		// move in (bootleBase)
 		Frame beerAir = beerBase.copyWithRedundancy();
@@ -349,6 +349,7 @@ public class Beer extends RoboticsAPIApplication {
 		tcpGrip.moveAsync(ptp(beerAir).setJointVelocityRel(0.3).setBlendingRel(0.2)
 				.triggerWhen(gOpenC, gOpenAction) );
 		
+		int ret = 0;
 		// move & grasp & evaluate Load
 		for (int i = 0; i < beers.size(); i++) {
 			Frame target = beers.get(i).copyWithRedundancy();
@@ -371,7 +372,7 @@ public class Beer extends RoboticsAPIApplication {
 				break;
 			case 1:	// Empty bottle
 				getLogger().info("The bottle is empty...");
-				trashBottle();
+				trashBottle(i);
 				break;
 			case 2:	// Full bottle
 				getLogger().info("Good to go to open the bottle");
@@ -391,10 +392,11 @@ public class Beer extends RoboticsAPIApplication {
 				
 				throw Exception;
 			}	// end of sw-case
+			ret = i;
 		}	// end of for
 		
-		// move out
-
+		
+		return ret;
 //		throw Exception;
 	}
 
@@ -518,14 +520,14 @@ public class Beer extends RoboticsAPIApplication {
 		shakingCSICM.parametrize(CartDOF.B).setStiffness(150).setAmplitude(20.0).setFrequency(1.5).setPhaseDeg(90);
 		shakingCSICM.setReferenceSystem(World.Current.getRootFrame());
 		
-		tcpTip.move(positionHold(shakingCSICM, 4500, TimeUnit.MILLISECONDS));
+		tcpTip.move(positionHold(shakingCSICM, 3000, TimeUnit.MILLISECONDS));
 		
 		
 		// pouring bottom-up
 		getLogger().info("Finishing pouring");
 		Spline buSpl = new Spline(
 				spl(bottomUpSPL.get(0)),
-				lin(bottomUpSPL.get(1)).setOrientationVelocity(0.1),
+				lin(bottomUpSPL.get(1)).setOrientationVelocity(0.2),
 				lin(bottomUpSPL.get(2))
 				).setOrientationVelocity(0.3).setJointVelocityRel(0.3);
 		tcpGrip.move(buSpl);
@@ -536,29 +538,57 @@ public class Beer extends RoboticsAPIApplication {
 		shakingCSICM2.setReferenceSystem(World.Current.getRootFrame());
 		
 		tcpTip.move(positionHold(shakingCSICM2, 3, TimeUnit.SECONDS));
+		tcpTip.move(ptp(lbr.getCurrentCartesianPosition(tcpTip)));
 		
+
+		lbr.detachAll();
+		tool.attachTo(lbr.getFlange());
+		glass.attachTo(tcpGrip);
 		
 		// move out
 		getLogger().info("Moving out");
-		SplineJP moSPL = new SplineJP(
-				ptp(bottomUpSPL.get(2)).setJointVelocityRel(0.3),
-				ptp(moveOutSPL.get(0)),
-				ptp(moveOutSPL.get(1))
-				).setJointVelocityRel(0.3);
-		tcpGrip.move(moSPL);
+		
+		tcpGrip.moveAsync(ptp(bottomUpSPL.get(2)).setJointVelocityRel(0.3).setBlendingRel(0.1));
+		tcpGrip.moveAsync(ptp(moveOutSPL.get(0)).setJointVelocityRel(0.3).setBlendingRel(0.1));
+		tcpGrip.move(ptp(moveOutSPL.get(1)).setJointVelocityRel(0.3));
+//		SplineJP moSPL = new SplineJP(
+//				ptp(bottomUpSPL.get(2)).setJointVelocityRel(0.3),
+//				ptp(moveOutSPL.get(0)),
+//				ptp(moveOutSPL.get(1))
+//				).setJointVelocityRel(0.3);
+//		tcpGrip.move(moSPL);
 		ThreadUtil.milliSleep(500);
 		
 
 //		throw Exception;
 	}
 
-	private void trashBottle() throws Exception {
-		getLogger().info("Trashing bottle");
+	private void trashBottle(int bottleNo) throws Exception {
+		getLogger().info("Trashing bottle : index [" + bottleNo + "]");
 		// move in (trashBeer)
+
+		Frame beerAir = beerBase.copyWithRedundancy();
+		beerAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 300));
 		
-		// release
+		tcpGrip.moveAsync(ptp(beerAir).setJointVelocityRel(0.3).setBlendingRel(0.2) );
+		
+		// move & release
+		Frame target = beers.get(bottleNo).copyWithRedundancy();
+		Frame targetAir = target.copyWithRedundancy();
+		targetAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 200));
+
+		tcpGrip.moveAsync(ptp(targetAir).setJointVelocityRel(0.3).setBlendingRel(0.2) );
+		tcpGrip.move(lin(target).setCartVelocity(300));
+
+		getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "Release??", "OK");
+		
+		exIO.gripperOpen();
+		
+		lbr.detachAll();
+		tool.attachTo(lbr.getFlange());
 		
 		// move out
+		tcpGrip.move(lin(targetAir).setCartVelocity(300));
 
 //		throw Exception;
 	}
