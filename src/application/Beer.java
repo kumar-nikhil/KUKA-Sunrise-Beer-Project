@@ -488,20 +488,20 @@ public class Beer extends RoboticsAPIApplication {
 		Spline pouringSpl = new Spline(
 				spl(pouringSPL.get(0)),
 				spl(pouringSPL.get(1)),
-				spl(pouringSPL.get(2)).setOrientationVelocity(0.05),
-				spl(pouringSPL.get(3)).setOrientationVelocity(0.05),
-				spl(pouringSPL.get(4)),
+				spl(pouringSPL.get(2)).setOrientationVelocity(0.02),
+				spl(pouringSPL.get(3)).setOrientationVelocity(0.02),
+				spl(pouringSPL.get(4)).setOrientationVelocity(0.02),
 				spl(pouringSPL.get(5)).setOrientationVelocity(0.1),
 				spl(pouringSPL.get(6))
-				).setOrientationVelocity(0.3).setJointVelocityRel(0.1);
+				).setOrientationVelocity(0.3).setJointVelocityRel(0.3);
 		tcpTip.move(pouringSpl);
 		ThreadUtil.milliSleep(500);
 		
 		// shaking motion
 		getLogger().info("Shaking beer");
 		CartesianSineImpedanceControlMode shakingCSICM = new CartesianSineImpedanceControlMode();
-		shakingCSICM.parametrize(CartDOF.C).setStiffness(300).setAmplitude(5.0).setFrequency(0.5);
-		shakingCSICM.parametrize(CartDOF.B).setStiffness(300).setAmplitude(5.0).setFrequency(0.5).setPhaseDeg(90);
+		shakingCSICM.parametrize(CartDOF.C).setStiffness(300).setAmplitude(20.0).setFrequency(0.5);
+		shakingCSICM.parametrize(CartDOF.B).setStiffness(300).setAmplitude(20.0).setFrequency(0.5).setPhaseDeg(90);
 		shakingCSICM.setReferenceSystem(World.Current.getRootFrame());
 		
 		tcpTip.move(positionHold(shakingCSICM, 6, TimeUnit.SECONDS));
