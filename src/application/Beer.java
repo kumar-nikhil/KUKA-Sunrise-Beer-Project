@@ -482,16 +482,16 @@ public class Beer extends RoboticsAPIApplication {
 		Frame pouringAir = pouring.copyWithRedundancy();
 		pouringAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 30, 30));
 		tcpTip.moveAsync(lin(pouringAir).setJointVelocityRel(0.3).setBlendingRel(0.2));
-		tcpTip.move(lin(pouring).setJointVelocityRel(0.3));
+//		tcpTip.move(lin(pouring).setJointVelocityRel(0.3));
 		
 		// pouring motion
 		Spline pouringSpl = new Spline(
 				spl(pouringSPL.get(0)),
 				spl(pouringSPL.get(1)),
-				spl(pouringSPL.get(2)).setOrientationVelocity(0.15),
-				spl(pouringSPL.get(3)).setOrientationVelocity(0.15),
+				spl(pouringSPL.get(2)).setOrientationVelocity(0.05),
+				spl(pouringSPL.get(3)).setOrientationVelocity(0.05),
 				spl(pouringSPL.get(4)),
-				spl(pouringSPL.get(5)).setOrientationVelocity(0.15),
+				spl(pouringSPL.get(5)).setOrientationVelocity(0.1),
 				spl(pouringSPL.get(6))
 				).setOrientationVelocity(0.3).setJointVelocityRel(0.2);
 		tcpTip.move(pouringSpl);
