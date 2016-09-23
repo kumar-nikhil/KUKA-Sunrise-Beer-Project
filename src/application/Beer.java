@@ -525,7 +525,7 @@ public class Beer extends RoboticsAPIApplication {
 		// move out
 		getLogger().info("Moving out");
 		Spline moSPL = new Spline(
-				spl(bottomUpSPL.get(1)).setJointVelocityRel(0.5),
+				spl(bottomUpSPL.get(0)).setJointVelocityRel(0.5),
 				spl(moveOutSPL.get(0)),
 				spl(moveOutSPL.get(1))
 				).setJointVelocityRel(1.0);
