@@ -510,14 +510,16 @@ public class Beer extends RoboticsAPIApplication {
 		
 		// shaking motion
 		getLogger().info("Shaking beer");
-//		CartesianSineImpedanceControlMode shakingCSICM = new CartesianSineImpedanceControlMode();
-//		shakingCSICM.parametrize(CartDOF.C).setStiffness(300).setAmplitude(20.0).setFrequency(0.5);
-//		shakingCSICM.parametrize(CartDOF.B).setStiffness(300).setAmplitude(20.0).setFrequency(0.5).setPhaseDeg(90);
-//		shakingCSICM.setReferenceSystem(World.Current.getRootFrame());
-//		
-//		tcpTip.move(positionHold(shakingCSICM, 6, TimeUnit.SECONDS));
+		CartesianSineImpedanceControlMode shakingCSICM = new CartesianSineImpedanceControlMode();
+		shakingCSICM.parametrize(CartDOF.TRANSL).setStiffness(3000);
+		shakingCSICM.parametrize(CartDOF.ROT).setStiffness(300);
+		shakingCSICM.parametrize(CartDOF.C).setStiffness(150).setAmplitude(15.0).setFrequency(1.0);
+		shakingCSICM.parametrize(CartDOF.B).setStiffness(150).setAmplitude(15.0).setFrequency(1.0).setPhaseDeg(90);
+		shakingCSICM.setReferenceSystem(World.Current.getRootFrame());
 		
-		Frame current = lbr.getCurrentCartesianPosition(tcpGrip);
+		tcpTip.move(positionHold(shakingCSICM, 6, TimeUnit.SECONDS));
+		
+/*		Frame current = lbr.getCurrentCartesianPosition(tcpGrip);
 		Frame c1 = current.copyWithRedundancy();
 		Frame c2 = current.copyWithRedundancy();
 		Frame c3 = current.copyWithRedundancy();
@@ -533,7 +535,7 @@ public class Beer extends RoboticsAPIApplication {
 				spl(c1), spl(c2), spl(c3), spl(c4),
 				spl(current)
 				).setOrientationVelocity(0.7).setJointVelocityRel(0.7)	);
-		
+		*/
 		
 		// pouring bottom-up
 		getLogger().info("Finishing pouring");
@@ -554,10 +556,10 @@ public class Beer extends RoboticsAPIApplication {
 		// move out
 		getLogger().info("Moving out");
 		Spline moSPL = new Spline(
-				spl(bottomUpSPL.get(0)).setJointVelocityRel(0.3),
+//				spl(bottomUpSPL.get(0)).setJointVelocityRel(0.3),
 				spl(moveOutSPL.get(0)),
 				spl(moveOutSPL.get(1))
-				).setJointVelocityRel(1.0);
+				).setJointVelocityRel(0.3);
 		tcpGrip.move(moSPL);
 		ThreadUtil.milliSleep(500);
 		
