@@ -514,11 +514,11 @@ public class Beer extends RoboticsAPIApplication {
 		CartesianSineImpedanceControlMode shakingCSICM = new CartesianSineImpedanceControlMode();
 		shakingCSICM.parametrize(CartDOF.TRANSL).setStiffness(3000);
 		shakingCSICM.parametrize(CartDOF.ROT).setStiffness(300);
-		shakingCSICM.parametrize(CartDOF.C).setStiffness(150).setAmplitude(15.0).setFrequency(1.0);
-		shakingCSICM.parametrize(CartDOF.B).setStiffness(150).setAmplitude(15.0).setFrequency(1.0).setPhaseDeg(90);
+		shakingCSICM.parametrize(CartDOF.C).setStiffness(150).setAmplitude(15.0).setFrequency(1.5);
+		shakingCSICM.parametrize(CartDOF.B).setStiffness(150).setAmplitude(15.0).setFrequency(1.5).setPhaseDeg(90);
 		shakingCSICM.setReferenceSystem(World.Current.getRootFrame());
 		
-		tcpTip.move(positionHold(shakingCSICM, 6, TimeUnit.SECONDS));
+		tcpTip.move(positionHold(shakingCSICM, 4500, TimeUnit.MILLISECONDS));
 		
 /*		Frame current = lbr.getCurrentCartesianPosition(tcpGrip);
 		Frame c1 = current.copyWithRedundancy();
