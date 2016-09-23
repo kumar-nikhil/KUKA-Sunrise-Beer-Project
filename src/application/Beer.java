@@ -504,8 +504,8 @@ public class Beer extends RoboticsAPIApplication {
 		// shaking motion
 		getLogger().info("Shaking beer");
 		CartesianSineImpedanceControlMode shakingCSICM = new CartesianSineImpedanceControlMode();
-		shakingCSICM.parametrize(CartDOF.C).setStiffness(300).setAmplitude(20.0).setFrequency(0.5);
-		shakingCSICM.parametrize(CartDOF.B).setStiffness(300).setAmplitude(20.0).setFrequency(0.5).setPhaseDeg(90);
+		shakingCSICM.parametrize(CartDOF.C).setStiffness(1000).setAmplitude(20.0).setFrequency(0.5);
+		shakingCSICM.parametrize(CartDOF.B).setStiffness(1000).setAmplitude(20.0).setFrequency(0.5).setPhaseDeg(90);
 		shakingCSICM.setReferenceSystem(World.Current.getRootFrame());
 		
 		tcpTip.move(positionHold(shakingCSICM, 6, TimeUnit.SECONDS));
