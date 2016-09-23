@@ -189,9 +189,9 @@
                         </redundancyData>
                     </frame>
                     <frame name="P2">
-                        <transformation a="0.2859074234338305" b="-3.3311696358039625E-4" c="-1.3559156393798969E-4" x="-1.8657567436963802" y="-10.588010914456639" z="0.038201307914619065"/>
+                        <transformation a="0.3072317841496778" b="-2.254691525935396E-4" c="-1.710564994978991E-4" x="-1.8152053435252924" y="-10.593822685170856" z="0.060621481956559364"/>
                         <additionalInformation>
-                            <info key="LastModificationTime" type="java.lang.Long" value="1474604646997"/>
+                            <info key="LastModificationTime" type="java.lang.Long" value="1474610898641"/>
                             <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Tool/TCP_Tip" tool="Tool" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
                                 <tcpTransformation a="0.0" b="0.0" c="0.0" x="-30.5611" y="-55.7192" z="126.26"/>
                             </info>
@@ -200,7 +200,7 @@
                             <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
                                 <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="1" valueType="java.lang.Integer"/>
                                 <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="71" valueType="java.lang.Integer"/>
-                                <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.0735393170138408" valueType="java.lang.Double"/>
+                                <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.0734497948222659" valueType="java.lang.Double"/>
                             </redundancy>
                         </redundancyData>
                     </frame>
