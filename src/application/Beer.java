@@ -319,9 +319,9 @@ public class Beer extends RoboticsAPIApplication {
 		// move out
 //		tcpTip.moveAsync(linRel(0, 0, -50, pourBase).setCartVelocity(600).setBlendingRel(0.1));
 //		tcpTip.moveAsync(linRel(50, 0, -50, pourBase).setCartVelocity(1000).setBlendingRel(0.1));
-		tcpGrip.moveAsync(linRel(-20, 0, 0, 0, Math.toRadians(-20), 0)
+		tcpGrip.moveAsync(linRel(-40, 0, 0, 0, Math.toRadians(-20), 0)
 				.setJointVelocityRel(0.2).setOrientationVelocity(0.3).setBlendingRel(0.1) );
-		tcpGrip.moveAsync(linRel(0, 0, -60, 0, Math.toRadians(-20), 0)
+		tcpGrip.moveAsync(linRel(-20, 0, -100, 0, Math.toRadians(-20), 0)
 				.setJointVelocityRel(0.2).setOrientationVelocity(0.3).setBlendingRel(0.1) );
 		tcpGrip.move(ptp(tempHome).setJointVelocityRel(1.0));
 
