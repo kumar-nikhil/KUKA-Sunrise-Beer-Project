@@ -110,7 +110,7 @@ public class Beer extends RoboticsAPIApplication {
 		mfIo = new MediaFlangeIOGroup(cabinet);
 		exIO = new ExGripper(cabinet);
 		// flag
-		loopFlag = false;
+		loopFlag = true;
 		// Force process data
 		processDataUpdate();
 		
