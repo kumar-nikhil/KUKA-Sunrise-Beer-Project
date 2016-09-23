@@ -155,7 +155,7 @@ public class Beer extends RoboticsAPIApplication {
 
 		while (loopFlag) {
 			
-			lbr.move(ptp(home).setJointVelocityRel(1.0));
+			lbr.move(ptp(home).setJointVelocityRel(0.3));
 			
 			int ret = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "To do?", "Start", "END");
 			switch (ret) {
@@ -171,7 +171,7 @@ public class Beer extends RoboticsAPIApplication {
 						
 		}	// end of while
 
-		lbr.move(ptp(home).setJointVelocityRel(1.0));
+		lbr.move(ptp(home).setJointVelocityRel(0.3));
 		
 	}
 
@@ -214,9 +214,9 @@ public class Beer extends RoboticsAPIApplication {
 		Frame detectApr = glassDetect.copyWithRedundancy();
 		detectApr.transform(glassBase, Transformation.ofTranslation(0, 0, -30));
 		
-		tcpTip.moveAsync(ptp(detectAir).setJointVelocityRel(1.0).setBlendingRel(0.2)
+		tcpTip.moveAsync(ptp(detectAir).setJointVelocityRel(0.3).setBlendingRel(0.2)
 				.triggerWhen(gOpenC, gOpenAction) );
-		tcpTip.move(lin(detectApr).setCartVelocity(1000));
+		tcpTip.move(lin(detectApr).setCartVelocity(300));
 		
 		// detect glass position
 		double j1t = lbr.getExternalTorque().getSingleTorqueValue(JointEnum.J1);
@@ -244,10 +244,10 @@ public class Beer extends RoboticsAPIApplication {
 			targetAir01.transform(target, Transformation.ofDeg(0, 0, -70, 0, -20, 0));
 			
 			tcpTip.move(ptp(lbr.getCurrentCartesianPosition(tcpTip)));
-			tcpTip.moveAsync(linRel(50, 0, -50, glassBase).setCartVelocity(1000).setBlendingRel(0.1));
-			tcpGrip.moveAsync(lin(targetAir01).setJointVelocityRel(1.0).setBlendingRel(0.1));
-			tcpGrip.moveAsync(lin(targetAir02).setJointVelocityRel(1.0).setBlendingRel(0.1));
-			tcpGrip.moveAsync(lin(targetGripApr).setCartVelocity(600).setBlendingRel(0.1));
+			tcpTip.moveAsync(linRel(50, 0, -50, glassBase).setCartVelocity(300).setBlendingRel(0.1));
+			tcpGrip.moveAsync(lin(targetAir01).setJointVelocityRel(0.3).setBlendingRel(0.1));
+			tcpGrip.moveAsync(lin(targetAir02).setJointVelocityRel(0.3).setBlendingRel(0.1));
+			tcpGrip.moveAsync(lin(targetGripApr).setCartVelocity(300).setBlendingRel(0.1));
 			tcpGrip.move(lin(target).setCartVelocity(300));
 			
 			exIO.gripperClose();
@@ -263,8 +263,8 @@ public class Beer extends RoboticsAPIApplication {
 		Frame glassJigAir = pourBase.copyWithRedundancy();
 		glassJigAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0,0,200));
 		
-		tcpGrip.moveAsync(lin(targetAir).setCartVelocity(1000));
-		tcpGrip.moveAsync(ptp(glassJigAir).setJointVelocityRel(1.0).setBlendingRel(0.1));
+		tcpGrip.moveAsync(lin(targetAir).setCartVelocity(300));
+		tcpGrip.moveAsync(ptp(glassJigAir).setJointVelocityRel(0.3).setBlendingRel(0.1));
 
 	}
 
@@ -273,7 +273,7 @@ public class Beer extends RoboticsAPIApplication {
 		// move in (pourGlass) 
 		Frame air = glassLean.copyWithRedundancy();
 		air.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0,0,50));
-		tcpGrip.move(lin(air).setJointVelocityRel(1.0));
+		tcpGrip.move(lin(air).setJointVelocityRel(0.3));
 
 		CartesianImpedanceControlMode dFloorCICM = new CartesianImpedanceControlMode();
 		dFloorCICM.parametrize(CartDOF.TRANSL).setStiffness(5000);
@@ -323,7 +323,7 @@ public class Beer extends RoboticsAPIApplication {
 				.setJointVelocityRel(0.2).setOrientationVelocity(0.3).setBlendingRel(0.1) );
 		tcpGrip.moveAsync(linRel(-20, 0, -100, 0, Math.toRadians(-20), 0)
 				.setJointVelocityRel(0.2).setOrientationVelocity(0.3).setBlendingRel(0.1) );
-		tcpGrip.move(ptp(tempHome).setJointVelocityRel(1.0));
+		tcpGrip.move(ptp(tempHome).setJointVelocityRel(0.3));
 
 //		throw Exception;
 	}
@@ -334,7 +334,7 @@ public class Beer extends RoboticsAPIApplication {
 		Frame beerAir = beerBase.copyWithRedundancy();
 		beerAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 300));
 		
-		tcpGrip.moveAsync(ptp(beerAir).setJointVelocityRel(1.0).setBlendingRel(0.2)
+		tcpGrip.moveAsync(ptp(beerAir).setJointVelocityRel(0.3).setBlendingRel(0.2)
 				.triggerWhen(gOpenC, gOpenAction) );
 		
 		// move & grasp & evaluate Load
@@ -343,13 +343,13 @@ public class Beer extends RoboticsAPIApplication {
 			Frame targetAir = target.copyWithRedundancy();
 			targetAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 200));
 			
-			tcpGrip.moveAsync(ptp(targetAir).setJointVelocityRel(1.0).setBlendingRel(0.2)
+			tcpGrip.moveAsync(ptp(targetAir).setJointVelocityRel(0.3).setBlendingRel(0.2)
 					.triggerWhen(gOpenC, gOpenAction) );
-			tcpGrip.move(lin(target).setCartVelocity(600));
+			tcpGrip.move(lin(target).setCartVelocity(300));
 
 			exIO.gripperClose();
 			
-			tcpGrip.move(lin(targetAir).setCartVelocity(1000));
+			tcpGrip.move(lin(targetAir).setCartVelocity(300));
 			
 			int key = evaluateLoad();
 			
@@ -369,13 +369,13 @@ public class Beer extends RoboticsAPIApplication {
 			case 4:
 			case 10:
 				getLogger().error("!!!!! Undesired object is gripped !!!!!");
-				tcpGrip.move(lin(target).setCartVelocity(600));
+				tcpGrip.move(lin(target).setCartVelocity(300));
 				
 				exIO.gripperOpen();
 				lbr.detachAll();
 				tool.attachTo(lbr.getFlange());
 				
-				tcpGrip.move(lin(targetAir).setCartVelocity(1000));
+				tcpGrip.move(lin(targetAir).setCartVelocity(3000));
 				
 				throw Exception;
 			}	// end of sw-case
@@ -435,25 +435,25 @@ public class Beer extends RoboticsAPIApplication {
 		Frame openerAir = openerBase.copyWithRedundancy();
 		openerAir.transform(openerBase, Transformation.ofTranslation(10, 10, 0));
 		// move in (openerBase) 
-		tcpGrip.moveAsync(ptp(openerBase.getChildren().get(0)).setJointVelocityRel(1.0).setBlendingRel(0.1));
-		tcpGrip.moveAsync(ptp(openerBase.getChildren().get(1)).setJointVelocityRel(1.0).setBlendingRel(0.1));
-		tcpGrip.moveAsync(ptp(openerBase.getChildren().get(2)).setJointVelocityRel(1.0).setBlendingRel(0.1));
+		tcpGrip.moveAsync(ptp(openerBase.getChildren().get(0)).setJointVelocityRel(0.3).setBlendingRel(0.1));
+		tcpGrip.moveAsync(ptp(openerBase.getChildren().get(1)).setJointVelocityRel(0.3).setBlendingRel(0.1));
+		tcpGrip.moveAsync(ptp(openerBase.getChildren().get(2)).setJointVelocityRel(0.3).setBlendingRel(0.1));
 		tcpGrip.move(lin(openerAir).setJointVelocityRel(0.15));
 		
 		// contact
 		CartesianImpedanceControlMode contactCICM = new CartesianImpedanceControlMode();
-		contactCICM.parametrize(CartDOF.X, CartDOF.Y).setStiffness(200);
+		contactCICM.parametrize(CartDOF.X, CartDOF.Y).setStiffness(500);
 		contactCICM.setReferenceSystem(openerBase);
 		
 		double fX = lbr.getExternalForceTorque(tcpGrip, openerBase).getForce().getX();
 		double fY = lbr.getExternalForceTorque(tcpGrip, openerBase).getForce().getY();
 		getLogger().info(String.format("Current Force X : %.03f,  Y : %.03f", fX, fY));
-		ForceCondition detectX = ForceCondition.createNormalForceCondition(tcpGrip, openerBase, CoordinateAxis.X, 5.0);
-		ForceCondition detectY = ForceCondition.createNormalForceCondition(tcpGrip, openerBase, CoordinateAxis.Y, 5.0);
+		ForceCondition detectX = ForceCondition.createNormalForceCondition(tcpGrip, openerBase, CoordinateAxis.X, 4.0);
+		ForceCondition detectY = ForceCondition.createNormalForceCondition(tcpGrip, openerBase, CoordinateAxis.Y, 4.0);
 		tcpGrip.move(linRel(-60, 0, 0, openerBase).setCartVelocity(20).setMode(contactCICM).breakWhen(detectX));
 		getLogger().info("X directional contact made");
 		ThreadUtil.milliSleep(500);
-		tcpGrip.move(linRel(0, -60, 0, openerBase).setCartVelocity(20).setMode(contactCICM).breakWhen(detectX));
+		tcpGrip.move(linRel(0, -40, 0, openerBase).setCartVelocity(20).setMode(contactCICM).breakWhen(detectX));
 		getLogger().info("Y directional contact made");
 		ThreadUtil.milliSleep(500);
 		
@@ -511,7 +511,7 @@ public class Beer extends RoboticsAPIApplication {
 		Spline buSpl = new Spline(
 				spl(bottomUpSPL.get(0)),
 				spl(bottomUpSPL.get(1)).setOrientationVelocity(0.1)
-				).setOrientationVelocity(0.3).setJointVelocityRel(0.5);
+				).setOrientationVelocity(0.3).setJointVelocityRel(0.3);
 		tcpGrip.move(buSpl);
 		ThreadUtil.milliSleep(500);
 
@@ -525,7 +525,7 @@ public class Beer extends RoboticsAPIApplication {
 		// move out
 		getLogger().info("Moving out");
 		Spline moSPL = new Spline(
-				spl(bottomUpSPL.get(0)).setJointVelocityRel(0.5),
+				spl(bottomUpSPL.get(0)).setJointVelocityRel(0.3),
 				spl(moveOutSPL.get(0)),
 				spl(moveOutSPL.get(1))
 				).setJointVelocityRel(1.0);
