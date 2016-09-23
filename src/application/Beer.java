@@ -493,7 +493,7 @@ public class Beer extends RoboticsAPIApplication {
 				spl(pouringSPL.get(4)),
 				spl(pouringSPL.get(5)).setOrientationVelocity(0.1),
 				spl(pouringSPL.get(6))
-				).setOrientationVelocity(0.3).setJointVelocityRel(0.2);
+				).setOrientationVelocity(0.3).setJointVelocityRel(0.1);
 		tcpTip.move(pouringSpl);
 		ThreadUtil.milliSleep(500);
 		
