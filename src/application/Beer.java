@@ -661,8 +661,8 @@ public class Beer extends RoboticsAPIApplication {
 					getLogger().info(String.format("First Force Z : %.03f", lbr.getExternalForceTorque(tcpGrip).getForce().getZ()));
 					getLogger().info("Pull now");
 					IMotionContainer mc1 = tcpGrip.move(positionHold(handOverCICM, 10, TimeUnit.SECONDS).breakWhen(fcMinZ));
-					getLogger().info(String.format("Second Force Z : %.03f", lbr.getExternalForceTorque(tcpGrip).getForce().getZ()));
 					if (mc1.hasFired(fcMinZ)) {
+						getLogger().info(String.format("Second Force Z : %.03f", lbr.getExternalForceTorque(tcpGrip).getForce().getZ()));
 						triggerCnt++;
 					}
 				}
