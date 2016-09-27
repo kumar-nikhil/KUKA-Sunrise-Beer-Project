@@ -7,6 +7,8 @@ import java.util.concurrent.TimeUnit;
 
 import ioTool.ExGripper;
 
+import additionalFunction.CycleTimer;
+
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
@@ -84,6 +86,8 @@ public class Beer extends RoboticsAPIApplication {
 	
 	private int	triggerCnt;
 
+	private CycleTimer	totalCT, glassCT, bottleCT, pouringCT, trashServeCT;
+	
 	// gripper Open
 	MotionPathCondition gOpenC = new MotionPathCondition(ReferenceType.DEST, 0, -300);
 	ITriggerAction gOpenAction = new ICallbackAction() {
@@ -112,13 +116,20 @@ public class Beer extends RoboticsAPIApplication {
 		mfIo = new MediaFlangeIOGroup(cabinet);
 		exIO = new ExGripper(cabinet);
 		// flag
-		loopFlag = false;
+		loopFlag = true;
 		// Force process data
 		processDataUpdate();
 		
 		initFrames();
 		
 		tool.attachTo(lbr.getFlange());
+		
+		totalCT = new CycleTimer("Total", getLogger());
+		glassCT = new CycleTimer("Glass", getLogger());
+		bottleCT = new CycleTimer("Bottle", getLogger());
+		pouringCT = new CycleTimer("Pouring", getLogger());
+		trashServeCT = new CycleTimer("Trash & Serve", getLogger());
+
 		
 		getApplicationControl().clipApplicationOverride(aov);
 	}
@@ -156,13 +167,6 @@ public class Beer extends RoboticsAPIApplication {
 
 	@Override
 	public void run() {
-
-		try {
-			serveGlass();
-		} catch (java.lang.Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		while (loopFlag) {
 			
@@ -187,32 +191,37 @@ public class Beer extends RoboticsAPIApplication {
 	}
 
 	private void beerApp() {
-		
+		totalCT.start();
 		try {
-			// glass preparation
+			// Glass
+			glassCT.start();
 			getGlass();
 			putGlass();
-			// finished
-			
-			// bottle preparation
+			glassCT.end();
+
+			// Bottle
+			bottleCT.start();
 			int bottleNo = getBottle();
 			openBottle();
-			
-			// pouring
+			bottleCT.end();
+
+			// Pouring
+			pouringCT.start();
 			pourBeer();
-			
-			// trashing bottle
+			pouringCT.end();
+
+			// Trashing
+			trashServeCT.start();
 			trashBottle(bottleNo);
-			
-			// serving glass
+			// Serving
 			serveGlass();
-			
+			trashServeCT.end();
 		} catch (Exception e) {
 			e.printStackTrace();
 			getLogger().error("!!!!! [ Application failed ] !!!!!");
 		}
 		
-		
+		totalCT.end();
 		
 	}
 
