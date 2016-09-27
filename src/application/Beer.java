@@ -494,17 +494,26 @@ public class Beer extends RoboticsAPIApplication {
 //		tcpTip.move(lin(pouring).setJointVelocityRel(0.3));
 		
 		// pouring motion
-		Spline pouringSpl = new Spline(
+		Spline pouringSpl1 = new Spline(
 				spl(pouringSPL.get(0)),
 				spl(pouringSPL.get(1)).setOrientationVelocity(0.1),	// contact
-				spl(pouringSPL.get(2)).setOrientationVelocity(0.04),	// pouring start
-				spl(pouringSPL.get(3)).setOrientationVelocity(0.014),	// pouring
+				spl(pouringSPL.get(2)).setOrientationVelocity(0.1)	// pouring start
+				).setOrientationVelocity(0.3).setJointVelocityRel(0.3);
+		Spline pouringSpl2 = new Spline(
+				spl(pouringSPL.get(3)).setOrientationVelocity(0.01),	// pouring
 				spl(pouringSPL.get(4)).setOrientationVelocity(0.1),	// stand up 1
 				spl(pouringSPL.get(5)).setOrientationVelocity(0.1),		// stand up 2
 				spl(pouringSPL.get(6)).setOrientationVelocity(0.2),		// out 1
 				spl(pouringSPL.get(7))									// out 2 to the center
 				).setOrientationVelocity(0.3).setJointVelocityRel(0.3);
-		tcpTip.move(pouringSpl);
+		tcpTip.move(pouringSpl1);
+		getLogger().info("Waiting ... 3");
+		ThreadUtil.milliSleep(1000);
+		getLogger().info("Waiting ... 2");
+		ThreadUtil.milliSleep(1000);
+		getLogger().info("Waiting ... 1");
+		ThreadUtil.milliSleep(1000);
+		tcpTip.move(pouringSpl2);
 		ThreadUtil.milliSleep(500);
 		
 		// shaking motion
