@@ -644,10 +644,10 @@ public class Beer extends RoboticsAPIApplication {
 		
 		do {
 			double forceZ = lbr.getExternalForceTorque(tcpGrip).getForce().getZ();
-			ForceCondition fcZ = ForceCondition.createNormalForceCondition(tcpGrip, CoordinateAxis.Z, 10);
+			ForceCondition fcZ = ForceCondition.createNormalForceCondition(tcpGrip, CoordinateAxis.Z, 8);
 			getLogger().info(String.format("Current Force Z : %.03f", forceZ));
 			final CartesianImpedanceControlMode handOverCICM = new CartesianImpedanceControlMode();
-			handOverCICM.parametrize(CartDOF.Z).setStiffness(500);
+			handOverCICM.parametrize(CartDOF.Z).setStiffness(800);
 			triggerCnt = 0;
 			ICallbackAction action = new ICallbackAction() {
 				@Override
