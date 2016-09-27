@@ -112,7 +112,7 @@ public class Beer extends RoboticsAPIApplication {
 		mfIo = new MediaFlangeIOGroup(cabinet);
 		exIO = new ExGripper(cabinet);
 		// flag
-		loopFlag = true;
+		loopFlag = false;
 		// Force process data
 		processDataUpdate();
 		
@@ -157,6 +157,13 @@ public class Beer extends RoboticsAPIApplication {
 	@Override
 	public void run() {
 
+		try {
+			serveGlass();
+		} catch (java.lang.Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		while (loopFlag) {
 			
 			lbr.move(ptp(home).setJointVelocityRel(0.3));
@@ -183,19 +190,19 @@ public class Beer extends RoboticsAPIApplication {
 		
 		try {
 			// glass preparation
-//			getGlass();
-//			putGlass();
+			getGlass();
+			putGlass();
 			// finished
 			
 			// bottle preparation
-//			int bottleNo = getBottle();
-//			openBottle();
+			int bottleNo = getBottle();
+			openBottle();
 			
 			// pouring
-//			pourBeer();
+			pourBeer();
 			
 			// trashing bottle
-//			trashBottle(bottleNo);
+			trashBottle(bottleNo);
 			
 			// serving glass
 			serveGlass();
