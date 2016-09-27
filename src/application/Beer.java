@@ -35,6 +35,7 @@ import com.kuka.roboticsAPI.geometricModel.math.Transformation;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.Spline;
 import com.kuka.roboticsAPI.motionModel.SplineJP;
+import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianSineImpedanceControlMode;
 import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
@@ -73,7 +74,7 @@ public class Beer extends RoboticsAPIApplication {
 	// Frames
 	private JointPosition		home;
 	private ObjectFrame			beerBase, glassBase, openerBase, pourBase;
-	private ObjectFrame			glassDetect, glassLean, pouring, tempHome;
+	private ObjectFrame			glassDetect, glassLean, pouring, serving, tempHome;
 	private List<ObjectFrame>	beers;
 	private List<ObjectFrame>	pouringSPL;
 	private List<ObjectFrame>	bottomUpSPL;
@@ -81,6 +82,7 @@ public class Beer extends RoboticsAPIApplication {
 	// Process data
 	private double				aov;
 	
+	private int	triggerCnt;
 
 	// gripper Open
 	MotionPathCondition gOpenC = new MotionPathCondition(ReferenceType.DEST, 0, -300);
@@ -139,6 +141,7 @@ public class Beer extends RoboticsAPIApplication {
 //		glassLean = pourBase.getChild("GlassJig").getChild("leanPosition");
 		glassLean = getApplicationData().getFrame("/BeerWorld/PourBase/GlassJig/leanPosition");
 		pouring = pourBase.getChild("Pouring");
+		serving = pourBase.getChild("Serving");
 		tempHome = getApplicationData().getFrame("/BeerWorld/tempHome");
 		
 		beers = new ArrayList<ObjectFrame>();
@@ -180,19 +183,19 @@ public class Beer extends RoboticsAPIApplication {
 		
 		try {
 			// glass preparation
-			getGlass();
-			putGlass();
+//			getGlass();
+//			putGlass();
 			// finished
 			
 			// bottle preparation
-			int bottleNo = getBottle();
-			openBottle();
+//			int bottleNo = getBottle();
+//			openBottle();
 			
 			// pouring
-			pourBeer();
+//			pourBeer();
 			
 			// trashing bottle
-			trashBottle(bottleNo);
+//			trashBottle(bottleNo);
 			
 			// serving glass
 			serveGlass();
@@ -603,15 +606,77 @@ public class Beer extends RoboticsAPIApplication {
 
 	private void serveGlass() throws Exception {
 		getLogger().info("Serving glass");
-		// move in (pourGlass) 
+		// move in (serving) 
+		Frame tempApr = serving.copyWithRedundancy();
+		tempApr.transform(serving, Transformation.ofTranslation(200, 0, -150));
+		tcpGrip.moveAsync(ptp(tempApr).setJointVelocityRel(0.3).setBlendingRel(0.1));
+		tempApr.transform(serving, Transformation.ofTranslation(0, 0, -100));
+		tcpGrip.moveAsync(ptp(tempApr).setJointVelocityRel(0.3).setBlendingRel(0.1));
 		
 		// grasp
+		Frame targetGripApr = serving.copyWithRedundancy();
+		targetGripApr.transform(serving, Transformation.ofDeg(-30, 0, 0, 0, -20, 0));
+		Frame targetAir02 = serving.copyWithRedundancy();
+		targetAir02.transform(serving, Transformation.ofDeg(-30, 0, -70, 0, -20, 0));
+		Frame targetAir01 = serving.copyWithRedundancy();
+		targetAir01.transform(serving, Transformation.ofDeg(0, 0, -70, 0, -20, 0));
 		
-		// move out
+		tcpGrip.moveAsync(lin(targetAir01).setJointVelocityRel(0.3).setBlendingRel(0.1));
+		tcpGrip.moveAsync(lin(targetAir02).setJointVelocityRel(0.3).setBlendingRel(0.1));
+		tcpGrip.moveAsync(lin(targetGripApr).setCartVelocity(100).setOrientationVelocity(0.3).setBlendingRel(0.1));
+		tcpGrip.move(lin(serving).setCartVelocity(100).setOrientationVelocity(0.3));
 		
-		// move to serve position & wait
+		exIO.gripperClose();
+		glass.attachTo(tcpGrip);
+		fluid.attachTo(tcpGrip);
+		ThreadUtil.milliSleep(500);
 		
+		// move to serve position & wait	.setOrientationType(SplineOrientationType.Constant)
+		tcpGrip.moveAsync(lin(serving.getChild("P1")).setCartVelocity(100).setCartAcceleration(100).setBlendingCart(50));
+		tcpGrip.move(lin(serving.getChild("P2")).setCartVelocity(100).setCartAcceleration(100));
+		ThreadUtil.milliSleep(500);
+
+		
+		do {
+			double forceZ = lbr.getExternalForceTorque(tcpGrip).getForce().getZ();
+			ForceCondition fcZ = ForceCondition.createNormalForceCondition(tcpGrip, CoordinateAxis.Z, 10);
+			getLogger().info(String.format("Current Force Z : %.03f", forceZ));
+			ForceCondition fcZ2 = ForceCondition.createNormalForceCondition(tcpGrip, CoordinateAxis.Z, 4);
+			final ICondition fcMinZ = fcZ2.invert();
+			final CartesianImpedanceControlMode handOverCICM = new CartesianImpedanceControlMode();
+			handOverCICM.parametrize(CartDOF.Z).setStiffness(500);
+			triggerCnt = 0;
+			ICallbackAction action = new ICallbackAction() {
+				@Override
+				public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
+					triggerCnt++;
+					getLogger().info(
+							String.format("First Force Z : %.03f", lbr.getExternalForceTorque(tcpGrip).getForce()
+									.getZ()));
+					IMotionContainer mc1 = tcpGrip.move(positionHold(handOverCICM, 10, TimeUnit.SECONDS).breakWhen(
+							fcMinZ));
+					getLogger().info(
+							String.format("Second Force Z : %.03f", lbr.getExternalForceTorque(tcpGrip).getForce()
+									.getZ()));
+					if (mc1.hasFired(fcMinZ)) {
+						triggerCnt++;
+					}
+				}
+			};
+			IMotionContainer mc = tcpGrip.move(positionHold(handOverCICM, 10, TimeUnit.SECONDS)
+					.triggerWhen(fcZ, action));
+		} while (triggerCnt != 2);
+		
+		// OK & release & move out
+		getLogger().info("OK, releasing the glass");
+		ThreadUtil.milliSleep(500);
+		exIO.gripperOpen();
+		ThreadUtil.milliSleep(500);
 		// move out (home)
+		tcpGrip.moveAsync(lin(serving.getChild("P3")).setCartVelocity(100).setBlendingCart(50));
+		lbr.move(ptp(home).setJointVelocityRel(0.3));
+		
+		
 
 //		throw Exception;
 	}
