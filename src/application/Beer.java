@@ -283,16 +283,18 @@ public class Beer extends RoboticsAPIApplication {
 		dFloorCICM.parametrize(CartDOF.C).setStiffness(30);
 		dFloorCICM.setReferenceSystem(World.Current.getRootFrame());
 		
+		dFloorCICM.setAdditionalControlForce(0, 0, -7, 0, 0, 0);
 		tcpGrip.move(lin(glassLean).setCartVelocity(50).setMode(dFloorCICM));
+		dFloorCICM.setAdditionalControlForceToDefaultValue();
 		double dist = lbr.getCurrentCartesianPosition(tcpGrip).distanceTo(glassLean);
 		getLogger().info("Distance offset : " + dist );
-		tcpGrip.move(linRel(0, 0, -(dist*2), World.Current.getRootFrame()).setCartVelocity(50).setMode(dFloorCICM));
-		getLogger().info("Distance offset : " + dist );
-		
-		if ( dist >= 5.0 ) {
-			tcpGrip.move(linRel(0, 0, -(dist*2), World.Current.getRootFrame()).setCartVelocity(50).setMode(dFloorCICM));
-			getLogger().info("Distance offset : " + dist );			
-		}
+//		tcpGrip.move(linRel(0, 0, -(dist*2), World.Current.getRootFrame()).setCartVelocity(50).setMode(dFloorCICM));
+//		getLogger().info("Distance offset : " + dist );
+//		
+//		if ( dist >= 5.0 ) {
+//			tcpGrip.move(linRel(0, 0, -(dist*2), World.Current.getRootFrame()).setCartVelocity(50).setMode(dFloorCICM));
+//			getLogger().info("Distance offset : " + dist );			
+//		}
 		tcpGrip.move(ptp(lbr.getCurrentCartesianPosition(tcpGrip)));
 		/*
 		// detect floor (z)
