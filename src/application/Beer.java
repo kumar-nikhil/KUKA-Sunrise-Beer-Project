@@ -618,7 +618,7 @@ public class Beer extends RoboticsAPIApplication {
 		tempApr.transform(serving, Transformation.ofTranslation(200, 0, -100));
 		tcpGrip.moveAsync(ptp(tempApr).setJointVelocityRel(0.3).setBlendingRel(0.1));
 		tempApr = serving.copyWithRedundancy();
-		tempApr.transform(serving, Transformation.ofTranslation(0, 0, -60));
+		tempApr.transform(serving, Transformation.ofDeg(0, 0, -60, 0, -10, 0));
 		tcpGrip.moveAsync(ptp(tempApr).setJointVelocityRel(0.3).setBlendingRel(0.1));
 		
 		// grasp
@@ -649,8 +649,6 @@ public class Beer extends RoboticsAPIApplication {
 			double forceZ = lbr.getExternalForceTorque(tcpGrip).getForce().getZ();
 			ForceCondition fcZ = ForceCondition.createNormalForceCondition(tcpGrip, CoordinateAxis.Z, 10);
 			getLogger().info(String.format("Current Force Z : %.03f", forceZ));
-			ForceCondition fcZ2 = ForceCondition.createNormalForceCondition(tcpGrip, CoordinateAxis.Z, 5);
-			final ICondition fcMinZ = fcZ2.invert();
 			final CartesianImpedanceControlMode handOverCICM = new CartesianImpedanceControlMode();
 			handOverCICM.parametrize(CartDOF.Z).setStiffness(500);
 			triggerCnt = 0;
@@ -659,20 +657,14 @@ public class Beer extends RoboticsAPIApplication {
 				public void onTriggerFired(IFiredTriggerInfo triggerInformation) {
 					triggerInformation.getMotionContainer().cancel();
 					triggerCnt++;
-					getLogger().info(String.format("First Force Z : %.03f", lbr.getExternalForceTorque(tcpGrip).getForce().getZ()));
-					getLogger().info("Pull now");
-					IMotionContainer mc1 = tcpGrip.move(positionHold(handOverCICM, 10, TimeUnit.SECONDS).breakWhen(fcMinZ));
-					if (mc1.hasFired(fcMinZ)) {
-						getLogger().info(String.format("Second Force Z : %.03f", lbr.getExternalForceTorque(tcpGrip).getForce().getZ()));
-						triggerCnt++;
-					}
 				}
 			};
 			getLogger().info("Push now");
 			IMotionContainer mc = tcpGrip.move(positionHold(handOverCICM, 10, TimeUnit.SECONDS).triggerWhen(fcZ, action));
-		} while (triggerCnt != 2);
+		} while (triggerCnt < 1);
 		
 		// OK & release & move out
+		tcpGrip.move(ptp(lbr.getCurrentCartesianPosition(tcpGrip)));
 		getLogger().info("OK, releasing the glass");
 		ThreadUtil.milliSleep(500);
 		exIO.gripperOpen();
