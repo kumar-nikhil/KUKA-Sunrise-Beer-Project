@@ -615,10 +615,7 @@ public class Beer extends RoboticsAPIApplication {
 		getLogger().info("Serving glass");
 		// move in (serving) 
 		Frame tempApr = serving.copyWithRedundancy();
-		tempApr.transform(serving, Transformation.ofTranslation(200, 0, -100));
-		tcpGrip.moveAsync(ptp(tempApr).setJointVelocityRel(0.3).setBlendingRel(0.1));
-		tempApr = serving.copyWithRedundancy();
-		tempApr.transform(serving, Transformation.ofDeg(0, 0, -60, 0, -10, 0));
+		tempApr.transform(serving, Transformation.ofTranslation(300, 0, -100));
 		tcpGrip.moveAsync(ptp(tempApr).setJointVelocityRel(0.3).setBlendingRel(0.1));
 		
 		// grasp
