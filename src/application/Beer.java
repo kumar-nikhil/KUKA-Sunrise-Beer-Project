@@ -41,7 +41,7 @@ import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
 
 /**
  * @author Seulki-Kim , Sep 7, 2016 , KUKA Robotics Korea<p>
- * @modified Seulki-Kim , Sep 8, 2016 , KUKA Robotics Korea<p>
+ * @modified Seulki-Kim , Sep 26, 2016 , KUKA Robotics Korea<p>
  * Implementation of a robot application.
  * <p>
  * The application provides a {@link RoboticsAPITask#initialize()} and a 
@@ -343,6 +343,7 @@ public class Beer extends RoboticsAPIApplication {
 				.triggerWhen(gOpenC, gOpenAction) );
 		
 		int ret = 0;
+		int trashCount = 0;
 		// move & grasp & evaluate Load
 		for (int i = 0; i < beers.size(); i++) {
 			Frame target = beers.get(i).copyWithRedundancy();
@@ -366,6 +367,7 @@ public class Beer extends RoboticsAPIApplication {
 			case 1:	// Empty bottle
 				getLogger().info("The bottle is empty...");
 				trashBottle(i);
+				trashCount++;
 				break;
 			case 2:	// Full bottle
 				getLogger().info("Good to go to open the bottle");
