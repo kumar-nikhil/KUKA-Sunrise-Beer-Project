@@ -283,7 +283,7 @@ public class Beer extends RoboticsAPIApplication {
 		dFloorCICM.parametrize(CartDOF.C).setStiffness(30);
 		dFloorCICM.setReferenceSystem(World.Current.getRootFrame());
 		
-		dFloorCICM.setAdditionalControlForce(0, 0, -7, 0, 0, 0);
+		dFloorCICM.setAdditionalControlForce(0, 0, -3, 0, 0, 0);
 		tcpGrip.move(lin(glassLean).setCartVelocity(50).setMode(dFloorCICM));
 		dFloorCICM.setAdditionalControlForceToDefaultValue();
 		double dist = lbr.getCurrentCartesianPosition(tcpGrip).distanceTo(glassLean);
