@@ -386,8 +386,12 @@ public class Beer extends RoboticsAPIApplication {
 			exIO.gripperClose();
 			
 			tcpGrip.move(lin(targetAir).setCartVelocity(300));
+
+			ThreadUtil.milliSleep(500);
+			double innateForce = lbr.getExternalForceTorque(tcpGrip, World.Current.getRootFrame()).getForce().getZ();
+			getLogger().info("Innate force is : " + innateForce + " N");
 			
-			int key = evaluateLoad();
+			int key = evaluateLoad(innateForce);
 			
 			switch (key) {
 			case 0: // Nothing
@@ -424,7 +428,7 @@ public class Beer extends RoboticsAPIApplication {
 //		throw Exception;
 	}
 
-	private int evaluateLoad() {
+	private int evaluateLoad(double innateForce) {
 		int ret = 0;
 		ThreadUtil.milliSleep(500);
 		
@@ -435,7 +439,7 @@ public class Beer extends RoboticsAPIApplication {
 				bottleMass, fluidMass, glassMass));
 		
 		double zForce = lbr.getExternalForceTorque(tcpGrip, World.Current.getRootFrame()).getForce().getZ();
-		getLogger().info("Rated force is : " + Math.abs(zForce) + " N");
+		getLogger().info("Rated force is : " + Math.abs(zForce-innateForce) + " N");
 		double load = zForce / 9.8;
 		getLogger().info("Rated load is : " + Math.abs(load) + " kg");
 		
