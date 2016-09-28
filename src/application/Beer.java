@@ -603,7 +603,7 @@ public class Beer extends RoboticsAPIApplication {
 		// move in (trashBeer)
 
 		Frame beerAir = beerBase.copyWithRedundancy();
-		beerAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 300));
+		beerAir.transform(beerBase, Transformation.ofTranslation(-270, -180, -120));
 		
 		tcpGrip.moveAsync(ptp(beerAir).setJointVelocityRel(0.3).setBlendingRel(0.2) );
 		
