@@ -195,8 +195,8 @@ public class Beer extends RoboticsAPIApplication {
 		try {
 			// Glass
 			glassCT.start();
-			getGlass();
-			putGlass();
+//			getGlass();
+//			putGlass();
 			glassCT.end();
 
 			// Bottle
