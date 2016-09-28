@@ -167,6 +167,14 @@ public class Beer extends RoboticsAPIApplication {
 
 	@Override
 	public void run() {
+
+		try {
+			getBottle();
+			openBottle();
+		} catch (java.lang.Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		while (loopFlag) {
 			
@@ -384,7 +392,7 @@ public class Beer extends RoboticsAPIApplication {
 			switch (key) {
 			case 0: // Nothing
 				getLogger().info("Try next position");
-				break;
+//				break;
 			case 1:	// Empty bottle
 				getLogger().info("The bottle is empty...");
 				trashBottle(i);
@@ -607,7 +615,17 @@ public class Beer extends RoboticsAPIApplication {
 		tcpGrip.moveAsync(ptp(targetAir).setJointVelocityRel(0.3).setBlendingRel(0.2) );
 		tcpGrip.move(lin(target).setCartVelocity(300));
 
-		getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "Release??", "OK");
+//		getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "Release??", "OK");
+		double fX = lbr.getExternalForceTorque(tcpGrip, beerBase).getForce().getX();
+		getLogger().info(String.format("Current Force X : %.03f", fX));
+		ForceCondition detectX = ForceCondition.createNormalForceCondition(tcpGrip, beerBase, CoordinateAxis.X, 5.0);
+		
+		CartesianImpedanceControlMode cicM = new CartesianImpedanceControlMode();
+		cicM.parametrize(CartDOF.X).setStiffness(300);
+		cicM.setReferenceSystem(beerBase);
+		
+		tcpGrip.move(linRel(30, 0, 0, beerBase).setMode(cicM).breakWhen(detectX));
+		tcpGrip.move(ptp(lbr.getCurrentCartesianPosition(tcpGrip)));
 		
 		exIO.gripperOpen();
 		
