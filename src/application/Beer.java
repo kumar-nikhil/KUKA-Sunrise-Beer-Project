@@ -220,7 +220,7 @@ public class Beer extends RoboticsAPIApplication {
 
 			// Trashing
 			trashServeCT.start();
-			trashBottle(bottleNo);
+			trashBottle(bottleNo, false);
 			// Serving
 			serveGlass();
 			trashServeCT.end();
@@ -395,7 +395,7 @@ public class Beer extends RoboticsAPIApplication {
 //				break;
 			case 1:	// Empty bottle
 				getLogger().info("The bottle is empty...");
-				trashBottle(i);
+				trashBottle(i, true);
 				trashCount++;
 				break;
 			case 2:	// Full bottle
@@ -598,14 +598,16 @@ public class Beer extends RoboticsAPIApplication {
 //		throw Exception;
 	}
 
-	private void trashBottle(int bottleNo) throws Exception {
+	private void trashBottle(int bottleNo, boolean direct) throws Exception {
 		getLogger().info("Trashing bottle : index [" + bottleNo + "]");
 		// move in (trashBeer)
-
-		Frame beerAir = beerBase.copyWithRedundancy();
-		beerAir.transform(beerBase, Transformation.ofTranslation(-270, -180, 0));
 		
-		tcpGrip.moveAsync(ptp(beerAir).setJointVelocityRel(0.3).setBlendingRel(0.2) );
+		Frame beerAir = beerBase.copyWithRedundancy();
+		beerAir.transform(beerBase, Transformation.ofTranslation(-270, -180, 0));			
+
+		if ( ! direct ) {
+			tcpGrip.moveAsync(ptp(beerAir).setJointVelocityRel(0.3).setBlendingRel(0.2) );
+		}
 		
 		// move & release
 		Frame target = beers.get(bottleNo).copyWithRedundancy();
