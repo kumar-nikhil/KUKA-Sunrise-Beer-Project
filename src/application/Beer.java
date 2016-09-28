@@ -381,7 +381,7 @@ public class Beer extends RoboticsAPIApplication {
 			
 			tcpGrip.move(ptp(targetAir).setJointVelocityRel(0.3).triggerWhen(gOpenC, gOpenAction) );
 
-			ThreadUtil.milliSleep(500);
+			ThreadUtil.milliSleep(1000);
 			double innateForce = lbr.getExternalForceTorque(tcpGrip, World.Current.getRootFrame()).getForce().getZ();
 			getLogger().info("Innate force is : " + innateForce + " N");
 			
@@ -431,7 +431,7 @@ public class Beer extends RoboticsAPIApplication {
 
 	private int evaluateLoad(double innateForce) {
 		int ret = 0;
-		ThreadUtil.milliSleep(500);
+		ThreadUtil.milliSleep(1000);
 		
 		double bottleMass = bottle.getLoadData().getMass();
 		double fluidMass = fluid.getLoadData().getMass();
