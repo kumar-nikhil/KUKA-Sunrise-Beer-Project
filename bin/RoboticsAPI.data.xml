@@ -46,27 +46,27 @@
                     </redundancyData>
                 </frame>
                 <frame name="P2">
-                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="-100.0" z="0.0"/>
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="-120.0" z="0.0"/>
                     <additionalInformation>
-                        <info key="LastModificationTime" type="java.lang.Long" value="1474521977934"/>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1475026227387"/>
                     </additionalInformation>
                     <redundancyData>
                         <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
                     </redundancyData>
                 </frame>
                 <frame name="P3">
-                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="-200.0" z="0.0"/>
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="-240.0" z="0.0"/>
                     <additionalInformation>
-                        <info key="LastModificationTime" type="java.lang.Long" value="1474521982565"/>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1475026231505"/>
                     </additionalInformation>
                     <redundancyData>
                         <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
                     </redundancyData>
                 </frame>
                 <frame name="P4">
-                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="-300.0" z="0.0"/>
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="-360.0" z="0.0"/>
                     <additionalInformation>
-                        <info key="LastModificationTime" type="java.lang.Long" value="1474521986891"/>
+                        <info key="LastModificationTime" type="java.lang.Long" value="1475026234947"/>
                     </additionalInformation>
                     <redundancyData>
                         <redundancy transformationProviderName="legacy" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy"/>
