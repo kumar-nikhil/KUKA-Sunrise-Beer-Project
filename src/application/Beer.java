@@ -279,9 +279,9 @@ public class Beer extends RoboticsAPIApplication {
 		
 		// move out
 		Frame targetAir = target.copyWithRedundancy();
-		targetAir.transform(tcpGrip, Transformation.ofDeg(200, 0, 0, 0, 0, 30));
+		targetAir.transform(tcpGrip, Transformation.ofDeg(250, 0, 0, 0, 0, 30));
 		Frame glassJigAir = pourBase.copyWithRedundancy();
-		glassJigAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0,0,200));
+		glassJigAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0,0,250));
 
 		tcpGrip.moveAsync(lin(targetAir).setCartVelocity(300));
 		tcpGrip.moveAsync(ptp(glassJigAir).setJointVelocityRel(0.3).setBlendingRel(0.1));
