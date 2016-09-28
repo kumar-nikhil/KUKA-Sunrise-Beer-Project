@@ -366,7 +366,7 @@ public class Beer extends RoboticsAPIApplication {
 		getLogger().info("Getting a bottle");
 		// move in (bootleBase)
 		Frame beerAir = beerBase.copyWithRedundancy();
-		beerAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 300));
+		beerAir.transform(beerBase, Transformation.ofTranslation(-270, -180, 0));
 		
 		tcpGrip.moveAsync(ptp(beerAir).setJointVelocityRel(0.3).setBlendingRel(0.2)
 				.triggerWhen(gOpenC, gOpenAction) );
@@ -377,7 +377,7 @@ public class Beer extends RoboticsAPIApplication {
 		for (int i = 0; i < beers.size(); i++) {
 			Frame target = beers.get(i).copyWithRedundancy();
 			Frame targetAir = target.copyWithRedundancy();
-			targetAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 200));
+			targetAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 250));
 			
 			tcpGrip.moveAsync(ptp(targetAir).setJointVelocityRel(0.3).setBlendingRel(0.2)
 					.triggerWhen(gOpenC, gOpenAction) );
@@ -603,14 +603,14 @@ public class Beer extends RoboticsAPIApplication {
 		// move in (trashBeer)
 
 		Frame beerAir = beerBase.copyWithRedundancy();
-		beerAir.transform(beerBase, Transformation.ofTranslation(-270, -180, -120));
+		beerAir.transform(beerBase, Transformation.ofTranslation(-270, -180, 0));
 		
 		tcpGrip.moveAsync(ptp(beerAir).setJointVelocityRel(0.3).setBlendingRel(0.2) );
 		
 		// move & release
 		Frame target = beers.get(bottleNo).copyWithRedundancy();
 		Frame targetAir = target.copyWithRedundancy();
-		targetAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 200));
+		targetAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 250));
 
 		tcpGrip.moveAsync(ptp(targetAir).setJointVelocityRel(0.3).setBlendingRel(0.2) );
 		tcpGrip.move(lin(target).setCartVelocity(300));
