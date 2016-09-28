@@ -379,17 +379,18 @@ public class Beer extends RoboticsAPIApplication {
 			Frame targetAir = target.copyWithRedundancy();
 			targetAir.transform(World.Current.getRootFrame(), Transformation.ofTranslation(0, 0, 250));
 			
-			tcpGrip.moveAsync(ptp(targetAir).setJointVelocityRel(0.3).setBlendingRel(0.2)
-					.triggerWhen(gOpenC, gOpenAction) );
+			tcpGrip.move(ptp(targetAir).setJointVelocityRel(0.3).triggerWhen(gOpenC, gOpenAction) );
+
+			ThreadUtil.milliSleep(500);
+			double innateForce = lbr.getExternalForceTorque(tcpGrip, World.Current.getRootFrame()).getForce().getZ();
+			getLogger().info("Innate force is : " + innateForce + " N");
+			
 			tcpGrip.move(lin(target).setCartVelocity(300));
 
 			exIO.gripperClose();
 			
 			tcpGrip.move(lin(targetAir).setCartVelocity(300));
 
-			ThreadUtil.milliSleep(500);
-			double innateForce = lbr.getExternalForceTorque(tcpGrip, World.Current.getRootFrame()).getForce().getZ();
-			getLogger().info("Innate force is : " + innateForce + " N");
 			
 			int key = evaluateLoad(innateForce);
 			
