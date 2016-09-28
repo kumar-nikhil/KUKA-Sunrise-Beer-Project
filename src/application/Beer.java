@@ -254,7 +254,7 @@ public class Beer extends RoboticsAPIApplication {
 			double detectedZOffset = lbr.getCurrentCartesianPosition(tcpTip, glassBase).getZ();
 			getLogger().info("detectedZOffset from Base : " + (detectedZOffset+58) );
 			target = glassBase.copyWithRedundancy();
-			target.transform(glassBase, Transformation.ofTranslation(0, 0, (detectedZOffset+64) ));
+			target.transform(glassBase, Transformation.ofTranslation(0, 0, (detectedZOffset+58) ));
 			
 			Frame targetGripApr = target.copyWithRedundancy();
 			targetGripApr.transform(target, Transformation.ofDeg(-30, 0, 0, 0, -20, 0));
