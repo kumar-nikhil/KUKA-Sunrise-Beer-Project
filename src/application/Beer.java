@@ -1,22 +1,26 @@
 package application;
 
 
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.lin;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.linRel;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.positionHold;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.spl;
+import ioTool.ExGripper;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import ioTool.ExGripper;
 
 import additionalFunction.CycleTimer;
 
 import com.kuka.common.ThreadUtil;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
-import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
-
+import com.kuka.roboticsAPI.applicationModel.tasks.RoboticsAPITask;
+import com.kuka.roboticsAPI.applicationModel.tasks.UseRoboticsAPIContext;
 import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.conditionModel.ICallbackAction;
-import com.kuka.roboticsAPI.conditionModel.ICondition;
 import com.kuka.roboticsAPI.conditionModel.ITriggerAction;
 import com.kuka.roboticsAPI.conditionModel.JointTorqueCondition;
 import com.kuka.roboticsAPI.conditionModel.MotionPathCondition;
@@ -36,8 +40,6 @@ import com.kuka.roboticsAPI.geometricModel.math.CoordinateAxis;
 import com.kuka.roboticsAPI.geometricModel.math.Transformation;
 import com.kuka.roboticsAPI.motionModel.IMotionContainer;
 import com.kuka.roboticsAPI.motionModel.Spline;
-import com.kuka.roboticsAPI.motionModel.SplineJP;
-import com.kuka.roboticsAPI.motionModel.SplineOrientationType;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianSineImpedanceControlMode;
 import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
@@ -62,6 +64,7 @@ import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
  * @see #run()
  * @see #dispose()
  */
+@SuppressWarnings("unused")
 public class Beer extends RoboticsAPIApplication {
 	private static final Exception	Exception	= null;
 	private Controller			cabinet;
@@ -289,6 +292,7 @@ public class Beer extends RoboticsAPIApplication {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	private void putGlass() throws Exception {
 		getLogger().info("Placing a glass");
 		// move in (pourGlass) 
@@ -467,6 +471,7 @@ public class Beer extends RoboticsAPIApplication {
 		return ret;
 	}
 
+	@SuppressWarnings("deprecation")
 	private void openBottle() throws Exception {
 		getLogger().info("Opening a bottle cap");
 		Frame openerAir = openerBase.copyWithRedundancy();
