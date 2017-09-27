@@ -249,6 +249,7 @@ public class Beer extends RoboticsAPIApplication {
 		CartesianImpedanceControlMode detectCICM = new CartesianImpedanceControlMode();
 		detectCICM.parametrize(CartDOF.Z).setStiffness(200);
 		
+		
 		IMotionContainer mc = tcpTip.move(linRel(0, 0, 500, glassBase).setCartVelocity(30).setMode(detectCICM).breakWhen(j1tc));
 		
 		Frame target = null;
